@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Sweet Délices Mobile</title>
+<meta name="description" content="Sweet Délices, pâtisserie et traiteur : canette cakes, box cookies, repas de mariage et buffets.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Pinyon+Script&family=Quicksand:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: appli mobile dans un cadre de téléphone (plein écran sur un vrai téléphone). Écrans par barre d'onglets en bas, fiches produit et panier en volets qui montent */
+:root{
+  --bg:#f7f1ec;--bg-alt:#efe1dc;--surface:#fffaf7;--ink:#2e2b22;--muted:#6e675b;
+  --olive:#56601f;--olive-soft:#e4e6d0;--rose:#b07a69;--line:#dfccc5;--on-olive:#fbf7f1;
+  --stage:#e6d6d0;--frame:#2b2722;
+  --shadow:0 14px 30px -16px rgb(70 50 40 / .4);
+  color-scheme:light;
+  --f-display:"Italiana","Didot","Bodoni 72",Georgia,serif;
+  --f-script:"Pinyon Script","Snell Roundhand","Apple Chancery",cursive;
+  --f-body:"Quicksand","Avenir Next","Segoe UI",system-ui,sans-serif;
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{background:var(--stage);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--olive);outline-offset:2px;border-radius:8px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;margin:0;line-height:1.1;text-wrap:balance}
+p{margin:0}
+.mono{font-family:var(--f-script);color:var(--olive);line-height:1;letter-spacing:-.14em;padding-right:.14em}
+.script{font-family:var(--f-script);color:var(--rose);line-height:1}
+.eyebrow{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--olive);font-weight:700}
+.muted{color:var(--muted)}
+
+/* Scène : cadre de téléphone sur grand écran */
+.stage{min-height:100%;display:flex;align-items:center;justify-content:center;gap:56px;padding:32px 16px;flex-wrap:wrap}
+.intro{max-width:300px;display:flex;flex-direction:column;gap:14px}
+.intro h1{font-size:2.6rem}
+.intro p{color:var(--muted);font-size:.92rem}
+.intro ul{margin:0;padding-left:18px;color:var(--muted);font-size:.88rem;display:flex;flex-direction:column;gap:4px}
+.phone{width:390px;max-width:100%;height:844px;border-radius:54px;background:var(--frame);padding:12px;box-shadow:0 40px 80px -30px rgb(0 0 0 / .5);flex-shrink:0}
+.app{position:relative;width:100%;height:100%;border-radius:42px;overflow:hidden;overflow:clip;background:var(--bg);display:flex;flex-direction:column}
+.notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:110px;height:30px;border-radius:20px;background:var(--frame);z-index:30}
+@media (max-width:520px){
+  .stage{padding:0;display:block;height:100%}
+  .intro,.notch{display:none}
+  .phone{width:100%;height:100%;border-radius:0;padding:0;box-shadow:none;background:none}
+  .app{border-radius:0}
+  .topbar{padding-top:calc(10px + env(safe-area-inset-top,0px))!important}
+  .tabbar{padding-bottom:calc(8px + env(safe-area-inset-bottom,0px))!important}
+}
+
+/* Barre du haut */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:48px 18px 10px;background:var(--bg);border-bottom:1px solid var(--line);flex-shrink:0;z-index:5}
+.brand{display:flex;align-items:center;gap:8px}
+.brand .mono{font-size:1.9rem}
+.brand b{font-family:var(--f-display);font-weight:400;font-size:1.1rem;display:block;line-height:1}
+.brand small{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.icon-btn{position:relative;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center}
+.icon-btn svg{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:1.6}
+.badge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--rose);color:var(--on-olive);font-size:.7rem;font-weight:700;display:grid;place-items:center;font-variant-numeric:tabular-nums}
+
+/* Écrans */
+.screens{flex:1;overflow:hidden;overflow:clip;position:relative;min-height:0}
+.screen{position:absolute;inset:0;overflow-y:auto;overscroll-behavior:contain;padding:18px 18px 110px;display:flex;flex-direction:column;gap:22px}
+.screen::-webkit-scrollbar{display:none}
+.screen > *{flex-shrink:0}
+
+/* Barre d'onglets */
+.tabbar{display:grid;grid-template-columns:repeat(5,1fr);background:var(--surface);border-top:1px solid var(--line);padding:8px 6px 22px;flex-shrink:0;z-index:5}
+.tabbar button{border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.66rem;font-weight:600;color:var(--muted);padding:4px 0}
+.tabbar svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6}
+.tabbar button[aria-selected="true"]{color:var(--olive)}
+
+/* Barre panier flottante */
+.cartbar{position:absolute;left:14px;right:14px;bottom:calc(84px);z-index:6;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--olive);color:var(--on-olive);border:none;border-radius:18px;padding:13px 18px;box-shadow:var(--shadow);font-weight:600;font-size:.9rem}
+.cartbar span:last-child{font-variant-numeric:tabular-nums}
+@media (max-width:520px){.cartbar{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
+
+/* Accueil */
+.hero{position:relative;border-radius:180px 180px 26px 26px;overflow:hidden;aspect-ratio:4/4.4;background:var(--bg-alt)}
+.hero img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
+.hero-cap{position:absolute;inset:auto 0 0 0;padding:60px 18px 18px;background:linear-gradient(to top,rgb(25 20 15 / .7),transparent);color:#fbf7f1}
+.hero-cap h1{font-size:2.3rem}
+.hero-cap .script{color:#f1d2c6;font-size:1.6rem;display:block}
+.ctas{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cta{border:1px solid var(--line);background:var(--surface);border-radius:20px;padding:14px;text-align:left;display:flex;flex-direction:column;gap:2px}
+.cta em{font-style:normal;font-size:.62rem;letter-spacing:.16em;color:var(--olive);font-weight:700}
+.cta b{font-family:var(--f-display);font-weight:400;font-size:1.2rem;line-height:1.15}
+.cta.main{background:var(--olive);border-color:var(--olive);color:var(--on-olive)}
+.cta.main em{color:var(--on-olive);opacity:.8}
+.row-head{display:flex;align-items:baseline;justify-content:space-between}
+.row-head h2{font-size:1.6rem}
+.row-head button{border:none;background:none;color:var(--olive);font-weight:600;font-size:.82rem}
+.carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:-18px;padding-inline:18px;scrollbar-width:none}
+.carousel::-webkit-scrollbar{display:none}
+.carousel button{flex:0 0 150px;scroll-snap-align:start;border:none;background:var(--surface);border-radius:20px;overflow:hidden;padding:0;text-align:left;box-shadow:var(--shadow)}
+.carousel .ph{aspect-ratio:3/4}
+.carousel p{padding:9px 12px 11px;font-size:.82rem;font-weight:600}
+.carousel p small{display:block;color:var(--olive);font-weight:600}
+.ph{background:var(--bg-alt);background-repeat:no-repeat;overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph.crop{background-size:280% auto}
+.promise{display:flex;flex-direction:column;gap:8px;background:var(--bg-alt);border-radius:20px;padding:16px}
+.promise div{display:flex;gap:10px;font-size:.86rem}
+.promise div::before{content:"✿";color:var(--rose)}
+
+/* Carte */
+.seg{display:grid;grid-template-columns:repeat(3,1fr);background:var(--bg-alt);border-radius:14px;padding:4px;gap:4px;position:sticky;top:-18px;z-index:2}
+.seg button{border:none;background:none;border-radius:10px;padding:9px 4px;font-weight:600;font-size:.84rem;color:var(--muted)}
+.seg button[aria-selected="true"]{background:var(--surface);color:var(--olive);box-shadow:0 2px 8px rgb(0 0 0 / .08)}
+.sec-title{display:flex;flex-direction:column;gap:4px}
+.sec-title .script{font-size:1.7rem}
+.sec-title h2{font-size:2rem}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{border:none;background:var(--surface);border-radius:20px;overflow:hidden;padding:0;text-align:left;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.tile .ph{aspect-ratio:4/5}
+.tile div.t{padding:10px 12px 12px;display:flex;flex-direction:column;gap:2px}
+.tile b{font-weight:600;font-size:.88rem;line-height:1.25}
+.tile span{font-size:.8rem;color:var(--olive);font-weight:600;font-variant-numeric:tabular-nums}
+.tile .plus{position:absolute}
+.box-card{background:var(--surface);border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+.box-card .ph{aspect-ratio:16/10}
+.box-card .b{padding:16px;display:flex;flex-direction:column;gap:10px}
+.box-card h3{font-size:1.5rem}
+.price{font-family:var(--f-display);font-size:1.6rem;color:var(--olive);font-variant-numeric:tabular-nums}
+.builder{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.builder li{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:.88rem}
+.builder li:last-child{border-bottom:none}
+.progress{height:6px;border-radius:99px;background:var(--bg-alt);overflow:hidden}
+.progress i{display:block;height:100%;background:var(--olive);width:0;transition:width .25s}
+
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.stepper button{width:34px;height:34px;border:none;background:none;font-size:1.1rem;color:var(--olive)}
+.stepper output{min-width:22px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.stepper.sm button{width:28px;height:28px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 18px;border-radius:16px;background:var(--olive);color:var(--on-olive);border:1px solid var(--olive);font-weight:700;font-size:.92rem}
+.btn.ghost{background:transparent;color:var(--olive)}
+.btn:disabled{opacity:.45}
+.btn span{font-variant-numeric:tabular-nums}
+
+/* Traiteur */
+.swipe{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:-18px;padding-inline:18px;scrollbar-width:none}
+.swipe::-webkit-scrollbar{display:none}
+.formule{flex:0 0 78%;scroll-snap-align:center;background:var(--surface);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.formule .script{font-size:1.9rem}
+.formule p{font-size:.88rem;flex:1}
+.formule b{font-family:var(--f-display);font-weight:400;font-size:1.8rem;color:var(--olive)}
+.formule b small{font-family:var(--f-body);font-size:.75rem;color:var(--muted)}
+.strip{border-radius:18px;background-repeat:no-repeat;background-size:auto 100%;aspect-ratio:16/9}
+.strip.mariage{background-image:url("img/mariage.jpg");background-size:280% auto;background-position:62% 80%}
+.strip.buffet{background-image:url("img/buffet.jpg");background-size:250% auto;background-position:100% 76%}
+.panel{background:var(--surface);border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow)}
+.kv{display:flex;flex-direction:column}
+.kv div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:.9rem;font-variant-numeric:tabular-nums}
+.kv div:last-child{border-bottom:none}
+.kv div b{font-family:var(--f-display);font-weight:400;font-size:1.2rem;color:var(--olive)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;padding:6px 11px;border:1px solid var(--rose);border-radius:999px;color:var(--rose)}
+.small{font-size:.82rem;color:var(--muted)}
+.small b{color:var(--ink)}
+.common{font-size:.85rem;color:var(--muted)}
+.common strong{color:var(--olive);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;margin-right:6px}
+
+/* Formulaires */
+.field{display:flex;flex-direction:column;gap:5px;font-size:.78rem;color:var(--muted);font-weight:600}
+input,select,textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;width:100%}
+textarea{min-height:80px;resize:vertical}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.choice label{position:relative;border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:2px;background:var(--surface);font-size:.85rem;font-weight:600;cursor:pointer}
+.choice label small{font-weight:500;color:var(--muted);font-size:.74rem}
+.choice input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;pointer-events:none}
+.choice label:has(input:checked){border-color:var(--olive);background:var(--olive-soft)}
+.check{display:flex;align-items:center;gap:10px;font-size:.88rem}
+.check input{width:20px;height:20px;accent-color:var(--olive)}
+.estimate{background:var(--olive);color:var(--on-olive);border-radius:22px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.estimate .amount{font-family:var(--f-display);font-size:2.4rem;line-height:1;font-variant-numeric:tabular-nums}
+.estimate dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:.82rem;font-variant-numeric:tabular-nums}
+.estimate dd{margin:0;text-align:right;font-weight:700}
+.estimate p{font-size:.74rem;opacity:.85}
+.opts{display:flex;flex-direction:column;gap:10px;min-height:86px;justify-content:center;background:var(--bg-alt);border-radius:16px;padding:12px 14px;box-sizing:border-box}
+.opts .none{font-size:.82rem;color:var(--muted)}
+#e-lines{min-height:84px;align-content:start}
+.quote-card{background:var(--olive-soft);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:8px;text-align:center;align-items:center}
+.quote-card .script{font-size:1.7rem}
+.quote-card h3{font-size:1.5rem}
+.quote-card p{font-size:.85rem;color:var(--muted);max-width:28ch}
+.quote-card .btn{margin-top:6px}
+.ok{font-size:.85rem;color:var(--olive);background:var(--olive-soft);border-radius:14px;padding:12px 14px}
+
+/* Contact */
+.contact{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.contact li{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px}
+.contact span{display:block;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.contact b{font-weight:700;user-select:all;overflow-wrap:anywhere}
+.pill{font-size:.78rem;border:1px solid var(--line);border-radius:999px;padding:6px 12px;background:none;color:var(--olive);text-decoration:none;font-weight:600;white-space:nowrap}
+.foot{text-align:center;display:flex;flex-direction:column;gap:4px;align-items:center;padding-top:8px}
+.foot .mono{font-size:2.6rem}
+
+/* Volets */
+.scrim{position:absolute;inset:0;background:rgb(25 20 15 / .45);z-index:20;opacity:0;pointer-events:none;transition:opacity .25s}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:21;background:var(--bg);border-radius:28px 28px 0 0;max-height:88%;overflow-y:auto;transform:translateY(105%);visibility:hidden;transition:transform .3s cubic-bezier(.2,.8,.2,1),visibility 0s .3s;display:flex;flex-direction:column}
+.sheet.on{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.grab{width:40px;height:5px;border-radius:9px;background:var(--line);margin:10px auto 0;flex-shrink:0}
+.sheet .in{padding:14px 18px 26px;display:flex;flex-direction:column;gap:14px}
+@media (max-width:520px){.sheet .in{padding-bottom:calc(26px + env(safe-area-inset-bottom,0px))}}
+.sheet .ph{border-radius:22px;aspect-ratio:1/1}
+.sheet-head{display:flex;justify-content:space-between;align-items:center}
+.sheet-head h2{font-size:1.9rem}
+.close{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--surface)}
+.sizes{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sizes button{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:10px 12px;text-align:left;font-size:.8rem;color:var(--muted)}
+.sizes b{display:block;font-family:var(--f-display);font-weight:400;font-size:1.4rem;color:var(--ink)}
+.sizes button[aria-pressed="true"]{border-color:var(--olive);background:var(--olive-soft)}
+.sizes button[aria-pressed="true"] b{color:var(--olive)}
+.buyrow{display:flex;gap:10px;align-items:center}
+.buyrow .btn{flex:1}
+.lines{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.line{display:grid;grid-template-columns:54px 1fr auto;gap:12px;align-items:center}
+.line .ph{width:54px;height:54px;border-radius:14px;aspect-ratio:auto}
+.line b{display:block;font-size:.88rem}
+.line small{font-size:.76rem;color:var(--muted);display:block}
+.line .lp{font-weight:700;font-variant-numeric:tabular-nums;font-size:.9rem}
+.totals{display:flex;flex-direction:column;gap:4px;border-top:1px solid var(--line);padding-top:12px;font-variant-numeric:tabular-nums}
+.totals div{display:flex;justify-content:space-between}
+.totals .grand{font-family:var(--f-display);font-size:1.5rem}
+.totals .dep{color:var(--olive);font-weight:700}
+.empty{text-align:center;color:var(--muted);padding:24px 0}
+.empty .mono{font-size:3rem;display:block}
+.toast{position:absolute;left:50%;top:100px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:.82rem;z-index:40;white-space:nowrap;max-width:90%;overflow:hidden;text-overflow:ellipsis}
+/* Sur un vrai téléphone : défilement natif de la page (plus fluide que des zones défilantes imbriquées) */
+@media (max-width:520px){
+  html,body{height:auto}
+  .stage,.phone{height:auto;min-height:100%}
+  .app{height:auto;min-height:100vh;overflow:visible;display:block}
+  .screens{overflow:visible;min-height:0}
+  .screen{position:static;overflow:visible;padding-bottom:170px}
+  .topbar{position:sticky;top:0;z-index:15}
+  .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:15}
+  .cartbar{position:fixed;z-index:16}
+  .scrim,.sheet,.toast{position:fixed}
+  .scrim{z-index:30}.sheet{z-index:31}.toast{z-index:40}
+  .seg{top:calc(66px + env(safe-area-inset-top,0px))}
+  body.lock{overflow:hidden}
+}
+</style>
+<style>img{max-width:100%}</style>
+</head>
+<body>
+
+
+<div class="stage">
+  <div class="intro">
+    <span class="script" style="font-size:2rem">maquette mobile</span>
+    <h1>Sweet Délices</h1>
+    <p>La version téléphone du site, pensée comme une appli. Tout est cliquable dans l'écran.</p>
+    <ul>
+      <li>Onglets en bas de l'écran</li>
+      <li>Fiche produit qui monte depuis le bas</li>
+      <li>Barre panier toujours visible</li>
+      <li>Devis calculé en direct</li>
+    </ul>
+    <p>Sur un téléphone, la maquette s'affiche en plein écran.</p>
+  </div>
+
+  <div class="phone">
+    <div class="app" id="app">
+      <div class="notch" aria-hidden="true"></div>
+      <div class="topbar">
+        <div class="brand"><span class="mono" aria-hidden="true">SD</span><div><b>Sweet Délices</b><small>Traiteur</small></div></div>
+        <button class="icon-btn" id="openCart" type="button" aria-label="Ouvrir le panier">
+          <svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+          <span class="badge" id="badge" hidden>0</span>
+        </button>
+      </div>
+
+      <div class="screens">
+        <!-- Accueil -->
+        <section class="screen" id="s-accueil" aria-label="Accueil">
+          <div class="hero">
+            <img src="img/cookie-redvelvet.jpg" alt="Cookie red velvet garni de framboises et d'une pensée">
+            <div class="hero-cap"><span class="script">fait maison</span><h1>Pâtisserie &amp; traiteur</h1></div>
+          </div>
+          <div class="ctas">
+            <button class="cta main" type="button" data-go="carte"><em>À L'UNITÉ</em><b>Commander des douceurs</b></button>
+            <button class="cta" type="button" data-go="devis"><em>SUR DEVIS</em><b>Préparer un événement</b></button>
+          </div>
+          <div class="row-head"><h2>Nos créations</h2><button type="button" data-go="carte">Tout voir</button></div>
+          <div class="carousel" id="carousel"></div>
+          <div class="row-head"><h2>Les box</h2><button type="button" data-go="carte" data-cat="box">Composer</button></div>
+          <button class="box-card" type="button" data-go="carte" data-cat="box" style="border:none;padding:0;text-align:left;display:block;width:100%;color:inherit">
+            <div class="ph"><img src="img/cookies-box2.jpg" alt="Box de six cookies garnis"></div>
+            <div class="b"><h3>Box de 6 cookies</h3><p class="small">Assortie ou composée par vos soins</p><span class="price">25 €</span></div>
+          </button>
+          <div class="promise">
+            <div>Livraison, installation et décoration pour les événements</div>
+            <div>Acompte de 50 % pour valider la commande</div>
+            <div>Devis sur demande pour le service à l'assiette</div>
+          </div>
+        </section>
+
+        <!-- Carte -->
+        <section class="screen" id="s-carte" aria-label="La carte" hidden>
+          <div class="sec-title"><span class="script">la carte</span><h2>Commander</h2></div>
+          <div class="seg" role="tablist" aria-label="Catégories">
+            <button type="button" role="tab" data-cat="canettes" aria-selected="true">Canettes</button>
+            <button type="button" role="tab" data-cat="cookies" aria-selected="false">Cookies</button>
+            <button type="button" role="tab" data-cat="box" aria-selected="false">Box</button>
+          </div>
+          <div id="cat-canettes" class="tiles"></div>
+          <div id="cat-cookies" class="tiles" hidden></div>
+          <div id="cat-box" style="display:flex;flex-direction:column;gap:16px" hidden>
+            <div class="box-card">
+              <div class="ph"><img src="img/cookies-box2.jpg" alt="Box assortie de six cookies"></div>
+              <div class="b">
+                <h3>Box assortie</h3>
+                <p class="small">6 cookies choisis par Sweet Délices parmi les parfums du moment.</p>
+                <div class="buyrow"><div class="stepper"><button type="button" data-q="box" data-d="-1" aria-label="Moins">−</button><output id="q-box">1</output><button type="button" data-q="box" data-d="1" aria-label="Plus">+</button></div><button class="btn" type="button" id="addBox">Ajouter · <span id="boxPrice">25 €</span></button></div>
+              </div>
+            </div>
+            <div class="box-card">
+              <div class="ph"><img src="img/cookies-box.jpg" alt="Plusieurs box de cookies"></div>
+              <div class="b">
+                <h3>Box à composer</h3>
+                <p class="small">Choisissez vos 6 cookies.</p>
+                <div class="progress" aria-hidden="true"><i id="bProg"></i></div>
+                <ul class="builder" id="builder"></ul>
+                <button class="btn" type="button" id="bAdd" disabled>Ajouter · <span id="bCount">0 / 6</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="quote-card">
+            <span class="script">sur devis</span>
+            <h3>Une grosse commande ?</h3>
+            <p>Anniversaire, baptême, mariage : dites-nous la quantité, on vous prépare un devis.</p>
+            <button class="btn" type="button" data-go="devis">Demander un devis</button>
+          </div>
+        </section>
+
+        <!-- Traiteur -->
+        <section class="screen" id="s-traiteur" aria-label="Traiteur" hidden>
+          <div class="sec-title"><span class="script">le traiteur</span><h2>Mariages &amp; réceptions</h2></div>
+          <div class="strip mariage" role="img" aria-label="Poulet aux olives et plats du repas de mariage"></div>
+          <div class="row-head"><h2>Repas de mariage</h2></div>
+          <p class="common"><strong>Entrée</strong>Salade composée avec nems, bricks, accras, pastels, pastilla poulet ou fruits de mer</p>
+          <div class="swipe">
+            <div class="formule"><span class="script">Formule 1</span><p>Poulet aux olives, pommes de terre sautées</p><b>35 € <small>/ pers.</small></b></div>
+            <div class="formule"><span class="script">Formule 2</span><p>Méchoui, pommes de terre sautées, carottes au cumin, haricots verts</p><b>40 € <small>/ pers.</small></b></div>
+            <div class="formule"><span class="script">Formule 3</span><p>Tajine de veau aux pruneaux, pommes de terre sautées</p><b>42 € <small>/ pers.</small></b></div>
+          </div>
+          <p class="common"><strong>Dessert</strong>Plateau de fruits frais de saison<br><strong>Compris</strong>Eau plate et gazeuse, thé, café, pain et service</p>
+          <div class="strip buffet" role="img" aria-label="Bar à cocktails du buffet"></div>
+          <div class="panel">
+            <div class="row-head"><h2>Buffet apéritif</h2></div>
+            <div class="kv">
+              <div><span>10 personnes</span><b>250 €</b></div>
+              <div><span>20 personnes</span><b>500 €</b></div>
+              <div><span>30 personnes</span><b>750 €</b></div>
+              <div><span>40 personnes</span><b>1 000 €</b></div>
+              <div><span>50 personnes</span><b>1 250 €</b></div>
+            </div>
+            <p class="small">Puis <b>250 €</b> par tranche de 10 personnes. 6 apéritifs salés, 6 mignardises sucrées et 2 cocktails. Nappes, présentoirs, fleurs, assiettes et couverts fournis.</p>
+            <div class="chips"><span>Livraison</span><span>Installation</span><span>Décoration</span></div>
+          </div>
+          <button class="btn" type="button" data-go="devis">Calculer mon devis</button>
+        </section>
+
+        <!-- Devis -->
+        <section class="screen" id="s-devis" aria-label="Devis" hidden>
+          <div class="sec-title"><span class="script">sur devis</span><h2>Votre événement</h2></div>
+          <form id="devisForm" novalidate style="display:flex;flex-direction:column;gap:14px">
+            <div class="choice" role="radiogroup" aria-label="Prestation">
+              <label><input type="radio" name="dtype" value="f1">Formule 1<small>35 € / pers.</small></label>
+              <label><input type="radio" name="dtype" value="f2">Formule 2<small>40 € / pers.</small></label>
+              <label><input type="radio" name="dtype" value="f3">Formule 3<small>42 € / pers.</small></label>
+              <label><input type="radio" name="dtype" value="buffet">Buffet<small>250 € / 10 pers.</small></label>
+              <label style="grid-column:1/-1"><input type="radio" name="dtype" value="sucre">Grosse commande sucrée<small>Canettes, cookies, box</small></label>
+            </div>
+            <label class="field">Nombre d'invités<input id="d-nb" type="number" inputmode="numeric" min="1" placeholder="Ex. 80"></label>
+            <label class="field">Date de l'événement<input id="d-date" type="date"></label>
+            <div class="opts" aria-label="Options">
+              <p class="none" id="w-none">Les options s'affichent selon la prestation choisie.</p>
+              <label class="check" id="w-assiette" hidden><input id="d-assiette" type="checkbox"> Service à l'assiette (sur devis)</label>
+              <label class="check" id="w-cooking" hidden><input id="d-cooking" type="checkbox"> Cooking show (sur devis)</label>
+              <label class="check" id="w-dessert" hidden><input id="d-dessert" type="checkbox"> Bar à desserts (sur devis)</label>
+            </div>
+            <div class="estimate" aria-live="polite">
+              <span class="eyebrow" style="color:inherit;opacity:.8">Estimation</span>
+              <div class="amount" id="e-total">—</div>
+              <dl id="e-lines"><dt style="grid-column:1/-1">Choisissez une prestation et le nombre d'invités.</dt></dl>
+              <p>Montant indicatif. Le devis final est confirmé par Sweet Délices.</p>
+            </div>
+            <label class="field">Nom<input id="d-nom" autocomplete="name" placeholder="Prénom et nom"></label>
+            <label class="field">Téléphone<input id="d-tel" type="tel" autocomplete="tel" placeholder="06 00 00 00 00"></label>
+            <label class="field">Message<textarea id="d-msg" placeholder="Lieu, horaires, envies particulières…"></textarea></label>
+            <button class="btn" type="submit">Envoyer ma demande</button>
+            <p class="ok" id="devisOk" hidden></p>
+          </form>
+        </section>
+
+        <!-- Contact -->
+        <section class="screen" id="s-contact" aria-label="Contact" hidden>
+          <div class="sec-title"><span class="script">contactez-nous</span><h2>Une question ?</h2></div>
+          <ul class="contact">
+            <li><div><span>Téléphone</span><b>06 26 68 65 98</b></div><button class="pill" type="button" data-copy="0626686598">Copier</button></li>
+            <li><div><span>Instagram</span><b>@sweet_delices</b></div><a class="pill" href="https://www.instagram.com/sweet_delices/" target="_blank" rel="noopener">Ouvrir</a></li>
+            <li><div><span>Snapchat</span><b>sweetdelices24</b></div><button class="pill" type="button" data-copy="sweetdelices24">Copier</button></li>
+            <li><div><span>TikTok</span><b>salamataniang350</b></div><button class="pill" type="button" data-copy="salamataniang350">Copier</button></li>
+          </ul>
+          <div class="foot"><span class="mono" aria-hidden="true">SD</span><b style="font-family:var(--f-display);font-weight:400;font-size:1.2rem">Sweet Délices Traiteur</b><p class="small">Acompte de 50 % à la commande · Devis sur demande</p></div>
+        </section>
+      </div>
+
+      <button class="cartbar" id="cartbar" type="button" hidden><span id="cbCount">Voir le panier</span><span id="cbTotal"></span></button>
+
+      <nav class="tabbar" role="tablist" aria-label="Navigation">
+        <button type="button" role="tab" data-tab="accueil" aria-selected="true"><svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>Accueil</button>
+        <button type="button" role="tab" data-tab="carte" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="9.5" cy="10" r="1"/><circle cx="14" cy="9" r="1"/><circle cx="13" cy="14" r="1"/><circle cx="9" cy="14.5" r=".8"/></svg>Carte</button>
+        <button type="button" role="tab" data-tab="traiteur" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M4 16h16M6 16a6 6 0 0 1 12 0M12 8V6M3 19h18"/></svg>Traiteur</button>
+        <button type="button" role="tab" data-tab="devis" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>Devis</button>
+        <button type="button" role="tab" data-tab="contact" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>Contact</button>
+      </nav>
+
+      <div class="scrim" id="scrim"></div>
+
+      <!-- Fiche produit -->
+      <div class="sheet" id="pSheet" role="dialog" aria-modal="true" aria-labelledby="pName">
+        <div class="grab"></div>
+        <div class="in">
+          <div class="ph" id="pPh"></div>
+          <div class="sheet-head"><h2 id="pName"></h2><button class="close" type="button" data-close aria-label="Fermer">✕</button></div>
+          <p class="small" id="pDesc"></p>
+          <div class="sizes" id="pSizes" role="group" aria-label="Format">
+            <button type="button" data-size="250" aria-pressed="true"><b>4,50 €</b>250 ml</button>
+            <button type="button" data-size="330" aria-pressed="false"><b>6 €</b>330 ml</button>
+          </div>
+          <div class="buyrow">
+            <div class="stepper"><button type="button" data-q="p" data-d="-1" aria-label="Moins">−</button><output id="q-p">1</output><button type="button" data-q="p" data-d="1" aria-label="Plus">+</button></div>
+            <button class="btn" type="button" id="pAdd">Ajouter · <span id="pPrice"></span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panier -->
+      <div class="sheet" id="cSheet" role="dialog" aria-modal="true" aria-labelledby="cTitle">
+        <div class="grab"></div>
+        <div class="in">
+          <div class="sheet-head"><h2 id="cTitle">Votre panier</h2><button class="close" type="button" data-close aria-label="Fermer">✕</button></div>
+          <div class="empty" id="cEmpty"><span class="mono">SD</span>Votre panier est vide.</div>
+          <ul class="lines" id="cLines"></ul>
+          <div class="totals" id="cTotals">
+            <div class="grand"><span>Total</span><span id="tTotal"></span></div>
+            <div class="dep"><span>Acompte (50 %)</span><span id="tDep"></span></div>
+          </div>
+          <form id="orderForm" novalidate style="display:flex;flex-direction:column;gap:12px">
+            <div class="choice" role="radiogroup" aria-label="Mode de réception">
+              <label><input type="radio" name="mode" value="retrait" checked>Retrait<small>Sur rendez-vous</small></label>
+              <label><input type="radio" name="mode" value="livraison">Livraison<small>Selon la zone</small></label>
+            </div>
+            <label class="field">Date souhaitée<input id="o-date" type="date"></label>
+            <label class="field">Nom<input id="o-nom" autocomplete="name" placeholder="Prénom et nom"></label>
+            <label class="field">Téléphone<input id="o-tel" type="tel" autocomplete="tel" placeholder="06 00 00 00 00"></label>
+            <button class="btn" type="submit" id="orderBtn">Payer l'acompte · <span id="oDep"></span></button>
+            <p class="ok" id="orderOk" hidden></p>
+          </form>
+        </div>
+      </div>
+
+      <div class="toast" id="toast" hidden></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const eur = n => n.toLocaleString('fr-FR', {minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2}) + ' €';
+
+const CANETTES = [
+  {id:'c-brownie', name:'Brownie caramel', desc:'Brownie, caramel, crème vanille et éclats de biscuit', img:'img/canette-speculoos.jpg'},
+  {id:'c-caramel', name:'Caramel', desc:'Caramel onctueux et crème vanille bourbon', img:'img/canette-caramel.jpg'},
+  {id:'c-fruits', name:'Fruits rouges', desc:'Coulis de fruits rouges, crumble et crème vanille', img:'img/canette-fruits-rouges.jpg'},
+  {id:'c-pomme', name:'Pomme caramel', desc:'Pommes fondantes, génoise et caramel', img:'img/canette-pomme.jpg'},
+  {id:'c-poire', name:'Poire chocolat', desc:'Poire, chocolat et crème vanille', img:'img/canette-poire.jpg'},
+];
+const SIZES = {'250':4.5, '330':6};
+const COOKIES = [
+  {id:'k-redvelvet', name:'Red velvet', desc:'Framboises, myrtilles, coulis et pensée', img:'img/cookie-redvelvet.jpg'},
+  {id:'k-pistache', name:'Pistache framboise', desc:'Crémeux pistache, framboises et cerises', img:'img/cookie-pistache.jpg'},
+  {id:'k-mangue', name:'Mangue vanille', desc:'Crémeux mangue, dés de mangue et caramel', img:'img/cookie-mangue.jpg'},
+  {id:'k-caramel', name:'Caramel pécan', desc:'Caramel vanillé, noix de pécan et fudge', img:'img/cookie-caramel.jpg'},
+  {id:'k-citron', name:'Citron meringué', desc:'Crémeux citron vert, meringue et pensée', img:'img/cookies-box2.jpg', crop:[93.4,39.7]},
+  {id:'k-chocopecan', name:'Chocolat pécan', desc:'Palets de chocolat, pécan et praliné', img:'img/cookies-box2.jpg', crop:[74.1,65.8]},
+  {id:'k-noisette', name:'Caramel noisette', desc:'Caramel, noisettes torréfiées et fudge', img:'img/cookies-box2.jpg', crop:[1.8,81.7]},
+  {id:'k-choconoisette', name:'Chocolat noisette', desc:'Palets de chocolat au lait et noisettes', img:'img/cookies-box.jpg', crop:[41.9,52.0]},
+];
+const COOKIE_PRICE = 4.5, BOX_PRICE = 25, BOX_SIZE = 6;
+
+// Image d'un produit : photo entière ou recadrage d'une photo de box
+const ph = (p, cls='') => p.crop
+  ? `<div class="ph crop ${cls}" role="img" aria-label="${p.name}" style="background-image:url('${p.img}');background-position:${p.crop[0]}% ${p.crop[1]}%"></div>`
+  : `<div class="ph ${cls}"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>`;
+
+// Rendu des listes
+const tile = (p, price) => `<button class="tile" type="button" data-open="${p.id}">${ph(p)}<div class="t"><b>${p.name}</b><span>${price}</span></div></button>`;
+$('cat-canettes').innerHTML = CANETTES.map(p => tile(p, 'dès 4,50 €')).join('');
+$('cat-cookies').innerHTML = COOKIES.map(p => tile(p, '4,50 €')).join('');
+$('carousel').innerHTML = [CANETTES[2], COOKIES[1], CANETTES[0], COOKIES[2], CANETTES[3], COOKIES[0]]
+  .map(p => `<button type="button" data-open="${p.id}">${ph(p)}<p>${p.name}<small>${p.id[0] === 'c' ? 'dès 4,50 €' : '4,50 €'}</small></p></button>`).join('');
+
+// Navigation par onglets
+function go(tab, cat){
+  document.querySelectorAll('.screen').forEach(s => s.hidden = s.id !== 's-' + tab);
+  document.querySelectorAll('.tabbar [data-tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === tab));
+  $('s-' + tab).scrollTop = 0; window.scrollTo(0, 0);
+  if (cat) setCat(cat);
+}
+function setCat(cat){
+  document.querySelectorAll('.seg [data-cat]').forEach(b => b.setAttribute('aria-selected', b.dataset.cat === cat));
+  ['canettes','cookies','box'].forEach(c => $('cat-' + c).hidden = c !== cat);
+}
+document.querySelector('.tabbar').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) go(b.dataset.tab); });
+document.querySelector('.seg').addEventListener('click', e => { const b = e.target.closest('[data-cat]'); if (b) setCat(b.dataset.cat); });
+
+// Panier
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem('sd-m-cart') || '[]'); } catch (_) { cart = []; }
+const save = () => { try { localStorage.setItem('sd-m-cart', JSON.stringify(cart)); } catch (_) {} };
+const total = () => cart.reduce((s, i) => s + i.qty * i.price, 0);
+function addItem(item, qty){
+  const ex = cart.find(i => i.key === item.key);
+  if (ex) ex.qty += qty; else cart.push({...item, qty});
+  save(); renderCart(); toast('Ajouté au panier : ' + item.name);
+}
+function renderCart(){
+  const n = cart.reduce((s, i) => s + i.qty, 0), t = total();
+  $('badge').hidden = n === 0; $('badge').textContent = n;
+  $('cartbar').hidden = n === 0;
+  $('cbCount').textContent = 'Voir le panier · ' + n + ' article' + (n > 1 ? 's' : '');
+  $('cbTotal').textContent = eur(t);
+  $('cLines').innerHTML = cart.map(i => `<li class="line">${ph({img:i.img, crop:i.crop, name:''})}<div><b>${i.name}</b><small>${i.detail}</small><div class="stepper sm" style="margin-top:4px"><button type="button" data-line="${i.key}" data-d="-1" aria-label="Retirer un">−</button><output>${i.qty}</output><button type="button" data-line="${i.key}" data-d="1" aria-label="Ajouter un">+</button></div></div><span class="lp">${eur(i.qty * i.price)}</span></li>`).join('');
+  $('cEmpty').hidden = cart.length > 0;
+  $('cTotals').hidden = $('orderForm').hidden = cart.length === 0;
+  $('tTotal').textContent = eur(t);
+  $('tDep').textContent = $('oDep').textContent = eur(Math.round(t * 50) / 100);
+  $('orderOk').hidden = true;
+}
+$('cLines').addEventListener('click', e => {
+  const b = e.target.closest('[data-line]'); if (!b) return;
+  const it = cart.find(i => i.key === b.dataset.line);
+  if (it) { it.qty += +b.dataset.d; if (it.qty <= 0) cart = cart.filter(i => i !== it); }
+  save(); renderCart();
+});
+
+// Volets
+let lastFocus = null;
+function openSheet(id){
+  lastFocus = document.activeElement;
+  document.querySelectorAll('.sheet.on').forEach(s => s.classList.remove('on'));
+  $(id).classList.add('on'); $('scrim').classList.add('on'); document.body.classList.add('lock');
+  setTimeout(() => $(id).querySelector('[data-close]').focus({preventScroll:true}), 50);
+}
+function closeSheets(){
+  document.querySelectorAll('.sheet.on').forEach(s => s.classList.remove('on'));
+  $('scrim').classList.remove('on'); document.body.classList.remove('lock');
+  if (lastFocus) lastFocus.focus({preventScroll:true});
+}
+$('scrim').addEventListener('click', closeSheets);
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', closeSheets));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheets(); });
+$('openCart').addEventListener('click', () => openSheet('cSheet'));
+$('cartbar').addEventListener('click', () => openSheet('cSheet'));
+
+// Fiche produit
+let cur = null, size = '250', q = {p:1, box:1};
+function setQ(k, v){ q[k] = Math.max(1, Math.min(99, v)); $('q-' + k).textContent = q[k]; updatePrices(); }
+function updatePrices(){
+  if (cur) $('pPrice').textContent = eur((cur.id[0] === 'c' ? SIZES[size] : COOKIE_PRICE) * q.p);
+  $('boxPrice').textContent = eur(BOX_PRICE * q.box);
+}
+function openProduct(id){
+  cur = CANETTES.find(p => p.id === id) || COOKIES.find(p => p.id === id);
+  size = '250'; q.p = 1; $('q-p').textContent = 1;
+  const isCan = cur.id[0] === 'c';
+  $('pPh').outerHTML = ph(cur).replace('class="ph', 'id="pPh" class="ph');
+  $('pName').textContent = cur.name;
+  $('pDesc').textContent = cur.desc + (isCan ? '' : ' · 4,50 € le cookie');
+  $('pSizes').hidden = !isCan;
+  $('pSizes').querySelectorAll('[data-size]').forEach(b => b.setAttribute('aria-pressed', b.dataset.size === size));
+  updatePrices(); openSheet('pSheet');
+}
+$('pSizes').addEventListener('click', e => {
+  const b = e.target.closest('[data-size]'); if (!b) return;
+  size = b.dataset.size;
+  $('pSizes').querySelectorAll('[data-size]').forEach(x => x.setAttribute('aria-pressed', x === b));
+  updatePrices();
+});
+$('pAdd').addEventListener('click', () => {
+  const isCan = cur.id[0] === 'c';
+  addItem(isCan
+    ? {key: cur.id + '-' + size, name: cur.name, detail: 'Canette ' + size + ' ml · ' + eur(SIZES[size]), price: SIZES[size], img: cur.img}
+    : {key: cur.id, name: cur.name, detail: 'Cookie · ' + eur(COOKIE_PRICE), price: COOKIE_PRICE, img: cur.img, crop: cur.crop}, q.p);
+  closeSheets();
+});
+$('addBox').addEventListener('click', () => {
+  addItem({key: 'k-box', name: 'Box assortie', detail: '6 cookies · 25 €', price: BOX_PRICE, img: 'img/cookies-box2.jpg'}, q.box);
+  setQ('box', 1);
+});
+
+// Clics délégués : ouvrir un produit, changer d'écran, quantités, copier
+document.addEventListener('click', e => {
+  const o = e.target.closest('[data-open]'); if (o) { openProduct(o.dataset.open); return; }
+  const g = e.target.closest('[data-go]'); if (g) { go(g.dataset.go, g.dataset.cat); return; }
+  const s = e.target.closest('[data-q]'); if (s) { setQ(s.dataset.q, q[s.dataset.q] + +s.dataset.d); return; }
+  const c = e.target.closest('[data-copy]');
+  if (c) { try { navigator.clipboard.writeText(c.dataset.copy).then(() => toast('Copié : ' + c.dataset.copy), () => {}); } catch (_) {} }
+});
+
+// Box à composer
+const pick = {};
+$('builder').innerHTML = COOKIES.map(c => `<li><span>${c.name}</span><div class="stepper sm"><button type="button" data-pick="${c.id}" data-d="-1" aria-label="Retirer ${c.name}">−</button><output id="pk-${c.id}">0</output><button type="button" data-pick="${c.id}" data-d="1" aria-label="Ajouter ${c.name}">+</button></div></li>`).join('');
+const picked = () => Object.values(pick).reduce((s, v) => s + v, 0);
+function renderBuilder(){
+  const n = picked();
+  COOKIES.forEach(c => $('pk-' + c.id).textContent = pick[c.id] || 0);
+  $('bCount').textContent = n === BOX_SIZE ? '25 €' : n + ' / ' + BOX_SIZE;
+  $('bProg').style.width = (n / BOX_SIZE * 100) + '%';
+  $('bAdd').disabled = n !== BOX_SIZE;
+}
+$('builder').addEventListener('click', e => {
+  const b = e.target.closest('[data-pick]'); if (!b) return;
+  const d = +b.dataset.d;
+  if (d > 0 && picked() >= BOX_SIZE) { toast('Votre box contient déjà 6 cookies'); return; }
+  pick[b.dataset.pick] = Math.max(0, (pick[b.dataset.pick] || 0) + d);
+  renderBuilder();
+});
+$('bAdd').addEventListener('click', () => {
+  const parts = COOKIES.filter(c => pick[c.id]).map(c => pick[c.id] + ' ' + c.name);
+  addItem({key: 'k-custom-' + parts.join('|'), name: 'Box à composer', detail: parts.join(', '), price: BOX_PRICE, img: 'img/cookies-box.jpg'}, 1);
+  Object.keys(pick).forEach(k => delete pick[k]); renderBuilder();
+});
+
+// Commande
+$('orderForm').addEventListener('submit', e => {
+  e.preventDefault();
+  $('orderOk').textContent = 'Maquette : sur le vrai site, cette étape ouvrirait le paiement de l\'acompte de ' + eur(Math.round(total() * 50) / 100) + '. Rien n\'a été envoyé.';
+  $('orderOk').hidden = false;
+});
+
+// Devis
+const F = {f1:35, f2:40, f3:42};
+function estimate(){
+  const type = (document.querySelector('[name=dtype]:checked') || {}).value;
+  const nb = Math.max(0, Math.floor(+$('d-nb').value || 0));
+  const isMeal = type in F, isBuffet = type === 'buffet', isSweet = type === 'sucre';
+  $('w-assiette').hidden = !isMeal; $('w-cooking').hidden = !isBuffet; $('w-dessert').hidden = !(isMeal || isBuffet);
+  $('w-none').hidden = isMeal || isBuffet;
+  $('w-none').textContent = isSweet ? 'Pas d\'option pour cette prestation : précisez vos envies dans le message.' : 'Les options s\'affichent selon la prestation choisie.';
+  const rows = []; const quote = []; let t = 0;
+  if (!type || (!isSweet && nb === 0)) {
+    $('e-total').textContent = '—';
+    $('e-lines').innerHTML = '<dt style="grid-column:1/-1">Choisissez une prestation et le nombre d\'invités.</dt>';
+    return 0;
+  }
+  if (isMeal) { t = F[type] * nb; rows.push(['Formule ' + type.slice(1) + ' × ' + nb + ' pers.', eur(t)]); if ($('d-assiette').checked) quote.push('Service à l\'assiette'); }
+  else if (isBuffet) { const tr = Math.ceil(nb / 10); t = tr * 250; rows.push([tr + ' tranche' + (tr > 1 ? 's' : '') + ' de 10 pers.', eur(t)]); if ($('d-cooking').checked) quote.push('Cooking show'); }
+  else quote.push('Douceurs en grande quantité');
+  if ((isMeal || isBuffet) && $('d-dessert').checked) quote.push('Bar à desserts');
+  quote.forEach(x => rows.push([x, 'sur devis']));
+  if (t) rows.push(['Acompte (50 %)', eur(t / 2)]);
+  $('e-total').textContent = t ? (quote.length ? 'dès ' : '') + eur(t) : 'Sur devis';
+  $('e-lines').innerHTML = rows.map(r => `<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('');
+  return t;
+}
+$('devisForm').addEventListener('input', estimate);
+$('devisForm').addEventListener('change', estimate);
+$('devisForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const t = estimate();
+  $('devisOk').textContent = 'Maquette : sur le vrai site, Sweet Délices recevrait cette demande' + (t ? ' (estimation ' + eur(t) + ')' : '') + ' et vous recontacterait. Rien n\'a été envoyé.';
+  $('devisOk').hidden = false;
+});
+
+let tt;
+function toast(m){ const t = $('toast'); t.textContent = m; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => t.hidden = true, 1800); }
+
+renderBuilder(); renderCart();
+</script>
+
+</body>
+</html>

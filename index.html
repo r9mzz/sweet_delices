@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Sweet Délices Traiteur</title>
+<meta name="description" content="Sweet Délices, pâtisserie et traiteur : canette cakes, box cookies, repas de mariage et buffets.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Pinyon+Script&family=Quicksand:wght@400;500;600&display=swap">
+<style>
+/* Layout: vitrine d'une page. Hero en collage photo, carte à l'unité en grandes vignettes avec panier latéral, traiteur en menus + simulateur de devis */
+:root{
+  --bg:#f7f1ec;          /* crème */
+  --bg-alt:#efe1dc;      /* rose poudré des affiches */
+  --surface:#fffaf7;
+  --ink:#2e2b22;
+  --muted:#6e675b;
+  --olive:#56601f;       /* vert olive du monogramme */
+  --olive-soft:#e4e6d0;
+  --rose:#b07a69;        /* rose doré des affiches */
+  --line:#dfccc5;
+  --on-olive:#fbf7f1;
+  --shadow:0 18px 40px -18px rgb(70 50 40 / .35);
+  color-scheme:light;
+  --f-display:"Italiana","Didot","Bodoni 72",Georgia,serif;
+  --f-script:"Pinyon Script","Snell Roundhand","Apple Chancery",cursive;
+  --f-body:"Quicksand","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --wrap:1160px;
+}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.6}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--olive);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:20px}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;line-height:1.08;text-wrap:balance;margin:0}
+h2{font-size:clamp(2.4rem,5.5vw,3.8rem)}
+h3{font-size:1.55rem}
+p{margin:0}
+.script{font-family:var(--f-script);color:var(--rose);font-size:2.1rem;line-height:1}
+.eyebrow{font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;color:var(--olive);font-weight:600}
+.lead{color:var(--muted);max-width:58ch}
+.mono{font-family:var(--f-script);color:var(--olive);line-height:1;letter-spacing:-.14em;padding-right:.14em}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* Header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.brand .mono{font-size:2.2rem}
+.brand-name{font-family:var(--f-display);font-size:1.25rem;letter-spacing:.04em;line-height:1.1}
+.brand-name small{display:block;font-family:var(--f-body);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.nav ul{display:flex;gap:24px;list-style:none;margin:0;padding:0;font-size:.92rem}
+.nav ul a{text-decoration:none;color:var(--muted)}
+.nav ul a:hover{color:var(--olive)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 22px;border-radius:999px;background:var(--olive);color:var(--on-olive);text-decoration:none;font-weight:600;font-size:.92rem;border:1px solid var(--olive);cursor:pointer;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--olive)}
+.btn.small{padding:8px 16px;font-size:.85rem}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.cart-btn{position:relative;background:var(--surface);color:var(--ink);border-color:var(--line)}
+.cart-count{min-width:22px;height:22px;border-radius:999px;background:var(--rose);color:var(--on-olive);font-size:.75rem;display:inline-grid;place-items:center;padding:0 6px;font-variant-numeric:tabular-nums}
+@media (max-width:860px){.nav ul{display:none}}
+@media (max-width:420px){.nav-actions .ghost{display:none}}
+
+/* Hero */
+.hero{padding-block:48px 72px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:40px;align-items:center}
+.hero-text{display:flex;flex-direction:column;gap:22px;min-width:0}
+.hero .mono{font-size:clamp(5rem,12vw,8rem);display:block;margin-bottom:-.25em}
+.hero h1{font-size:clamp(2.8rem,7vw,5rem)}
+.hero h1 .script{display:block;font-size:.6em;margin-top:.12em}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.collage{position:relative;display:grid;grid-template-columns:1.15fr 1fr;grid-template-rows:1fr 1fr;gap:14px;aspect-ratio:1/1;max-width:100%}
+.collage figure{margin:0;overflow:hidden;border-radius:22px;background:var(--bg-alt);box-shadow:var(--shadow)}
+.collage img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.collage figure:hover img{transform:scale(1.04)}
+.collage .tall{grid-row:span 2;border-radius:220px 220px 22px 22px}
+.collage .tall img{object-position:50% 40%}
+.seal{position:absolute;left:50%;top:50%;transform:translate(-62%,-50%);width:118px;height:118px;border-radius:50%;background:var(--surface);display:grid;place-items:center;text-align:center;box-shadow:var(--shadow);border:1px solid var(--line)}
+.seal .mono{font-size:2.6rem;margin:0}
+.seal small{display:block;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr}.seal{width:96px;height:96px}}
+
+section{padding-block:80px}
+.alt{background:var(--bg-alt)}
+.sec-head{display:flex;flex-direction:column;gap:12px;margin-bottom:36px;align-items:center;text-align:center}
+.sec-head .lead{margin-inline:auto}
+.flourish{display:flex;align-items:center;gap:14px;color:var(--rose)}
+.flourish::before,.flourish::after{content:"";width:48px;height:1px;background:currentColor;opacity:.6}
+
+/* Choix du parcours */
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+.path{display:flex;flex-direction:column;gap:6px;padding:22px 24px;border-radius:20px;background:var(--surface);border:1px solid var(--line);text-decoration:none;transition:border-color .15s,transform .15s}
+.path:hover{border-color:var(--olive);transform:translateY(-2px)}
+.path b{font-family:var(--f-display);font-weight:400;font-size:1.6rem}
+.path span{font-size:.9rem;color:var(--muted)}
+.path em{font-style:normal;font-size:.8rem;color:var(--olive);font-weight:600;letter-spacing:.06em}
+@media (max-width:640px){.paths{grid-template-columns:1fr}}
+
+/* Carte à l'unité */
+.tabs{display:flex;justify-content:center;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+.tab{padding:10px 22px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer;font-weight:600;font-size:.9rem;color:var(--muted)}
+.tab[aria-selected="true"]{background:var(--olive);border-color:var(--olive);color:var(--on-olive)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);min-width:0}
+.card .ph{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--bg-alt)}
+.card .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
+.card:hover .ph img{transform:scale(1.05)}
+.tag{position:absolute;top:14px;left:14px;background:var(--surface);color:var(--olive);font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:999px}
+.card-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:12px;flex:1}
+.card-body h3{font-size:1.5rem}
+.card-body p{font-size:.88rem;color:var(--muted)}
+.sizes{display:flex;gap:8px}
+.size{flex:1;border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:transparent;cursor:pointer;text-align:left;font-size:.8rem;color:var(--muted)}
+.size b{display:block;font-family:var(--f-display);font-weight:400;font-size:1.25rem;color:var(--ink);font-variant-numeric:tabular-nums}
+.size[aria-pressed="true"]{border-color:var(--olive);background:var(--olive-soft)}
+.size[aria-pressed="true"] b{color:var(--olive)}
+.buy{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-top:auto}
+.price-big{font-family:var(--f-display);font-size:1.7rem;color:var(--olive);font-variant-numeric:tabular-nums}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px}
+.stepper button{width:34px;height:34px;border:none;background:none;cursor:pointer;font-size:1.1rem;color:var(--olive)}
+.stepper output{min-width:24px;text-align:center;font-variant-numeric:tabular-nums;font-weight:600}
+.buy-row{display:flex;gap:10px;align-items:center}
+.added{font-size:.8rem;color:var(--olive);min-height:1.2em}
+.card.feature{grid-column:span 2;flex-direction:row}
+.card.feature .ph{aspect-ratio:auto;flex:1.2;min-height:340px}
+.card.feature .card-body{flex:1;justify-content:center;padding:28px}
+@media (max-width:560px){.card.feature{grid-column:auto;flex-direction:column}.card.feature .ph{aspect-ratio:4/5;min-height:0}}
+.sub-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px;margin:56px 0 20px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+#panel-canettes{margin-top:0}
+.sub-head:first-of-type{margin-top:0}
+.sub-head h3{font-size:2rem}
+.sub-head p{color:var(--muted);font-size:.9rem}
+.grid.four{grid-template-columns:repeat(4,1fr);gap:18px}
+.grid.four .ph{aspect-ratio:1/1}
+.grid.four .card-body h3{font-size:1.3rem}
+@media (max-width:900px){.grid.four{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.grid.four{grid-template-columns:1fr}}
+.ph.crop{background-repeat:no-repeat;background-size:280% auto;transition:background-size .6s}
+.card:hover .ph.crop{background-size:300% auto}
+.boxes{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:760px){.boxes{grid-template-columns:1fr}}
+.box-card .ph{aspect-ratio:16/10}
+.builder{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 14px}
+.builder li{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.84rem;min-width:0}
+.builder .stepper button{width:26px;height:26px;font-size:1rem}
+.builder output{min-width:18px}
+@media (max-width:420px){.builder{grid-template-columns:1fr}}
+.count{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.count.full{color:var(--olive);font-weight:600}
+.quote-band{margin-top:40px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px 28px;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:24px 28px}
+.quote-band > div{display:flex;flex-direction:column;gap:6px;min-width:0}
+.quote-band .script{font-size:1.7rem}
+.quote-band h3{font-size:1.8rem}
+.quote-band p{color:var(--muted);font-size:.92rem}
+.hint{margin-top:28px;text-align:center;font-size:.9rem;color:var(--muted)}
+.hint a{color:var(--olive);font-weight:600}
+
+/* Panier */
+.drawer-bg{position:fixed;inset:0;background:rgb(30 25 20 / .45);z-index:40}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--surface);z-index:41;display:flex;flex-direction:column;padding:calc(20px + env(safe-area-inset-top,0px)) 22px calc(20px + env(safe-area-inset-bottom,0px));gap:16px;box-shadow:-20px 0 50px rgb(0 0 0 / .2);overflow-y:auto}
+.drawer-head{display:flex;justify-content:space-between;align-items:center}
+.drawer-head h2{font-size:2rem}
+.x{border:1px solid var(--line);background:none;border-radius:999px;width:36px;height:36px;cursor:pointer}
+.lines{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.line{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center}
+.line img{width:56px;height:56px;border-radius:12px;object-fit:cover}
+.line b{font-weight:600;font-size:.92rem;display:block}
+.line small{color:var(--muted);font-size:.8rem}
+.line .lp{font-variant-numeric:tabular-nums;font-weight:600;text-align:right}
+.line .stepper button{width:28px;height:28px}
+.empty{color:var(--muted);text-align:center;padding:30px 0}
+.empty .mono{font-size:3rem;display:block}
+.totals{border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:6px;font-variant-numeric:tabular-nums}
+.totals div{display:flex;justify-content:space-between}
+.totals .grand{font-family:var(--f-display);font-size:1.6rem}
+.totals .dep{color:var(--olive);font-weight:600}
+.drawer form{display:flex;flex-direction:column;gap:12px}
+.seg{display:flex;gap:8px}
+.seg label{flex:1;flex-direction:row;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:12px;padding:9px;cursor:pointer;color:var(--ink)}
+.seg input{width:auto;accent-color:var(--olive)}
+
+/* Traiteur */
+.menus{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:860px){.menus{grid-template-columns:1fr}}
+.menu-card{background:var(--surface);border-radius:24px;padding:26px;display:flex;flex-direction:column;gap:18px;min-width:0;box-shadow:var(--shadow)}
+.strip{border-radius:16px;max-width:100%;background-repeat:no-repeat;background-size:100% auto}
+.strip.mariage{aspect-ratio:1080/385;background-image:url("img/mariage.jpg");background-position:0 79.9%}
+.strip.buffet{aspect-ratio:1080/450;background-image:url("img/buffet.jpg");background-position:0 75.7%}
+.formules{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.formule{border:1px solid var(--line);border-radius:16px;padding:14px 12px;display:flex;flex-direction:column;gap:6px;text-align:center;min-width:0}
+.formule .script{font-size:1.6rem}
+.formule p{font-size:.84rem;color:var(--ink);flex:1}
+.formule b{font-family:var(--f-display);font-weight:400;font-size:1.5rem;color:var(--olive);font-variant-numeric:tabular-nums}
+.formule b small{font-family:var(--f-body);font-size:.72rem;color:var(--muted)}
+@media (max-width:520px){.formules{grid-template-columns:1fr}}
+.common{font-size:.86rem;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.common strong{color:var(--olive);font-weight:600;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;margin-right:6px}
+.tarifs{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.tarifs td{padding:8px 2px;border-bottom:1px solid var(--line);font-size:.92rem}
+.tarifs td:last-child{text-align:right;font-family:var(--f-display);font-size:1.3rem;color:var(--olive)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.two > *{min-width:0}
+@media (max-width:520px){.two{grid-template-columns:1fr}}
+.list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:.92rem}
+.list li{display:flex;gap:10px}
+.list li::before{content:"✿";color:var(--rose)}
+.note{font-size:.86rem;color:var(--muted)}
+.note b{color:var(--ink);font-weight:600}
+.included{display:flex;flex-wrap:wrap;gap:8px}
+.included span{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--rose);border-radius:999px;color:var(--rose)}
+
+/* Devis */
+.devis{margin-top:40px;display:grid;grid-template-columns:1.1fr 1fr;gap:0;border-radius:28px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+@media (max-width:860px){.devis{grid-template-columns:1fr}}
+.devis form{padding:30px;display:grid;grid-template-columns:1fr 1fr;gap:14px;min-width:0}
+.devis form .full{grid-column:1/-1}
+@media (max-width:520px){.devis form{grid-template-columns:1fr;padding:22px}}
+label{display:flex;flex-direction:column;gap:6px;font-size:.8rem;color:var(--muted);font-weight:500}
+input,select,textarea{font:inherit;font-size:.95rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;width:100%}
+textarea{min-height:86px;resize:vertical}
+.check{flex-direction:row;align-items:center;gap:10px;color:var(--ink);font-size:.88rem}
+.check input{width:auto;accent-color:var(--olive)}
+.estimate{background:var(--olive);color:var(--on-olive);padding:30px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.estimate .script{color:var(--on-olive);opacity:.85}
+.estimate .amount{font-family:var(--f-display);font-size:clamp(2.8rem,6vw,4rem);line-height:1;font-variant-numeric:tabular-nums}
+.estimate dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:6px 14px;font-size:.9rem;font-variant-numeric:tabular-nums}
+.estimate dt{opacity:.8}
+.estimate dd{margin:0;text-align:right;font-weight:600}
+.estimate .sep{grid-column:1/-1;height:1px;background:currentColor;opacity:.25}
+.estimate p{font-size:.82rem;opacity:.85}
+.ok{font-size:.88rem;color:var(--olive);background:var(--olive-soft);border-radius:12px;padding:12px 14px}
+
+/* Contact */
+.contact{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media (max-width:860px){.contact{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:420px){.contact{grid-template-columns:1fr}}
+.contact li{list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px;align-items:flex-start;min-width:0}
+.contact{padding:0;margin:0}
+.contact span{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.contact b{font-weight:600;user-select:all;overflow-wrap:anywhere}
+.copy{font-size:.78rem;background:none;border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--olive);cursor:pointer;text-decoration:none}
+
+footer{padding-block:40px;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center}
+footer .mono{font-size:2.4rem}
+.foot-brand{display:flex;align-items:center;gap:12px;color:var(--ink)}
+.foot-brand small{color:var(--muted);font-size:.8rem}
+.foot-contact{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:12px 28px}
+.foot-contact li{display:flex;flex-direction:column;min-width:0}
+.foot-contact span{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase}
+.foot-contact b{color:var(--ink);font-weight:600;user-select:all;overflow-wrap:anywhere}
+.foot-contact a{text-decoration:none}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:.88rem;z-index:50;box-shadow:var(--shadow)}
+</style>
+<style>img{max-width:100%}</style>
+</head>
+<body>
+
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#accueil" aria-label="Sweet Délices, accueil">
+      <span class="mono" aria-hidden="true">SD</span>
+      <span class="brand-name">Sweet Délices<small>Traiteur</small></span>
+    </a>
+    <ul>
+      <li><a href="#carte">La carte</a></li>
+      <li><a href="#traiteur">Traiteur</a></li>
+      <li><a href="#devis">Devis</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a class="btn ghost small" href="#devis">Devis</a>
+      <button class="btn small cart-btn" id="openCart" type="button" aria-label="Ouvrir le panier">Panier <span class="cart-count" id="cartCount">0</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="accueil">
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-text">
+        <div>
+          <span class="mono" aria-hidden="true">SD</span>
+          <h1>Sweet Délices<span class="script">pâtisserie &amp; traiteur</span></h1>
+        </div>
+        <p class="lead">Des canette cakes montés en couches, des cookies garnis comme des tartelettes et des buffets complets pour vos mariages et réceptions. Tout est fait maison, sur commande.</p>
+        <div class="paths">
+          <a class="path" href="#carte"><em>À L'UNITÉ</em><b>Commander des douceurs</b><span>Canettes et cookies, ajoutés au panier</span></a>
+          <a class="path" href="#devis"><em>SUR DEVIS</em><b>Préparer un événement</b><span>Mariage, buffet, grosse commande</span></a>
+        </div>
+      </div>
+      <div class="collage">
+        <figure class="tall"><img src="img/cookie-redvelvet.jpg" alt="Cookie red velvet garni de framboises, myrtilles et d'une pensée"></figure>
+        <figure><img src="img/canette-fruits-rouges.jpg" alt="Canette cake fruits rouges"></figure>
+        <figure><img src="img/cookies-box2.jpg" alt="Box de cookies garnis"></figure>
+        <div class="seal"><div><span class="mono">SD</span><small>fait maison</small></div></div>
+      </div>
+    </div>
+  </div>
+
+  <section id="carte" class="alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="flourish"><span class="script">la carte</span></span>
+        <h2>Commandez à l'unité</h2>
+        <p class="lead">Choisissez vos créations, ajoutez-les au panier et indiquez la date de retrait ou de livraison. Un acompte de 50 % valide la commande.</p>
+      </div>
+      <div class="sub-head" style="margin-top:0"><h3>Canette cakes</h3><p>Format 250 ml à 4,50 € ou 330 ml à 6 €</p></div>
+      <div id="panel-canettes" class="grid"></div>
+
+      <div class="sub-head" id="cookies"><h3>Les box cookies</h3><p>Une box de 6 cookies à 25 €, assortie ou composée par vos soins</p></div>
+      <div class="boxes">
+        <article class="card box-card">
+          <div class="ph"><img src="img/cookies-box2.jpg" alt="Box de six cookies garnis assortis" loading="lazy"><span class="tag">Box assortie</span></div>
+          <div class="card-body"><h3>Box assortie</h3><p>6 cookies choisis par Sweet Délices parmi les parfums du moment, présentés dans leur boîte.</p>
+            <div class="price-big">25 €</div>
+            <div class="buy"><div class="stepper"><button type="button" data-step="-1" data-for="k-box" aria-label="Moins">−</button><output id="q-k-box">1</output><button type="button" data-step="1" data-for="k-box" aria-label="Plus">+</button></div><button class="btn small" type="button" data-add="k-box">Ajouter</button></div>
+            <div class="added" id="a-k-box"></div></div>
+        </article>
+        <article class="card box-card">
+          <div class="ph"><img src="img/cookies-box.jpg" alt="Plusieurs box de cookies garnis" loading="lazy"><span class="tag">À composer</span></div>
+          <div class="card-body"><h3>Box à composer</h3><p>Choisissez vos 6 cookies.</p>
+            <ul class="builder" id="builder"></ul>
+            <div class="buy"><span class="count" id="b-count">0 / 6 cookies</span><button class="btn small" type="button" id="b-add" disabled>Ajouter · 25 €</button></div>
+            <div class="added" id="a-k-custom"></div></div>
+        </article>
+      </div>
+
+      <div class="sub-head"><h3>Cookies à l'unité</h3><p>4,50 € le cookie</p></div>
+      <div id="panel-cookies" class="grid four"></div>
+      <div class="quote-band">
+        <div><span class="script">sur devis</span><h3>Une grosse commande ?</h3><p>Anniversaire, baptême, mariage : dites-nous la quantité, on vous prépare un devis.</p></div>
+        <a class="btn" href="#devis">Demander un devis</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="traiteur">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="flourish"><span class="script">le traiteur</span></span>
+        <h2>Mariages &amp; réceptions</h2>
+        <p class="lead">Des repas complets ou des buffets apéritifs préparés maison, livrés, installés et décorés le jour J.</p>
+      </div>
+      <div class="menus">
+        <article class="menu-card" aria-labelledby="t-mariage">
+          <div class="strip mariage" role="img" aria-label="Entrées en présentoir, poulet aux olives, plateau de fruits et méchoui"></div>
+          <div><p class="eyebrow">Repas de mariage</p><h3 id="t-mariage">Trois formules</h3></div>
+          <div class="common">
+            <div><strong>Entrée</strong>Salade composée avec nems, bricks, accras, pastels, pastilla poulet ou fruits de mer</div>
+          </div>
+          <div class="formules">
+            <div class="formule"><span class="script">Formule 1</span><p>Poulet aux olives, pommes de terre sautées</p><b>35 € <small>/ pers.</small></b></div>
+            <div class="formule"><span class="script">Formule 2</span><p>Méchoui, pommes de terre sautées, carottes au cumin, haricots verts</p><b>40 € <small>/ pers.</small></b></div>
+            <div class="formule"><span class="script">Formule 3</span><p>Tajine de veau aux pruneaux, pommes de terre sautées</p><b>42 € <small>/ pers.</small></b></div>
+          </div>
+          <div class="common">
+            <div><strong>Dessert</strong>Plateau de fruits frais de saison</div>
+            <div><strong>Compris</strong>Eau plate et gazeuse, thé, café, pain et service</div>
+          </div>
+          <p class="note">Service à l'assiette : <b>devis sur demande</b>.</p>
+        </article>
+
+        <article class="menu-card" aria-labelledby="t-buffet">
+          <div class="strip buffet" role="img" aria-label="Buffet de wraps, verrines, pastels et bar à cocktails"></div>
+          <div><p class="eyebrow">Prestations buffet</p><h3 id="t-buffet">Buffet apéritif</h3></div>
+          <div class="two">
+            <table class="tarifs"><tbody>
+              <tr><td>10 personnes</td><td>250 €</td></tr>
+              <tr><td>20 personnes</td><td>500 €</td></tr>
+              <tr><td>30 personnes</td><td>750 €</td></tr>
+              <tr><td>40 personnes</td><td>1 000 €</td></tr>
+              <tr><td>50 personnes</td><td>1 250 €</td></tr>
+            </tbody></table>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <ul class="list"><li>6 sortes d'apéritifs salés</li><li>6 sortes de mignardises sucrées</li><li>2 cocktails</li></ul>
+              <p class="note">Nappes, présentoirs, bouquets de fleurs, assiettes et couverts fournis.</p>
+              <p class="note">Puis <b>250 €</b> par tranche de 10 personnes.</p>
+            </div>
+          </div>
+          <div class="included"><span>Livraison</span><span>Installation</span><span>Décoration</span></div>
+          <p class="note">Cooking show : <b>devis sur demande</b>.</p>
+        </article>
+      </div>
+
+      <div class="devis" id="devis">
+        <form id="devisForm" novalidate>
+          <div class="full"><p class="eyebrow">Demande de devis</p><h3>Votre événement</h3></div>
+          <label class="full">Prestation
+            <select id="d-type">
+              <option value="f1">Repas de mariage, formule 1 (35 €/pers.)</option>
+              <option value="f2">Repas de mariage, formule 2 (40 €/pers.)</option>
+              <option value="f3">Repas de mariage, formule 3 (42 €/pers.)</option>
+              <option value="buffet">Prestation buffet (250 € / 10 pers.)</option>
+              <option value="sucre">Grosse commande sucrée (canettes, cookies)</option>
+            </select>
+          </label>
+          <label>Nombre d'invités<input id="d-nb" type="number" min="1" step="1" placeholder="Ex. 80"></label>
+          <label>Date de l'événement<input id="d-date" type="date"></label>
+          <div class="full" style="display:flex;flex-direction:column;gap:10px;min-height:58px">
+          <label class="check" id="d-assiette-wrap"><input id="d-assiette" type="checkbox"> Service à l'assiette (sur devis)</label>
+          <label class="check" id="d-cooking-wrap" hidden><input id="d-cooking" type="checkbox"> Ajouter un cooking show (sur devis)</label>
+          <label class="check" id="d-dessert-wrap"><input id="d-dessert" type="checkbox"> Ajouter un bar à desserts (canettes, cookies)</label>
+          </div>
+          <label>Nom<input id="d-nom" autocomplete="name" placeholder="Prénom et nom"></label>
+          <label>Téléphone<input id="d-tel" type="tel" autocomplete="tel" placeholder="06 00 00 00 00"></label>
+          <label class="full">Message<textarea id="d-msg" placeholder="Lieu, horaires, envies particulières…"></textarea></label>
+          <div class="full"><button class="btn" type="submit">Envoyer ma demande de devis</button></div>
+          <p class="ok full" id="devisOk" hidden></p>
+        </form>
+        <aside class="estimate" aria-live="polite">
+          <span class="script">estimation</span>
+          <div class="amount" id="e-total">Sur devis</div>
+          <dl id="e-lines"></dl>
+          <p id="e-note">Montant indicatif établi à partir de nos tarifs. Le devis final est confirmé par Sweet Délices.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="alt">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="flourish"><span class="script">contactez-nous</span></span>
+        <h2>Une question ?</h2>
+      </div>
+      <ul class="contact">
+        <li><span>Instagram</span><b>@sweet_delices</b><a class="copy" href="https://www.instagram.com/sweet_delices/" target="_blank" rel="noopener">Ouvrir</a></li>
+        <li><span>Snapchat</span><b>sweetdelices24</b><button class="copy" type="button" data-copy="sweetdelices24">Copier</button></li>
+        <li><span>TikTok</span><b>salamataniang350</b><button class="copy" type="button" data-copy="salamataniang350">Copier</button></li>
+        <li><span>Téléphone</span><b>06 26 68 65 98</b><button class="copy" type="button" data-copy="0626686598">Copier</button></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-brand"><span class="mono" aria-hidden="true">SD</span><span>Sweet Délices Traiteur<br><small>Acompte de 50 % à la commande · Devis sur demande</small></span></div>
+    <ul class="foot-contact" aria-label="Coordonnées">
+      <li><span>Téléphone</span><b>06 26 68 65 98</b></li>
+      <li><span>Instagram</span><a href="https://www.instagram.com/sweet_delices/" target="_blank" rel="noopener"><b>@sweet_delices</b></a></li>
+      <li><span>Snapchat</span><b>sweetdelices24</b></li>
+      <li><span>TikTok</span><b>salamataniang350</b></li>
+    </ul>
+  </div>
+</footer>
+
+<div class="drawer-bg" id="drawerBg" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-label="Panier">
+  <div class="drawer-head"><h2>Votre panier</h2><button class="x" id="closeCart" type="button" aria-label="Fermer le panier">✕</button></div>
+  <ul class="lines" id="lines"></ul>
+  <div class="empty" id="empty"><span class="mono">SD</span>Votre panier est vide. Ajoutez une canette ou un cookie depuis la carte.</div>
+  <div class="totals" id="totals">
+    <div><span>Sous-total</span><span id="t-sub"></span></div>
+    <div class="grand"><span>Total</span><span id="t-total"></span></div>
+    <div class="dep"><span>Acompte à régler (50 %)</span><span id="t-dep"></span></div>
+  </div>
+  <form id="orderForm" novalidate>
+    <div class="seg" role="radiogroup" aria-label="Mode de réception">
+      <label><input type="radio" name="mode" id="m-retrait" value="retrait" checked> Retrait</label>
+      <label><input type="radio" name="mode" id="m-livraison" value="livraison"> Livraison</label>
+    </div>
+    <label>Date souhaitée<input id="o-date" type="date"></label>
+    <label>Nom<input id="o-nom" autocomplete="name" placeholder="Prénom et nom"></label>
+    <label>Téléphone<input id="o-tel" type="tel" autocomplete="tel" placeholder="06 00 00 00 00"></label>
+    <button class="btn" type="submit" id="orderBtn">Valider et payer l'acompte</button>
+    <p class="ok" id="orderOk" hidden></p>
+  </form>
+</aside>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const eur = n => n.toLocaleString('fr-FR', {minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2}) + ' €';
+
+const CANETTES = [
+  {id:'c-brownie', name:'Brownie caramel', desc:'Brownie, caramel, crème vanille et éclats de biscuit', img:'img/canette-speculoos.jpg', tag:'Best-seller'},
+  {id:'c-caramel', name:'Caramel', desc:'Caramel onctueux et crème vanille bourbon', img:'img/canette-caramel.jpg'},
+  {id:'c-fruits', name:'Fruits rouges', desc:'Coulis de fruits rouges, crumble et crème vanille', img:'img/canette-fruits-rouges.jpg'},
+  {id:'c-pomme', name:'Pomme caramel', desc:'Pommes fondantes, génoise et caramel', img:'img/canette-pomme.jpg'},
+  {id:'c-poire', name:'Poire chocolat', desc:'Poire, chocolat et crème vanille', img:'img/canette-poire.jpg'},
+];
+const SIZES = {'250':4.5, '330':6};
+const COOKIES = [
+  {id:'k-redvelvet', name:'Red velvet', desc:'Framboises, myrtilles, coulis et pensée', img:'img/cookie-redvelvet.jpg'},
+  {id:'k-pistache', name:'Pistache framboise', desc:'Crémeux pistache, framboises et cerises', img:'img/cookie-pistache.jpg'},
+  {id:'k-mangue', name:'Mangue vanille', desc:'Crémeux mangue, dés de mangue et caramel', img:'img/cookie-mangue.jpg'},
+  {id:'k-caramel', name:'Caramel pécan', desc:'Caramel vanillé, noix de pécan et fudge', img:'img/cookie-caramel.jpg'},
+  {id:'k-citron', name:'Citron meringué', desc:'Crémeux citron vert, meringue et pensée', img:'img/cookies-box2.jpg', crop:[93.4,39.7]},
+  {id:'k-chocopecan', name:'Chocolat pécan', desc:'Palets de chocolat, pécan et praliné', img:'img/cookies-box2.jpg', crop:[74.1,65.8]},
+  {id:'k-noisette', name:'Caramel noisette', desc:'Caramel, noisettes torréfiées et fudge', img:'img/cookies-box2.jpg', crop:[1.8,81.7]},
+  {id:'k-choconoisette', name:'Chocolat noisette', desc:'Palets de chocolat au lait et noisettes', img:'img/cookies-box.jpg', crop:[41.9,52.0]},
+];
+const COOKIE_PRICE = 4.5, BOX = {id:'k-box', name:'Box assortie', price:25, img:'img/cookies-box2.jpg'}, BOX_SIZE = 6;
+
+let cart = [];
+try { cart = JSON.parse(localStorage.getItem('sd-cart') || '[]'); } catch (_) { cart = []; }
+const save = () => { try { localStorage.setItem('sd-cart', JSON.stringify(cart)); } catch (_) {} };
+
+function stepper(id){
+  return `<div class="stepper"><button type="button" data-step="-1" data-for="${id}" aria-label="Moins">−</button><output id="q-${id}">1</output><button type="button" data-step="1" data-for="${id}" aria-label="Plus">+</button></div>`;
+}
+function canetteCard(p){
+  return `<article class="card"><div class="ph"><img src="${p.img}" alt="Canette cake ${p.name}" loading="lazy">${p.tag?`<span class="tag">${p.tag}</span>`:''}</div>
+  <div class="card-body"><h3>${p.name}</h3><p>${p.desc}</p>
+  <div class="sizes" role="group" aria-label="Format">
+    <button type="button" class="size" data-size="250" data-for="${p.id}" aria-pressed="true"><b>4,50 €</b>250 ml</button>
+    <button type="button" class="size" data-size="330" data-for="${p.id}" aria-pressed="false"><b>6 €</b>330 ml</button>
+  </div>
+  <div class="buy">${stepper(p.id)}<button class="btn small" type="button" data-add="${p.id}">Ajouter</button></div>
+  <div class="added" id="a-${p.id}"></div></div></article>`;
+}
+function cookieCard(p){
+  const ph = p.crop
+    ? `<div class="ph crop" role="img" aria-label="Cookie ${p.name}" style="background-image:url('${p.img}');background-position:${p.crop[0]}% ${p.crop[1]}%"></div>`
+    : `<div class="ph"><img src="${p.img}" alt="Cookie ${p.name}" loading="lazy"></div>`;
+  return `<article class="card">${ph}
+  <div class="card-body"><h3>${p.name}</h3><p>${p.desc}</p>
+  <div class="buy"><span class="price-big" style="font-size:1.35rem">${eur(COOKIE_PRICE)}</span>${stepper(p.id)}<button class="btn small" type="button" data-add="${p.id}">Ajouter</button></div>
+  <div class="added" id="a-${p.id}"></div></div></article>`;
+}
+document.getElementById('panel-canettes').innerHTML = CANETTES.map(canetteCard).join('');
+document.getElementById('panel-cookies').innerHTML = COOKIES.map(cookieCard).join('');
+
+const chosenSize = {};
+document.addEventListener('click', e => {
+  const s = e.target.closest('[data-size]');
+  if (s) {
+    chosenSize[s.dataset.for] = s.dataset.size;
+    s.parentElement.querySelectorAll('.size').forEach(b => b.setAttribute('aria-pressed', b === s));
+  }
+  const st = e.target.closest('[data-step]');
+  if (st && st.dataset.for) {
+    const o = document.getElementById('q-' + st.dataset.for);
+    o.value = o.textContent = Math.max(1, Math.min(99, +o.textContent + +st.dataset.step));
+  }
+  const add = e.target.closest('[data-add]');
+  if (add) addToCart(add.dataset.add);
+  const ln = e.target.closest('[data-line]');
+  if (ln) {
+    const it = cart.find(i => i.key === ln.dataset.line);
+    if (it) { it.qty += +ln.dataset.d; if (it.qty <= 0) cart = cart.filter(i => i !== it); }
+    save(); renderCart();
+  }
+});
+
+function addToCart(id){
+  const qty = +document.getElementById('q-' + id).textContent;
+  let item;
+  const c = CANETTES.find(p => p.id === id);
+  if (c) {
+    const size = chosenSize[id] || '250';
+    item = {key: id + '-' + size, name: c.name, detail: 'Canette ' + size + ' ml', price: SIZES[size], img: c.img};
+  } else if (id === 'k-box') {
+    item = {key: id, name: BOX.name, detail: 'Box de 6 cookies', price: BOX.price, img: BOX.img};
+  } else {
+    const k = COOKIES.find(p => p.id === id);
+    item = {key: id, name: k.name, detail: 'Cookie à l\'unité', price: COOKIE_PRICE, img: k.img};
+  }
+  const ex = cart.find(i => i.key === item.key);
+  if (ex) ex.qty += qty; else cart.push({...item, qty});
+  save(); renderCart();
+  const a = document.getElementById('a-' + id);
+  a.textContent = '✓ ' + qty + ' ajouté' + (qty > 1 ? 's' : '') + ' au panier';
+  setTimeout(() => a.textContent = '', 2200);
+  toast('Ajouté au panier : ' + item.name);
+}
+
+function renderCart(){
+  const n = cart.reduce((s, i) => s + i.qty, 0);
+  const total = cart.reduce((s, i) => s + i.qty * i.price, 0);
+  document.getElementById('cartCount').textContent = n;
+  document.getElementById('lines').innerHTML = cart.map(i => `<li class="line"><img src="${i.img}" alt=""><div><b>${i.name}</b><small>${i.detail} · ${eur(i.price)}</small><div class="stepper" style="margin-top:4px"><button type="button" data-line="${i.key}" data-d="-1" aria-label="Retirer un">−</button><output>${i.qty}</output><button type="button" data-line="${i.key}" data-d="1" aria-label="Ajouter un">+</button></div></div><span class="lp">${eur(i.qty * i.price)}</span></li>`).join('');
+  document.getElementById('empty').hidden = cart.length > 0;
+  document.getElementById('totals').hidden = cart.length === 0;
+  document.getElementById('t-sub').textContent = eur(total);
+  document.getElementById('t-total').textContent = eur(total);
+  document.getElementById('t-dep').textContent = eur(Math.round(total * 50) / 100);
+  document.getElementById('orderBtn').disabled = cart.length === 0;
+  document.getElementById('orderOk').hidden = true;
+}
+
+const drawer = document.getElementById('drawer'), bg = document.getElementById('drawerBg');
+const openCart = () => { drawer.hidden = bg.hidden = false; document.getElementById('closeCart').focus(); };
+const closeCart = () => { drawer.hidden = bg.hidden = true; document.getElementById('openCart').focus(); };
+document.getElementById('openCart').onclick = openCart;
+document.getElementById('closeCart').onclick = closeCart;
+bg.onclick = closeCart;
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !drawer.hidden) closeCart(); });
+
+document.getElementById('orderForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const total = cart.reduce((s, i) => s + i.qty * i.price, 0);
+  const ok = document.getElementById('orderOk');
+  ok.textContent = 'Maquette : sur le vrai site, cette étape ouvrirait le paiement de l\'acompte de ' + eur(Math.round(total * 50) / 100) + ', puis Sweet Délices confirmerait la commande. Rien n\'a été envoyé.';
+  ok.hidden = false;
+});
+
+let tt;
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.hidden = false;
+  clearTimeout(tt); tt = setTimeout(() => t.hidden = true, 2000);
+}
+
+// Box à composer
+const pick = {};
+document.getElementById('builder').innerHTML = COOKIES.map(c => `<li><span>${c.name}</span><div class="stepper"><button type="button" data-pick="${c.id}" data-d="-1" aria-label="Retirer ${c.name}">−</button><output id="p-${c.id}">0</output><button type="button" data-pick="${c.id}" data-d="1" aria-label="Ajouter ${c.name}">+</button></div></li>`).join('');
+function renderBuilder(){
+  const n = Object.values(pick).reduce((s, v) => s + v, 0);
+  COOKIES.forEach(c => document.getElementById('p-' + c.id).textContent = pick[c.id] || 0);
+  const cnt = document.getElementById('b-count');
+  cnt.textContent = n + ' / ' + BOX_SIZE + ' cookies';
+  cnt.classList.toggle('full', n === BOX_SIZE);
+  document.getElementById('b-add').disabled = n !== BOX_SIZE;
+  return n;
+}
+document.getElementById('builder').addEventListener('click', e => {
+  const b = e.target.closest('[data-pick]'); if (!b) return;
+  e.stopPropagation();
+  const n = Object.values(pick).reduce((s, v) => s + v, 0), d = +b.dataset.d, id = b.dataset.pick;
+  if (d > 0 && n >= BOX_SIZE) { toast('Votre box contient déjà 6 cookies'); return; }
+  pick[id] = Math.max(0, (pick[id] || 0) + d);
+  renderBuilder();
+});
+document.getElementById('b-add').addEventListener('click', () => {
+  const parts = COOKIES.filter(c => pick[c.id]).map(c => pick[c.id] + ' ' + c.name);
+  const key = 'k-custom-' + parts.join('|');
+  const ex = cart.find(i => i.key === key);
+  if (ex) ex.qty++; else cart.push({key, name: 'Box à composer', detail: parts.join(', '), price: BOX.price, img: 'img/cookies-box.jpg', qty: 1});
+  save(); renderCart();
+  Object.keys(pick).forEach(k => delete pick[k]); renderBuilder();
+  const a = document.getElementById('a-k-custom');
+  a.textContent = '✓ Box ajoutée au panier'; setTimeout(() => a.textContent = '', 2200);
+  toast('Box à composer ajoutée au panier');
+});
+renderBuilder();
+
+// Devis
+const F = {f1:35, f2:40, f3:42};
+const $ = id => document.getElementById(id);
+function estimate(){
+  const type = $('d-type').value, nb = Math.max(0, Math.floor(+$('d-nb').value || 0));
+  const isMeal = type in F, isBuffet = type === 'buffet', isSweet = type === 'sucre';
+  $('d-assiette-wrap').hidden = !isMeal;
+  $('d-cooking-wrap').hidden = !isBuffet;
+  $('d-dessert-wrap').hidden = isSweet;
+  const rows = []; let total = 0; const quote = [];
+  if (isMeal) {
+    const t = F[type] * nb; total += t;
+    rows.push(['Formule ' + type.slice(1) + ' × ' + nb + ' pers.', eur(t)]);
+    if ($('d-assiette').checked) quote.push('Service à l\'assiette');
+  } else if (isBuffet) {
+    const tr = Math.ceil(nb / 10), t = tr * 250; total += t;
+    rows.push(['Buffet, ' + tr + ' tranche' + (tr > 1 ? 's' : '') + ' de 10 pers.', eur(t)]);
+    if ($('d-cooking').checked) quote.push('Cooking show');
+  } else {
+    quote.push('Douceurs en grande quantité');
+  }
+  if (!isSweet && $('d-dessert').checked) quote.push('Bar à desserts');
+  quote.forEach(q => rows.push([q, 'sur devis']));
+  if (total > 0) {
+    rows.push(['sep']);
+    rows.push(['Acompte (50 %)', eur(total / 2)]);
+  }
+  $('e-total').textContent = total > 0 ? (quote.length ? 'dès ' : '') + eur(total) : 'Sur devis';
+  $('e-lines').innerHTML = rows.map(r => r[0] === 'sep' ? '<div class="sep"></div>' : `<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('');
+  if (!isSweet && nb === 0) {
+    $('e-total').textContent = '—';
+    $('e-lines').innerHTML = '<dt style="grid-column:1/-1">Indiquez le nombre d\'invités pour voir l\'estimation.</dt>';
+  }
+  return {total, nb};
+}
+['d-type','d-nb','d-assiette','d-cooking','d-dessert'].forEach(id => $(id).addEventListener('input', estimate));
+$('devisForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const {total} = estimate();
+  const ok = $('devisOk');
+  ok.textContent = 'Maquette : sur le vrai site, Sweet Délices recevrait cette demande' + (total ? ' (estimation ' + eur(total) + ')' : '') + ' et vous recontacterait au ' + ($('d-tel').value || 'numéro indiqué') + '. Rien n\'a été envoyé.';
+  ok.hidden = false;
+});
+
+estimate();
+renderCart();
+</script>
+
+</body>
+</html>
