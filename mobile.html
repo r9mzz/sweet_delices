@@ -61,9 +61,10 @@ p{margin:0}
 .brand .mono{font-size:1.9rem}
 .brand b{font-family:var(--f-display);font-weight:400;font-size:1.1rem;display:block;line-height:1}
 .brand small{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-.icon-btn{position:relative;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center}
-.icon-btn svg{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:1.6}
-.badge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--rose);color:var(--on-olive);font-size:.7rem;font-weight:700;display:grid;place-items:center;font-variant-numeric:tabular-nums}
+.icon-btn{position:relative;flex-shrink:0;width:42px;height:42px;padding:0;margin:0;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:block;line-height:0;-webkit-appearance:none;appearance:none}
+/* Icône centrée de façon absolue : identique sur tous les navigateurs, badge affiché ou non */
+.icon-btn svg{position:absolute;left:50%;top:50%;width:20px;height:20px;transform:translate(-50%,-50%);stroke:var(--ink);fill:none;stroke-width:1.6;display:block;pointer-events:none}
+.badge{position:absolute;top:-5px;right:-5px;line-height:1;pointer-events:none;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--rose);color:var(--on-olive);font-size:.7rem;font-weight:700;display:grid;place-items:center;font-variant-numeric:tabular-nums}
 
 /* Écrans */
 .screens{flex:1;overflow:hidden;overflow:clip;position:relative;min-height:0}
@@ -152,6 +153,11 @@ p{margin:0}
 .formule p{font-size:.88rem;flex:1}
 .formule b{font-family:var(--f-display);font-weight:400;font-size:1.8rem;color:var(--olive)}
 .formule b small{font-family:var(--f-body);font-size:.75rem;color:var(--muted)}
+/* Photos du traiteur : chaque photo de l'affiche est affichée à sa taille d'origine (pas d'agrandissement, donc nette) */
+.photos{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:-18px;padding-inline:18px;scrollbar-width:none}
+.photos::-webkit-scrollbar{display:none}
+.ptile{--H:190;flex:0 0 auto;scroll-snap-align:start;height:calc(var(--H) * 1px);width:calc(var(--w) / var(--h) * var(--H) * 1px);border-radius:16px;background-image:var(--img);background-repeat:no-repeat;
+  background-size:calc(1080 / var(--h) * var(--H) * 1px) auto;background-position:calc(var(--x) / var(--h) * var(--H) * -1px) calc(var(--y) / var(--h) * var(--H) * -1px)}
 .strip{border-radius:18px;background-repeat:no-repeat;background-size:auto 100%;aspect-ratio:16/9}
 .strip.mariage{background-image:url("img/mariage.jpg");background-size:280% auto;background-position:62% 80%}
 .strip.buffet{background-image:url("img/buffet.jpg");background-size:250% auto;background-position:100% 76%}
@@ -330,7 +336,7 @@ input,select,textarea{min-width:0;max-width:100%}
       <div class="topbar">
         <div class="brand"><span class="mono" aria-hidden="true">SD</span><div><b>Sweet Délices</b><small>Traiteur</small></div></div>
         <button class="icon-btn" id="openCart" type="button" aria-label="Ouvrir le panier">
-          <svg viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M5.2 9h13.6l-1.1 10.4a1 1 0 0 1-1 .9H7.3a1 1 0 0 1-1-.9z"/><path d="M9 9V7a3 3 0 0 1 6 0v2"/></svg>
           <span class="badge" id="badge" hidden>0</span>
         </button>
       </div>
@@ -401,7 +407,7 @@ input,select,textarea{min-width:0;max-width:100%}
         <!-- Traiteur -->
         <section class="screen" id="s-traiteur" aria-label="Traiteur" hidden>
           <div class="sec-title"><span class="script">le traiteur</span><h2>Mariages &amp; réceptions</h2></div>
-          <div class="strip mariage" role="img" aria-label="Poulet aux olives et plats du repas de mariage"></div>
+          <div class="photos"><div class="ptile" role="img" aria-label="Entrées en présentoir : bricks, salades" style="--img:url('img/mariage.jpg');--x:0;--y:1192;--w:286;--h:382"></div><div class="ptile" role="img" aria-label="Poulet aux olives" style="--img:url('img/mariage.jpg');--x:290;--y:1192;--w:257;--h:382"></div><div class="ptile" role="img" aria-label="Plateau de fruits frais" style="--img:url('img/mariage.jpg');--x:552;--y:1192;--w:253;--h:382"></div><div class="ptile" role="img" aria-label="Méchoui et légumes" style="--img:url('img/mariage.jpg');--x:810;--y:1192;--w:270;--h:382"></div></div>
           <div class="row-head"><h2>Repas de mariage</h2></div>
           <p class="common"><strong>Entrée</strong>Salade composée avec nems, bricks, accras, pastels, pastilla poulet ou fruits de mer</p>
           <div class="swipe">
@@ -410,7 +416,7 @@ input,select,textarea{min-width:0;max-width:100%}
             <div class="formule"><span class="script">Formule 3</span><p>Tajine de veau aux pruneaux, pommes de terre sautées</p><b>42 € <small>/ pers.</small></b></div>
           </div>
           <p class="common"><strong>Dessert</strong>Plateau de fruits frais de saison<br><strong>Compris</strong>Eau plate et gazeuse, thé, café, pain et service</p>
-          <div class="strip buffet" role="img" aria-label="Bar à cocktails du buffet"></div>
+          <div class="photos"><div class="ptile" role="img" aria-label="Wraps du buffet" style="--img:url('img/buffet.jpg');--x:0;--y:970;--w:256;--h:450"></div><div class="ptile" role="img" aria-label="Verrines et mignardises" style="--img:url('img/buffet.jpg');--x:262;--y:970;--w:247;--h:450"></div><div class="ptile" role="img" aria-label="Pastels et sauce" style="--img:url('img/buffet.jpg');--x:515;--y:970;--w:259;--h:450"></div><div class="ptile" role="img" aria-label="Bar à cocktails" style="--img:url('img/buffet.jpg');--x:780;--y:970;--w:300;--h:450"></div></div>
           <div class="panel">
             <div class="row-head"><h2>Buffet apéritif</h2></div>
             <div class="kv">
