@@ -132,7 +132,7 @@ section{padding-block:80px}
 .stepper button{width:34px;height:34px;border:none;background:none;cursor:pointer;font-size:1.1rem;color:var(--olive)}
 .stepper output{min-width:24px;text-align:center;font-variant-numeric:tabular-nums;font-weight:600}
 .buy-row{display:flex;gap:10px;align-items:center}
-.added{font-size:.8rem;color:var(--olive);min-height:1.2em}
+.added{font-size:.8rem;color:var(--olive);min-height:1.6em;line-height:1.6}
 .card.feature{grid-column:span 2;flex-direction:row}
 .card.feature .ph{aspect-ratio:auto;flex:1.2;min-height:340px}
 .card.feature .card-body{flex:1;justify-content:center;padding:28px}
@@ -169,7 +169,9 @@ section{padding-block:80px}
 
 /* Panier */
 .drawer-bg{position:fixed;inset:0;background:rgb(30 25 20 / .45);z-index:40}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--surface);z-index:41;display:flex;flex-direction:column;padding:calc(20px + env(safe-area-inset-top,0px)) 22px calc(20px + env(safe-area-inset-bottom,0px));gap:16px;box-shadow:-20px 0 50px rgb(0 0 0 / .2);overflow-y:auto}
+body.lock{position:fixed;left:0;right:0;width:100%;overflow:hidden}
+.drawer-bg{touch-action:none}
+.drawer{overscroll-behavior:contain;position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--surface);z-index:41;display:flex;flex-direction:column;padding:calc(20px + env(safe-area-inset-top,0px)) 22px calc(20px + env(safe-area-inset-bottom,0px));gap:16px;box-shadow:-20px 0 50px rgb(0 0 0 / .2);overflow-y:auto}
 .drawer-head{display:flex;justify-content:space-between;align-items:center}
 .drawer-head h2{font-size:2rem}
 .x{border:1px solid var(--line);background:none;border-radius:999px;width:36px;height:36px;cursor:pointer}
@@ -235,7 +237,7 @@ textarea{min-height:86px;resize:vertical}
 .estimate{background:var(--olive);color:var(--on-olive);padding:30px;display:flex;flex-direction:column;gap:14px;min-width:0}
 .estimate .script{color:var(--on-olive);opacity:.85}
 .estimate .amount{font-family:var(--f-display);font-size:clamp(2.8rem,6vw,4rem);line-height:1;font-variant-numeric:tabular-nums}
-.estimate dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:6px 14px;font-size:.9rem;font-variant-numeric:tabular-nums}
+.estimate dl{min-height:104px;align-content:start;margin:0;display:grid;grid-template-columns:1fr auto;gap:6px 14px;font-size:.9rem;font-variant-numeric:tabular-nums}
 .estimate dt{opacity:.8}
 .estimate dd{margin:0;text-align:right;font-weight:600}
 .estimate .sep{grid-column:1/-1;height:1px;background:currentColor;opacity:.25}
@@ -268,6 +270,30 @@ input[type="date"]{-webkit-appearance:none;appearance:none;display:block;min-hei
 input,select,textarea{min-width:0;max-width:100%;font-size:16px}
 #devisForm > *,#orderForm > *{min-width:0}
 .estimate .amount{white-space:nowrap}
+/* Animations : arrivée sur le site, puis apparition douce des sections */
+@keyframes sdFadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes sdFadeDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+@keyframes sdScaleIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+@keyframes sdPop{0%{opacity:0;transform:translate(-62%,-50%) scale(.6)}100%{opacity:1;transform:translate(-62%,-50%) scale(1)}}
+@keyframes sdBump{50%{transform:scale(1.25)}}
+header{animation:sdFadeDown .6s cubic-bezier(.2,.8,.2,1) both}
+.hero-text > *{animation:sdFadeUp .7s cubic-bezier(.2,.8,.2,1) both}
+.hero-text > *:nth-child(1){animation-delay:.15s}
+.hero-text > *:nth-child(2){animation-delay:.3s}
+.hero-text > *:nth-child(3){animation-delay:.45s}
+.collage figure{animation:sdScaleIn .8s cubic-bezier(.2,.8,.2,1) both}
+.collage figure:nth-child(1){animation-delay:.2s}
+.collage figure:nth-child(2){animation-delay:.35s}
+.collage figure:nth-child(3){animation-delay:.5s}
+.seal{animation:sdPop .6s cubic-bezier(.3,1.4,.5,1) .8s both}
+.cart-count.bump{animation:sdBump .35s ease}
+.sec-head.enter > *{animation:sdFadeUp .6s cubic-bezier(.2,.8,.2,1) both}
+.sec-head.enter > *:nth-child(2){animation-delay:.08s}
+.sec-head.enter > *:nth-child(3){animation-delay:.16s}
+@supports (animation-timeline: view()){
+  .card,.menu-card,.quote-band,.contact li,.formule{animation:sdFadeUp linear both;animation-timeline:view();animation-range:entry 0% entry 35%}
+}
+@media (prefers-reduced-motion: reduce){header,.hero-text > *,.collage figure,.seal,.card,.menu-card,.quote-band,.contact li,.formule{animation:none!important}}
 </style>
 <style>img{max-width:100%}</style>
 </head>
@@ -415,7 +441,7 @@ input,select,textarea{min-width:0;max-width:100%;font-size:16px}
           </label>
           <label>Nombre d'invités<input id="d-nb" type="number" min="1" step="1" placeholder="Ex. 80"></label>
           <label>Date de l'événement<input id="d-date" type="date"></label>
-          <div class="full" style="display:flex;flex-direction:column;gap:10px;min-height:58px">
+          <div class="full" style="display:flex;flex-direction:column;gap:10px;min-height:78px">
           <label class="check" id="d-assiette-wrap"><input id="d-assiette" type="checkbox"> Service à l'assiette (sur devis)</label>
           <label class="check" id="d-cooking-wrap" hidden><input id="d-cooking" type="checkbox"> Ajouter un cooking show (sur devis)</label>
           <label class="check" id="d-dessert-wrap"><input id="d-dessert" type="checkbox"> Ajouter un bar à desserts (canettes, cookies)</label>
@@ -424,13 +450,13 @@ input,select,textarea{min-width:0;max-width:100%;font-size:16px}
           <label>Téléphone<input id="d-tel" type="tel" autocomplete="tel" placeholder="06 00 00 00 00"></label>
           <label class="full">Message<textarea id="d-msg" placeholder="Lieu, horaires, envies particulières…"></textarea></label>
           <div class="full"><button class="btn" type="submit">Envoyer ma demande de devis</button></div>
-          <p class="ok full" id="devisOk" hidden></p>
         </form>
         <aside class="estimate" aria-live="polite">
           <span class="script">estimation</span>
           <div class="amount" id="e-total">Sur devis</div>
           <dl id="e-lines"></dl>
           <p id="e-note">Montant indicatif établi à partir de nos tarifs. Le devis final est confirmé par Sweet Délices.</p>
+          <p class="ok" id="devisOk" hidden style="color:var(--olive);opacity:1"></p>
         </aside>
       </div>
     </div>
@@ -582,6 +608,7 @@ function addToCart(id){
   a.textContent = '✓ ' + qty + ' ajouté' + (qty > 1 ? 's' : '') + ' au panier';
   setTimeout(() => a.textContent = '', 2200);
   toast('Ajouté au panier : ' + item.name);
+  const cc = document.getElementById('cartCount'); cc.classList.remove('bump'); void cc.offsetWidth; cc.classList.add('bump');
 }
 
 function renderCart(){
@@ -599,8 +626,12 @@ function renderCart(){
 }
 
 const drawer = document.getElementById('drawer'), bg = document.getElementById('drawerBg');
-const openCart = () => { drawer.hidden = bg.hidden = false; document.getElementById('closeCart').focus(); };
-const closeCart = () => { drawer.hidden = bg.hidden = true; document.getElementById('openCart').focus(); };
+// Fige la page derrière le panier (overflow:hidden ne suffit pas sur iPhone)
+let lockedY = null;
+const lockPage = () => { if (lockedY !== null) return; lockedY = window.scrollY; document.body.style.top = -lockedY + 'px'; document.body.classList.add('lock'); };
+const unlockPage = () => { if (lockedY === null) return; document.body.classList.remove('lock'); document.body.style.top = ''; window.scrollTo({top: lockedY, behavior: 'instant'}); lockedY = null; };
+const openCart = () => { drawer.hidden = bg.hidden = false; lockPage(); document.getElementById('closeCart').focus({preventScroll:true}); };
+const closeCart = () => { drawer.hidden = bg.hidden = true; unlockPage(); document.getElementById('openCart').focus({preventScroll:true}); };
 document.getElementById('openCart').onclick = openCart;
 document.getElementById('closeCart').onclick = closeCart;
 bg.onclick = closeCart;
@@ -697,6 +728,13 @@ $('devisForm').addEventListener('submit', e => {
   ok.textContent = 'Maquette : sur le vrai site, Sweet Délices recevrait cette demande' + (total ? ' (estimation ' + eur(total) + ')' : '') + ' et vous recontacterait au ' + ($('d-tel').value || 'numéro indiqué') + '. Rien n\'a été envoyé.';
   ok.hidden = false;
 });
+
+// Quand on clique sur un lien du menu, le titre de la section arrive en douceur
+document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', () => {
+  const t = document.getElementById(a.getAttribute('href').slice(1));
+  const h = t && t.querySelector('.sec-head');
+  if (h) { h.classList.remove('enter'); void h.offsetWidth; h.classList.add('enter'); }
+}));
 
 estimate();
 renderCart();

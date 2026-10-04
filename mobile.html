@@ -139,7 +139,7 @@ p{margin:0}
 .stepper button{width:34px;height:34px;border:none;background:none;font-size:1.1rem;color:var(--olive)}
 .stepper output{min-width:22px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
 .stepper.sm button{width:28px;height:28px}
-.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 18px;border-radius:16px;background:var(--olive);color:var(--on-olive);border:1px solid var(--olive);font-weight:700;font-size:.92rem}
+.btn{white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 18px;border-radius:16px;background:var(--olive);color:var(--on-olive);border:1px solid var(--olive);font-weight:700;font-size:.92rem}
 .btn.ghost{background:transparent;color:var(--olive)}
 .btn:disabled{opacity:.45}
 .btn span{font-variant-numeric:tabular-nums}
@@ -261,6 +261,44 @@ input,select,textarea{min-width:0;max-width:100%}
   .app{min-height:100dvh}
   body.typing .tabbar,body.typing .cartbar{display:none}
 }
+/* Volets sur téléphone : le fond ne défile plus, le panier s'ouvre en plein écran */
+.sheet{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.scrim{touch-action:none}
+@media (max-width:520px){
+  #cSheet{top:0;max-height:none;height:100%;border-radius:0;padding-top:env(safe-area-inset-top,0px)}
+  #cSheet .grab{display:none}
+  body.lock{position:fixed;left:0;right:0;width:100%;overflow:hidden}
+}
+/* Animations : ouverture avec le monogramme, puis transitions douces entre les pages */
+@keyframes sdFadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes sdMonoIn{from{opacity:0;transform:scale(.6) rotate(-6deg)}to{opacity:1;transform:none}}
+@keyframes sdSplashOut{to{opacity:0;visibility:hidden}}
+@keyframes sdPop{50%{transform:scale(1.2)}}
+@keyframes sdLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.splash{position:absolute;inset:0;z-index:60;background:var(--bg);display:grid;place-items:center;text-align:center;pointer-events:none;animation:sdSplashOut .55s ease 1.25s forwards}
+.splash .mono{font-size:6rem;display:block;animation:sdMonoIn .9s cubic-bezier(.2,.8,.2,1) both}
+.splash b{display:block;font-family:var(--f-display);font-weight:400;font-size:1.7rem;margin-top:6px;animation:sdFadeUp .6s .4s both}
+.splash i{display:block;height:1px;width:120px;margin:12px auto;background:var(--rose);transform-origin:left;animation:sdLine .6s .6s both}
+.splash small{display:block;font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);animation:sdFadeUp .6s .75s both}
+.screen.enter > *{animation:sdFadeUp .45s cubic-bezier(.2,.8,.2,1) both}
+.screen.enter > *:nth-child(2){animation-delay:.05s}
+.screen.enter > *:nth-child(3){animation-delay:.1s}
+.screen.enter > *:nth-child(4){animation-delay:.15s}
+.screen.enter > *:nth-child(5){animation-delay:.2s}
+.screen.enter > *:nth-child(n+6){animation-delay:.25s}
+.screen.first > *{animation-delay:calc(1.3s + var(--d,0s))!important}
+.enter-grid > *{animation:sdFadeUp .4s cubic-bezier(.2,.8,.2,1) both}
+.enter-grid > *:nth-child(2){animation-delay:.04s}
+.enter-grid > *:nth-child(3){animation-delay:.08s}
+.enter-grid > *:nth-child(4){animation-delay:.12s}
+.enter-grid > *:nth-child(n+5){animation-delay:.16s}
+.tabbar [aria-selected="true"] svg{animation:sdPop .35s ease}
+.badge{transition:transform .2s}
+.badge.bump{animation:sdPop .35s ease}
+.tile,.carousel button,.cta,.btn{transition:transform .15s ease}
+.tile:active,.carousel button:active,.cta:active,.btn:active{transform:scale(.97)}
+@media (max-width:520px){.splash{position:fixed}}
+@media (prefers-reduced-motion: reduce){.splash{display:none}}
 </style>
 <style>img{max-width:100%}</style>
 </head>
@@ -284,6 +322,7 @@ input,select,textarea{min-width:0;max-width:100%}
   <div class="phone">
     <div class="app" id="app">
       <div class="notch" aria-hidden="true"></div>
+      <div class="splash" aria-hidden="true"><div><span class="mono">SD</span><b>Sweet Délices</b><i></i><small>Traiteur</small></div></div>
       <div class="topbar">
         <div class="brand"><span class="mono" aria-hidden="true">SD</span><div><b>Sweet Délices</b><small>Traiteur</small></div></div>
         <button class="icon-btn" id="openCart" type="button" aria-label="Ouvrir le panier">
@@ -294,7 +333,7 @@ input,select,textarea{min-width:0;max-width:100%}
 
       <div class="screens">
         <!-- Accueil -->
-        <section class="screen" id="s-accueil" aria-label="Accueil">
+        <section class="screen enter first" id="s-accueil" aria-label="Accueil">
           <div class="hero">
             <img src="img/cookie-redvelvet.jpg" alt="Cookie red velvet garni de framboises et d'une pensée">
             <div class="hero-cap"><span class="script">fait maison</span><h1>Pâtisserie &amp; traiteur</h1></div>
@@ -530,11 +569,19 @@ function go(tab, cat){
   document.querySelectorAll('.screen').forEach(s => s.hidden = s.id !== 's-' + tab);
   document.querySelectorAll('.tabbar [data-tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === tab));
   $('s-' + tab).scrollTop = 0; window.scrollTo(0, 0);
+  replay($('s-' + tab), 'enter');
   if (cat) setCat(cat);
 }
 function setCat(cat){
   document.querySelectorAll('.seg [data-cat]').forEach(b => b.setAttribute('aria-selected', b.dataset.cat === cat));
   ['canettes','cookies','box'].forEach(c => $('cat-' + c).hidden = c !== cat);
+  replay($('cat-' + cat), 'enter-grid');
+}
+// Rejoue une animation CSS en retirant puis remettant sa classe
+function replay(el, cls){
+  el.classList.remove(cls, 'first');
+  void el.offsetWidth;
+  el.classList.add(cls);
 }
 document.querySelector('.tabbar').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) go(b.dataset.tab); });
 document.querySelector('.seg').addEventListener('click', e => { const b = e.target.closest('[data-cat]'); if (b) setCat(b.dataset.cat); });
@@ -547,7 +594,7 @@ const total = () => cart.reduce((s, i) => s + i.qty * i.price, 0);
 function addItem(item, qty){
   const ex = cart.find(i => i.key === item.key);
   if (ex) ex.qty += qty; else cart.push({...item, qty});
-  save(); renderCart(); toast('Ajouté au panier : ' + item.name);
+  save(); renderCart(); toast('Ajouté au panier : ' + item.name); replay($('badge'), 'bump');
 }
 function renderCart(){
   const n = cart.reduce((s, i) => s + i.qty, 0), t = total();
@@ -570,16 +617,31 @@ $('cLines').addEventListener('click', e => {
 });
 
 // Volets
+// Sur iPhone, overflow:hidden ne bloque pas le fond : on fige la page à sa position et on la restaure à la fermeture
+let lockedY = null;
+function lockPage(){
+  if (lockedY !== null) return;
+  lockedY = window.scrollY;
+  document.body.style.top = -lockedY + 'px';
+  document.body.classList.add('lock');
+}
+function unlockPage(){
+  if (lockedY === null) return;
+  document.body.classList.remove('lock');
+  document.body.style.top = '';
+  window.scrollTo({top: lockedY, behavior: 'instant'});
+  lockedY = null;
+}
 let lastFocus = null;
 function openSheet(id){
   lastFocus = document.activeElement;
   document.querySelectorAll('.sheet.on').forEach(s => s.classList.remove('on'));
-  $(id).classList.add('on'); $('scrim').classList.add('on'); document.body.classList.add('lock');
+  $(id).classList.add('on'); $('scrim').classList.add('on'); lockPage();
   setTimeout(() => $(id).querySelector('[data-close]').focus({preventScroll:true}), 50);
 }
 function closeSheets(){
   document.querySelectorAll('.sheet.on').forEach(s => s.classList.remove('on'));
-  $('scrim').classList.remove('on'); document.body.classList.remove('lock');
+  $('scrim').classList.remove('on'); unlockPage();
   if (lastFocus) lastFocus.focus({preventScroll:true});
 }
 $('scrim').addEventListener('click', closeSheets);
