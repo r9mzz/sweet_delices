@@ -269,6 +269,10 @@ input,select,textarea{min-width:0;max-width:100%}
   #cSheet .grab{display:none}
   body.lock{position:fixed;left:0;right:0;width:100%;overflow:hidden}
 }
+/* Photos de canettes : on garde tout le cadre de la photo pour laisser de l'air autour de la canette */
+.ph.can,.carousel .ph{aspect-ratio:1206/1427}
+.ph.can img{object-position:50% 50%}
+.sheet .ph.can{aspect-ratio:1206/1427}
 /* Animations : ouverture avec le monogramme, puis transitions douces entre les pages */
 @keyframes sdFadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes sdMonoIn{from{opacity:0;transform:scale(.6) rotate(-6deg)}to{opacity:1;transform:none}}
@@ -553,7 +557,7 @@ const COOKIES = [
 const COOKIE_PRICE = 4.5, BOX_PRICE = 25, BOX_SIZE = 6;
 
 // Image d'un produit : photo entière ou recadrage d'une photo de box
-const ph = (p, cls='') => p.crop
+const ph = (p, cls='') => (cls = cls + (p.id && p.id[0] === 'c' ? ' can' : ''), p.crop)
   ? `<div class="ph crop ${cls}" role="img" aria-label="${p.name}" style="background-image:url('${p.img}');background-position:${p.crop[0]}% ${p.crop[1]}%"></div>`
   : `<div class="ph ${cls}"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>`;
 

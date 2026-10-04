@@ -270,6 +270,8 @@ input[type="date"]{-webkit-appearance:none;appearance:none;display:block;min-hei
 input,select,textarea{min-width:0;max-width:100%;font-size:16px}
 #devisForm > *,#orderForm > *{min-width:0}
 .estimate .amount{white-space:nowrap}
+/* Photos de canettes : tout le cadre, pour laisser de l'air autour */
+.card .ph.can{aspect-ratio:1206/1427}
 /* Animations : arrivée sur le site, puis apparition douce des sections */
 @keyframes sdFadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @keyframes sdFadeDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
@@ -545,7 +547,7 @@ function stepper(id){
   return `<div class="stepper"><button type="button" data-step="-1" data-for="${id}" aria-label="Moins">−</button><output id="q-${id}">1</output><button type="button" data-step="1" data-for="${id}" aria-label="Plus">+</button></div>`;
 }
 function canetteCard(p){
-  return `<article class="card"><div class="ph"><img src="${p.img}" alt="Canette cake ${p.name}" loading="lazy">${p.tag?`<span class="tag">${p.tag}</span>`:''}</div>
+  return `<article class="card"><div class="ph can"><img src="${p.img}" alt="Canette cake ${p.name}" loading="lazy">${p.tag?`<span class="tag">${p.tag}</span>`:''}</div>
   <div class="card-body"><h3>${p.name}</h3><p>${p.desc}</p>
   <div class="sizes" role="group" aria-label="Format">
     <button type="button" class="size" data-size="250" data-for="${p.id}" aria-pressed="true"><b>4,50 €</b>250 ml</button>
