@@ -74,7 +74,7 @@ p{margin:0}
 
 /* Barre d'onglets */
 .tabbar{display:grid;grid-template-columns:repeat(5,1fr);background:var(--surface);border-top:1px solid var(--line);padding:8px 6px 22px;flex-shrink:0;z-index:5}
-.tabbar button{border:none;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.66rem;font-weight:600;color:var(--muted);padding:4px 0}
+.tabbar button{border:none;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:.66rem;font-weight:600;line-height:1.2;color:var(--muted);padding:5px 0 4px}
 .tabbar svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.6}
 .tabbar button[aria-selected="true"]{color:var(--olive)}
 
@@ -279,6 +279,9 @@ input,select,textarea{min-width:0;max-width:100%}
 .ph.can,.carousel .ph{aspect-ratio:1206/1427}
 .ph.can img{object-position:50% 50%}
 .sheet .ph.can{aspect-ratio:1206/1427}
+/* Icônes des boutons (−, +, ✕) en dessin vectoriel : centrées exactement, quelle que soit la police */
+.ico{width:14px;height:14px;display:block;margin:auto;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;pointer-events:none}
+.stepper button,.close,.x{display:inline-flex;align-items:center;justify-content:center;padding:0;line-height:0}
 /* Animations : ouverture avec le monogramme, puis transitions douces entre les pages */
 @keyframes sdFadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes sdMonoIn{from{opacity:0;transform:scale(.6) rotate(-6deg)}to{opacity:1;transform:none}}
@@ -382,7 +385,7 @@ input,select,textarea{min-width:0;max-width:100%}
               <div class="b">
                 <h3>Box assortie</h3>
                 <p class="small">6 cookies choisis par Sweet Délices parmi les parfums du moment.</p>
-                <div class="buyrow"><div class="stepper"><button type="button" data-q="box" data-d="-1" aria-label="Moins">−</button><output id="q-box">1</output><button type="button" data-q="box" data-d="1" aria-label="Plus">+</button></div><button class="btn" type="button" id="addBox">Ajouter · <span id="boxPrice">25 €</span></button></div>
+                <div class="buyrow"><div class="stepper"><button type="button" data-q="box" data-d="-1" aria-label="Moins"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg></button><output id="q-box">1</output><button type="button" data-q="box" data-d="1" aria-label="Plus"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg></button></div><button class="btn" type="button" id="addBox">Ajouter · <span id="boxPrice">25 €</span></button></div>
               </div>
             </div>
             <div class="box-card">
@@ -495,14 +498,14 @@ input,select,textarea{min-width:0;max-width:100%}
         <div class="grab"></div>
         <div class="in">
           <div class="ph" id="pPh"></div>
-          <div class="sheet-head"><h2 id="pName"></h2><button class="close" type="button" data-close aria-label="Fermer">✕</button></div>
+          <div class="sheet-head"><h2 id="pName"></h2><button class="close" type="button" data-close aria-label="Fermer"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>
           <p class="small" id="pDesc"></p>
           <div class="sizes" id="pSizes" role="group" aria-label="Format">
             <button type="button" data-size="250" aria-pressed="true"><b>4,50 €</b>250 ml</button>
             <button type="button" data-size="330" aria-pressed="false"><b>6 €</b>330 ml</button>
           </div>
           <div class="buyrow">
-            <div class="stepper"><button type="button" data-q="p" data-d="-1" aria-label="Moins">−</button><output id="q-p">1</output><button type="button" data-q="p" data-d="1" aria-label="Plus">+</button></div>
+            <div class="stepper"><button type="button" data-q="p" data-d="-1" aria-label="Moins"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg></button><output id="q-p">1</output><button type="button" data-q="p" data-d="1" aria-label="Plus"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg></button></div>
             <button class="btn" type="button" id="pAdd">Ajouter · <span id="pPrice"></span></button>
           </div>
         </div>
@@ -512,7 +515,7 @@ input,select,textarea{min-width:0;max-width:100%}
       <div class="sheet" id="cSheet" role="dialog" aria-modal="true" aria-labelledby="cTitle">
         <div class="grab"></div>
         <div class="in">
-          <div class="sheet-head"><h2 id="cTitle">Votre panier</h2><button class="close" type="button" data-close aria-label="Fermer">✕</button></div>
+          <div class="sheet-head"><h2 id="cTitle">Votre panier</h2><button class="close" type="button" data-close aria-label="Fermer"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>
           <div class="empty" id="cEmpty"><span class="mono">SD</span>Votre panier est vide.</div>
           <ul class="lines" id="cLines"></ul>
           <div class="totals" id="cTotals">
@@ -612,7 +615,7 @@ function renderCart(){
   $('cartbar').hidden = n === 0;
   $('cbCount').textContent = 'Voir le panier · ' + n + ' article' + (n > 1 ? 's' : '');
   $('cbTotal').textContent = eur(t);
-  $('cLines').innerHTML = cart.map(i => `<li class="line">${ph({img:i.img, crop:i.crop, name:''})}<div><b>${i.name}</b><small>${i.detail}</small><div class="stepper sm" style="margin-top:4px"><button type="button" data-line="${i.key}" data-d="-1" aria-label="Retirer un">−</button><output>${i.qty}</output><button type="button" data-line="${i.key}" data-d="1" aria-label="Ajouter un">+</button></div></div><span class="lp">${eur(i.qty * i.price)}</span></li>`).join('');
+  $('cLines').innerHTML = cart.map(i => `<li class="line">${ph({img:i.img, crop:i.crop, name:''})}<div><b>${i.name}</b><small>${i.detail}</small><div class="stepper sm" style="margin-top:4px"><button type="button" data-line="${i.key}" data-d="-1" aria-label="Retirer un"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg></button><output>${i.qty}</output><button type="button" data-line="${i.key}" data-d="1" aria-label="Ajouter un"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg></button></div></div><span class="lp">${eur(i.qty * i.price)}</span></li>`).join('');
   $('cEmpty').hidden = cart.length > 0;
   $('cTotals').hidden = $('orderForm').hidden = cart.length === 0;
   $('tTotal').textContent = eur(t);
@@ -707,7 +710,7 @@ document.addEventListener('click', e => {
 
 // Box à composer
 const pick = {};
-$('builder').innerHTML = COOKIES.map(c => `<li><span>${c.name}</span><div class="stepper sm"><button type="button" data-pick="${c.id}" data-d="-1" aria-label="Retirer ${c.name}">−</button><output id="pk-${c.id}">0</output><button type="button" data-pick="${c.id}" data-d="1" aria-label="Ajouter ${c.name}">+</button></div></li>`).join('');
+$('builder').innerHTML = COOKIES.map(c => `<li><span>${c.name}</span><div class="stepper sm"><button type="button" data-pick="${c.id}" data-d="-1" aria-label="Retirer ${c.name}"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg></button><output id="pk-${c.id}">0</output><button type="button" data-pick="${c.id}" data-d="1" aria-label="Ajouter ${c.name}"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg></button></div></li>`).join('');
 const picked = () => Object.values(pick).reduce((s, v) => s + v, 0);
 function renderBuilder(){
   const n = picked();

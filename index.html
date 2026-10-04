@@ -67,7 +67,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:co
 .btn.small{padding:8px 16px;font-size:.85rem}
 .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
 .cart-btn{position:relative;background:var(--surface);color:var(--ink);border-color:var(--line)}
-.cart-count{min-width:22px;height:22px;border-radius:999px;background:var(--rose);color:var(--on-olive);font-size:.75rem;display:inline-grid;place-items:center;padding:0 6px;font-variant-numeric:tabular-nums}
+.cart-count{line-height:1;min-width:22px;height:22px;border-radius:999px;background:var(--rose);color:var(--on-olive);font-size:.75rem;display:inline-grid;place-items:center;padding:0 6px;font-variant-numeric:tabular-nums}
 @media (max-width:860px){.nav ul{display:none}}
 @media (max-width:420px){.nav-actions .ghost{display:none}}
 
@@ -86,7 +86,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:co
 .collage .tall{grid-row:span 2;border-radius:220px 220px 22px 22px}
 .collage .tall img{object-position:50% 40%}
 .seal{position:absolute;left:50%;top:50%;transform:translate(-62%,-50%);width:118px;height:118px;border-radius:50%;background:var(--surface);display:grid;place-items:center;text-align:center;box-shadow:var(--shadow);border:1px solid var(--line)}
-.seal .mono{font-size:2.6rem;margin:0}
+.seal .mono{font-size:2.6rem;margin:0;display:block;transform:translateY(3px)}
 .seal small{display:block;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:2px}
 @media (max-width:860px){.hero-grid{grid-template-columns:1fr}.seal{width:96px;height:96px}}
 
@@ -272,6 +272,9 @@ input,select,textarea{min-width:0;max-width:100%;font-size:16px}
 .estimate .amount{white-space:nowrap}
 /* Photos de canettes : tout le cadre, pour laisser de l'air autour */
 .card .ph.can{aspect-ratio:1206/1427}
+/* Icônes des boutons (−, +, ✕) en dessin vectoriel : centrées exactement, quelle que soit la police */
+.ico{width:14px;height:14px;display:block;margin:auto;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;pointer-events:none}
+.stepper button,.close,.x{display:inline-flex;align-items:center;justify-content:center;padding:0;line-height:0}
 /* Animations : arrivée sur le site, puis apparition douce des sections */
 @keyframes sdFadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @keyframes sdFadeDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
@@ -360,7 +363,7 @@ header{animation:sdFadeDown .6s cubic-bezier(.2,.8,.2,1) both}
           <div class="ph"><img src="img/cookies-box2.jpg" alt="Box de six cookies garnis assortis" loading="lazy"><span class="tag">Box assortie</span></div>
           <div class="card-body"><h3>Box assortie</h3><p>6 cookies choisis par Sweet Délices parmi les parfums du moment, présentés dans leur boîte.</p>
             <div class="price-big">25 €</div>
-            <div class="buy"><div class="stepper"><button type="button" data-step="-1" data-for="k-box" aria-label="Moins">−</button><output id="q-k-box">1</output><button type="button" data-step="1" data-for="k-box" aria-label="Plus">+</button></div><button class="btn small" type="button" data-add="k-box">Ajouter</button></div>
+            <div class="buy"><div class="stepper"><button type="button" data-step="-1" data-for="k-box" aria-label="Moins"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg></button><output id="q-k-box">1</output><button type="button" data-step="1" data-for="k-box" aria-label="Plus"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg></button></div><button class="btn small" type="button" data-add="k-box">Ajouter</button></div>
             <div class="added" id="a-k-box"></div></div>
         </article>
         <article class="card box-card">
@@ -494,7 +497,7 @@ header{animation:sdFadeDown .6s cubic-bezier(.2,.8,.2,1) both}
 
 <div class="drawer-bg" id="drawerBg" hidden></div>
 <aside class="drawer" id="drawer" hidden aria-label="Panier">
-  <div class="drawer-head"><h2>Votre panier</h2><button class="x" id="closeCart" type="button" aria-label="Fermer le panier">✕</button></div>
+  <div class="drawer-head"><h2>Votre panier</h2><button class="x" id="closeCart" type="button" aria-label="Fermer le panier"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>
   <ul class="lines" id="lines"></ul>
   <div class="empty" id="empty"><span class="mono">SD</span>Votre panier est vide. Ajoutez une canette ou un cookie depuis la carte.</div>
   <div class="totals" id="totals">
@@ -544,7 +547,7 @@ try { cart = JSON.parse(localStorage.getItem('sd-cart') || '[]'); } catch (_) { 
 const save = () => { try { localStorage.setItem('sd-cart', JSON.stringify(cart)); } catch (_) {} };
 
 function stepper(id){
-  return `<div class="stepper"><button type="button" data-step="-1" data-for="${id}" aria-label="Moins">−</button><output id="q-${id}">1</output><button type="button" data-step="1" data-for="${id}" aria-label="Plus">+</button></div>`;
+  return `<div class="stepper"><button type="button" data-step="-1" data-for="${id}" aria-label="Moins"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg></button><output id="q-${id}">1</output><button type="button" data-step="1" data-for="${id}" aria-label="Plus"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg></button></div>`;
 }
 function canetteCard(p){
   return `<article class="card"><div class="ph can"><img src="${p.img}" alt="Canette cake ${p.name}" loading="lazy">${p.tag?`<span class="tag">${p.tag}</span>`:''}</div>
@@ -617,7 +620,7 @@ function renderCart(){
   const n = cart.reduce((s, i) => s + i.qty, 0);
   const total = cart.reduce((s, i) => s + i.qty * i.price, 0);
   document.getElementById('cartCount').textContent = n;
-  document.getElementById('lines').innerHTML = cart.map(i => `<li class="line"><img src="${i.img}" alt=""><div><b>${i.name}</b><small>${i.detail} · ${eur(i.price)}</small><div class="stepper" style="margin-top:4px"><button type="button" data-line="${i.key}" data-d="-1" aria-label="Retirer un">−</button><output>${i.qty}</output><button type="button" data-line="${i.key}" data-d="1" aria-label="Ajouter un">+</button></div></div><span class="lp">${eur(i.qty * i.price)}</span></li>`).join('');
+  document.getElementById('lines').innerHTML = cart.map(i => `<li class="line"><img src="${i.img}" alt=""><div><b>${i.name}</b><small>${i.detail} · ${eur(i.price)}</small><div class="stepper" style="margin-top:4px"><button type="button" data-line="${i.key}" data-d="-1" aria-label="Retirer un"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg></button><output>${i.qty}</output><button type="button" data-line="${i.key}" data-d="1" aria-label="Ajouter un"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg></button></div></div><span class="lp">${eur(i.qty * i.price)}</span></li>`).join('');
   document.getElementById('empty').hidden = cart.length > 0;
   document.getElementById('totals').hidden = cart.length === 0;
   document.getElementById('t-sub').textContent = eur(total);
@@ -656,7 +659,7 @@ function toast(msg){
 
 // Box à composer
 const pick = {};
-document.getElementById('builder').innerHTML = COOKIES.map(c => `<li><span>${c.name}</span><div class="stepper"><button type="button" data-pick="${c.id}" data-d="-1" aria-label="Retirer ${c.name}">−</button><output id="p-${c.id}">0</output><button type="button" data-pick="${c.id}" data-d="1" aria-label="Ajouter ${c.name}">+</button></div></li>`).join('');
+document.getElementById('builder').innerHTML = COOKIES.map(c => `<li><span>${c.name}</span><div class="stepper"><button type="button" data-pick="${c.id}" data-d="-1" aria-label="Retirer ${c.name}"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg></button><output id="p-${c.id}">0</output><button type="button" data-pick="${c.id}" data-d="1" aria-label="Ajouter ${c.name}"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg></button></div></li>`).join('');
 function renderBuilder(){
   const n = Object.values(pick).reduce((s, v) => s + v, 0);
   COOKIES.forEach(c => document.getElementById('p-' + c.id).textContent = pick[c.id] || 0);
