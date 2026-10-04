@@ -763,9 +763,16 @@ $('devisForm').addEventListener('submit', e => {
 let tt;
 function toast(m){ const t = $('toast'); t.textContent = m; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => t.hidden = true, 1800); }
 
-// Pendant la saisie au clavier, on masque les barres fixes (sinon elles sautent au-dessus du clavier sur iPhone)
-document.addEventListener('focusin', e => { if (e.target.matches('input:not([type=radio]):not([type=checkbox]),textarea,select')) document.body.classList.add('typing'); });
-document.addEventListener('focusout', () => setTimeout(() => { if (!document.activeElement || !document.activeElement.matches('input,textarea,select')) document.body.classList.remove('typing'); }, 50));
+// Quand le clavier est ouvert, on masque les barres fixes (sinon elles sautent au-dessus du clavier sur iPhone)
+const isField = el => el && el.matches('input:not([type=radio]):not([type=checkbox]),textarea,select');
+function checkKeyboard(){
+  const vv = window.visualViewport;
+  const open = !!vv && vv.height < window.innerHeight - 120 && isField(document.activeElement);
+  document.body.classList.toggle('typing', open);
+}
+document.addEventListener('focusin', () => setTimeout(checkKeyboard, 300));
+document.addEventListener('focusout', () => setTimeout(checkKeyboard, 100));
+if (window.visualViewport) window.visualViewport.addEventListener('resize', checkKeyboard);
 
 renderBuilder(); renderCart();
 </script>
