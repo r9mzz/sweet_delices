@@ -10,3 +10,5 @@ Site de Sweet Délices, pâtisserie et traiteur. Les commandes et demandes de de
 
 - Site : https://r9mzz.github.io/sweet_delices/
 - Mobile : https://r9mzz.github.io/sweet_delices/mobile.html
+
+Pour un nom de domaine : ajouter un fichier CNAME à la racine et remplacer r9mzz.github.io/sweet_delices/ dans les balises og des deux pages.
