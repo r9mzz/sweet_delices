@@ -261,8 +261,10 @@ textarea{min-height:86px;resize:vertical}
 .ok{font-size:.88rem;color:var(--olive);background:var(--olive-soft);border-radius:12px;padding:12px 14px}
 
 /* Contact */
-.contact{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-@media (max-width:860px){.contact{grid-template-columns:repeat(2,1fr)}}
+.contact{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.contact li{grid-column:span 2}
+.contact li:nth-child(n+4){grid-column:span 3}
+@media (max-width:860px){.contact{grid-template-columns:repeat(2,1fr)}.contact li,.contact li:nth-child(n+4){grid-column:auto}.contact li:last-child{grid-column:1/-1}}
 @media (max-width:420px){.contact{grid-template-columns:1fr}}
 .contact li{list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px;align-items:flex-start;min-width:0}
 .contact{padding:0;margin:0}
@@ -494,6 +496,7 @@ header{animation:sdFadeDown .6s cubic-bezier(.2,.8,.2,1) both}
         <li><span>Snapchat</span><b>sweetdelices24</b><button class="copy" type="button" data-copy="sweetdelices24">Copier</button></li>
         <li><span>TikTok</span><b>salamataniang350</b><button class="copy" type="button" data-copy="salamataniang350">Copier</button></li>
         <li><span>Téléphone</span><b>06 26 68 65 98</b><button class="copy" type="button" data-copy="0626686598">Copier</button></li>
+        <li><span>E-mail</span><b>salamataniang@<wbr>gmail.com</b><a class="copy" href="mailto:salamataniang@gmail.com">Écrire</a></li>
       </ul>
     </div>
   </section>
@@ -504,6 +507,7 @@ header{animation:sdFadeDown .6s cubic-bezier(.2,.8,.2,1) both}
     <div class="foot-brand"><span class="mono" aria-hidden="true">SD</span><span>Sweet Délices Traiteur<br><small>Acompte de 50 % à la commande · Devis sur demande</small></span></div>
     <ul class="foot-contact" aria-label="Coordonnées">
       <li><span>Téléphone</span><b>06 26 68 65 98</b></li>
+      <li><span>E-mail</span><a href="mailto:salamataniang@gmail.com"><b>salamataniang@<wbr>gmail.com</b></a></li>
       <li><span>Instagram</span><a href="https://www.instagram.com/sweet_delices/" target="_blank" rel="noopener"><b>@sweet_delices</b></a></li>
       <li><span>Snapchat</span><b>sweetdelices24</b></li>
       <li><span>TikTok</span><b>salamataniang350</b></li>
