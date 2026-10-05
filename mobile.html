@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
-<script>(function(){try{if(/[?&]v=app/.test(location.search))return;if(!matchMedia('(max-width: 760px), (pointer: coarse) and (max-width: 1024px)').matches)location.replace('./'+location.hash);}catch(e){}})();</script>
+<script>(function(){try{if(/[?&]v=app/.test(location.search))return;if(!matchMedia('(max-width: 760px)').matches)location.replace('./'+location.hash);}catch(e){}})();</script>
 <title>Sweet Délices Mobile</title>
 <meta name="description" content="Sweet Délices, pâtisserie et traiteur : canette cakes, box cookies, repas de mariage et buffets.">
 
@@ -63,7 +63,7 @@ p{margin:0}
 .phone{width:390px;max-width:100%;height:844px;border-radius:54px;background:var(--frame);padding:12px;box-shadow:0 40px 80px -30px rgb(0 0 0 / .5);flex-shrink:0}
 .app{position:relative;width:100%;height:100%;border-radius:42px;overflow:hidden;overflow:clip;background:var(--bg);display:flex;flex-direction:column}
 .notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:110px;height:30px;border-radius:20px;background:var(--frame);z-index:30}
-@media (max-width:520px){
+@media (max-width:520px), (pointer:coarse) and (max-height:520px){
   .stage{padding:0;display:block;height:100%}
   .intro,.notch{display:none}
   .phone{width:100%;height:100%;border-radius:0;padding:0;box-shadow:none;background:none}
@@ -96,9 +96,11 @@ p{margin:0}
 .tabbar button[aria-selected="true"]{color:var(--olive)}
 
 /* Barre panier flottante */
+.cartbar span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#cbTotal{flex-shrink:0}
 .cartbar{position:absolute;left:14px;right:14px;bottom:calc(84px);z-index:6;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--olive);color:var(--on-olive);border:none;border-radius:18px;padding:13px 18px;box-shadow:var(--shadow);font-weight:600;font-size:.9rem}
 .cartbar span:last-child{font-variant-numeric:tabular-nums}
-@media (max-width:520px){.cartbar{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
+@media (max-width:520px), (pointer:coarse) and (max-height:520px){.cartbar{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
 
 /* Accueil */
 .hero{position:relative;border-radius:180px 180px 26px 26px;overflow:hidden;aspect-ratio:4/4.4;background:var(--bg-alt)}
@@ -115,7 +117,7 @@ p{margin:0}
 .row-head{display:flex;align-items:baseline;justify-content:space-between}
 .row-head h2{font-size:1.6rem}
 .row-head button{border:none;background:none;color:var(--olive);font-weight:600;font-size:.82rem}
-.carousel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:-18px;padding-inline:18px;scrollbar-width:none}
+.carousel{display:flex;scroll-padding-inline:18px;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:-18px;padding-inline:18px;scrollbar-width:none}
 .carousel::-webkit-scrollbar{display:none}
 .carousel button{flex:0 0 150px;scroll-snap-align:start;border:none;background:var(--surface);border-radius:20px;overflow:hidden;padding:0;text-align:left;box-shadow:var(--shadow)}
 .carousel .ph{aspect-ratio:3/4}
@@ -163,7 +165,7 @@ p{margin:0}
 .btn span{font-variant-numeric:tabular-nums}
 
 /* Traiteur */
-.swipe{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:-18px;padding-inline:18px;scrollbar-width:none}
+.swipe{display:flex;scroll-padding-inline:18px;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:-18px;padding-inline:18px;scrollbar-width:none}
 .swipe::-webkit-scrollbar{display:none}
 .formule{flex:0 0 78%;scroll-snap-align:center;background:var(--surface);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow);border:1px solid var(--line)}
 .formule .script{font-size:1.9rem}
@@ -171,7 +173,7 @@ p{margin:0}
 .formule b{font-family:var(--f-display);font-weight:400;font-size:1.8rem;color:var(--olive)}
 .formule b small{font-family:var(--f-body);font-size:.75rem;color:var(--muted)}
 /* Photos du traiteur : chaque photo de l'affiche est affichée à sa taille d'origine (pas d'agrandissement, donc nette) */
-.photos{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:-18px;padding-inline:18px;scrollbar-width:none}
+.photos{display:flex;scroll-padding-inline:18px;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:-18px;padding-inline:18px;scrollbar-width:none}
 .photos::-webkit-scrollbar{display:none}
 .ptile{--H:190;flex:0 0 auto;scroll-snap-align:start;height:calc(var(--H) * 1px);width:calc(var(--w) / var(--h) * var(--H) * 1px);border-radius:16px;background-image:var(--img);background-repeat:no-repeat;
   background-size:calc(1080 / var(--h) * var(--H) * 1px) auto;background-position:calc(var(--x) / var(--h) * var(--H) * -1px) calc(var(--y) / var(--h) * var(--H) * -1px)}
@@ -180,7 +182,7 @@ p{margin:0}
 .strip.buffet{background-image:url("img/buffet.jpg");background-size:250% auto;background-position:100% 76%}
 .panel{background:var(--surface);border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow)}
 .kv{display:flex;flex-direction:column}
-.kv div{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:.9rem;font-variant-numeric:tabular-nums}
+.kv div{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--line);font-size:.9rem;font-variant-numeric:tabular-nums}
 .kv div:last-child{border-bottom:none}
 .kv div b{font-family:var(--f-display);font-weight:400;font-size:1.2rem;color:var(--olive)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
@@ -192,7 +194,7 @@ p{margin:0}
 
 /* Formulaires */
 .field{display:flex;flex-direction:column;gap:5px;font-size:.78rem;color:var(--muted);font-weight:600}
-input,select,textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;width:100%}
+input,select,textarea{font:inherit;font-weight:500;font-size:16px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;width:100%}
 textarea{min-height:80px;resize:vertical}
 .choice{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .choice label{position:relative;border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:2px;background:var(--surface);font-size:.85rem;font-weight:600;cursor:pointer}
@@ -218,6 +220,8 @@ textarea{min-height:80px;resize:vertical}
 .quote-card p{font-size:.85rem;color:var(--muted);max-width:28ch}
 .quote-card .btn{margin-top:6px}
 .ok{font-size:.85rem;color:var(--olive);background:var(--olive-soft);border-radius:14px;padding:12px 14px}
+.ok.err{color:#7a4636;background:#f6e3dc}
+::placeholder{font-weight:400;color:#a49b8e}
 
 /* Contact */
 .contact{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
@@ -235,7 +239,7 @@ textarea{min-height:80px;resize:vertical}
 .sheet.on{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
 .grab{width:40px;height:5px;border-radius:9px;background:var(--line);margin:10px auto 0;flex-shrink:0}
 .sheet .in{padding:14px 18px 26px;display:flex;flex-direction:column;gap:14px}
-@media (max-width:520px){.sheet .in{padding-bottom:calc(26px + env(safe-area-inset-bottom,0px))}}
+@media (max-width:520px), (pointer:coarse) and (max-height:520px){.sheet .in{padding-bottom:calc(26px + env(safe-area-inset-bottom,0px))}}
 .sheet .ph{border-radius:22px;aspect-ratio:1/1}
 .sheet-head{display:flex;justify-content:space-between;align-items:center}
 .sheet-head h2{font-size:1.9rem}
@@ -261,7 +265,7 @@ textarea{min-height:80px;resize:vertical}
 .empty .mono{font-size:3rem;display:block}
 .toast{position:absolute;left:50%;top:100px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:999px;font-size:.82rem;z-index:40;white-space:nowrap;max-width:90%;overflow:hidden;text-overflow:ellipsis}
 /* Sur un vrai téléphone : défilement natif de la page (plus fluide que des zones défilantes imbriquées) */
-@media (max-width:520px){
+@media (max-width:520px), (pointer:coarse) and (max-height:520px){
   html,body{height:auto}
   .stage,.phone{height:auto;min-height:100%}
   .app{height:auto;min-height:100vh;overflow:visible;display:block}
@@ -272,7 +276,7 @@ textarea{min-height:80px;resize:vertical}
   .cartbar{position:fixed;z-index:16}
   .scrim,.sheet,.toast{position:fixed}
   .scrim{z-index:30}.sheet{z-index:31}.toast{z-index:40}
-  .seg{top:calc(66px + env(safe-area-inset-top,0px))}
+  .seg{top:calc(63px + env(safe-area-inset-top,0px));box-shadow:0 -8px 0 var(--bg),-10px -8px 0 var(--bg),10px -8px 0 var(--bg)}
   body.lock{overflow:hidden}
 }
 /* Stabilité sur iPhone : pas de glissement horizontal, champ date à la bonne largeur, barres cachées pendant la saisie */
@@ -282,7 +286,7 @@ input[type="date"]::-webkit-date-and-time-value{text-align:left}
 input,select,textarea{min-width:0;max-width:100%}
 .field,.choice > *,#devisForm > *,#orderForm > *{min-width:0}
 .estimate .amount{white-space:nowrap}
-@media (max-width:520px){
+@media (max-width:520px), (pointer:coarse) and (max-height:520px){
   body{touch-action:pan-y}
   .app{min-height:100dvh}
   body.typing .tabbar,body.typing .cartbar{display:none}
@@ -290,7 +294,7 @@ input,select,textarea{min-width:0;max-width:100%}
 /* Volets sur téléphone : le fond ne défile plus, le panier s'ouvre en plein écran */
 .sheet{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .scrim{touch-action:none}
-@media (max-width:520px){
+@media (max-width:520px), (pointer:coarse) and (max-height:520px){
   #cSheet{top:0;max-height:none;height:100%;border-radius:0;padding-top:env(safe-area-inset-top,0px)}
   #cSheet .grab{display:none}
   body.lock{position:fixed;left:0;right:0;width:100%;overflow:hidden}
@@ -299,6 +303,8 @@ input,select,textarea{min-width:0;max-width:100%}
 .ph.can,.carousel .ph{aspect-ratio:1206/1427}
 .ph.can img{object-position:50% 50%}
 .sheet .ph.can{aspect-ratio:1206/1427}
+.sheet .ph,.sheet .ph.can{max-height:36vh;aspect-ratio:auto;height:36vh}
+.sheet .ph img{object-fit:cover;width:100%;height:100%}
 /* Icônes des boutons (−, +, ✕) en dessin vectoriel : centrées exactement, quelle que soit la police */
 .ico{width:14px;height:14px;display:block;margin:auto;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;pointer-events:none}
 .stepper button,.close,.x{display:inline-flex;align-items:center;justify-content:center;padding:0;line-height:0}
@@ -330,7 +336,7 @@ input,select,textarea{min-width:0;max-width:100%}
 .badge.bump{animation:sdPop .35s ease}
 .tile,.carousel button,.cta,.btn{transition:transform .15s ease}
 .tile:active,.carousel button:active,.cta:active,.btn:active{transform:scale(.97)}
-@media (max-width:520px){.splash{position:fixed}}
+@media (max-width:520px), (pointer:coarse) and (max-height:520px){.splash{position:fixed}}
 @media (prefers-reduced-motion: reduce){.splash{display:none}}
 </style>
 <style>img{max-width:100%}</style>
@@ -339,19 +345,7 @@ input,select,textarea{min-width:0;max-width:100%}
 
 
 <div class="stage">
-  <div class="intro">
-    <span class="script" style="font-size:2rem">version mobile</span>
-    <h1>Sweet Délices</h1>
-    <p>La version téléphone du site, pensée comme une appli. Tout est cliquable dans l'écran.</p>
-    <ul>
-      <li>Onglets en bas de l'écran</li>
-      <li>Fiche produit qui monte depuis le bas</li>
-      <li>Barre panier toujours visible</li>
-      <li>Devis calculé en direct</li>
-    </ul>
-    <p>Sur un téléphone, le site s'affiche en plein écran.</p>
-  </div>
-
+  
   <div class="phone">
     <div class="app" id="app">
       <div class="notch" aria-hidden="true"></div>
@@ -484,7 +478,7 @@ input,select,textarea{min-width:0;max-width:100%}
             <label class="field">Téléphone<input id="d-tel" type="tel" autocomplete="tel" placeholder="06 00 00 00 00"></label>
             <label class="field">Message<textarea id="d-msg" placeholder="Lieu, horaires, envies particulières…"></textarea></label>
             <button class="btn" type="submit">Envoyer ma demande</button>
-            <p class="ok" id="devisOk" hidden></p>
+            <p class="ok" id="devisOk" hidden role="status" aria-live="polite"></p>
           </form>
         </section>
 
@@ -492,11 +486,11 @@ input,select,textarea{min-width:0;max-width:100%}
         <section class="screen" id="s-contact" aria-label="Contact" hidden>
           <div class="sec-title"><span class="script">contactez-nous</span><h2>Une question ?</h2></div>
           <ul class="contact">
-            <li><div><span>Téléphone</span><b>06 26 68 65 98</b></div><button class="pill" type="button" data-copy="0626686598">Copier</button></li>
+            <li><div><span>Téléphone</span><b>06 26 68 65 98</b></div><a class="pill" href="tel:+33626686598">Appeler</a></li>
             <li><div><span>E-mail</span><b>salamataniang@<wbr>gmail.com</b></div><a class="pill" href="mailto:salamataniang@gmail.com">Écrire</a></li>
             <li><div><span>Instagram</span><b>@sweet_delices</b></div><a class="pill" href="https://www.instagram.com/sweet_delices/" target="_blank" rel="noopener">Ouvrir</a></li>
-            <li><div><span>Snapchat</span><b>sweetdelices24</b></div><button class="pill" type="button" data-copy="sweetdelices24">Copier</button></li>
-            <li><div><span>TikTok</span><b>salamataniang350</b></div><button class="pill" type="button" data-copy="salamataniang350">Copier</button></li>
+            <li><div><span>Snapchat</span><b>sweetdelices24</b></div><a class="pill" href="https://www.snapchat.com/add/sweetdelices24" target="_blank" rel="noopener">Ouvrir</a></li>
+            <li><div><span>TikTok</span><b>salamataniang350</b></div><a class="pill" href="https://www.tiktok.com/@salamataniang350" target="_blank" rel="noopener">Ouvrir</a></li>
           </ul>
           <div class="foot"><span class="mono" aria-hidden="true">SD</span><b style="font-family:var(--f-display);font-weight:400;font-size:1.2rem">Sweet Délices Traiteur</b><p class="small">Acompte de 50 % à la commande · Devis sur demande</p></div>
         </section>
@@ -552,7 +546,7 @@ input,select,textarea{min-width:0;max-width:100%}
             <label class="field">Nom<input id="o-nom" autocomplete="name" placeholder="Prénom et nom"></label>
             <label class="field">Téléphone<input id="o-tel" type="tel" autocomplete="tel" placeholder="06 00 00 00 00"></label>
             <button class="btn" type="submit" id="orderBtn">Envoyer ma commande<span id="oDep" hidden></span></button>
-            <p class="ok" id="orderOk" hidden></p>
+            <p class="ok" id="orderOk" hidden role="status" aria-live="polite"></p>
           </form>
         </div>
       </div>
@@ -570,10 +564,12 @@ const sdVal = id => (document.getElementById(id).value || '').trim();
 function sdNeed(ids, out){
   for (const id of ids) {
     const el = document.getElementById(id);
-    const bad = !el.value.trim();
+    const isTel = id.endsWith('tel'), v = el.value.trim();
+    const bad = isTel ? v.replace(/\D/g, '').length < 10 : !v;
     el.toggleAttribute('aria-invalid', bad);
-    if (bad) { out.textContent = 'Merci d\'indiquer votre ' + (id.endsWith('tel') ? 'téléphone' : 'nom') + ' pour que Sweet Délices puisse vous recontacter.'; out.hidden = false; el.focus({preventScroll:false}); return false; }
+    if (bad) { out.textContent = isTel ? 'Merci d\'indiquer un numéro de téléphone complet (10 chiffres) pour que Sweet Délices puisse vous rappeler.' : 'Merci d\'indiquer votre nom.'; out.classList.add('err'); out.hidden = false; el.focus({preventScroll:true}); el.scrollIntoView({block:'center'}); return false; }
   }
+  out.classList.remove('err');
   return true;
 }
 function sdDate(id){ const v = sdVal(id); return v ? new Date(v + 'T12:00').toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long', year:'numeric'}) : 'à convenir'; }
@@ -616,7 +612,9 @@ $('carousel').innerHTML = [CANETTES[2], COOKIES[1], CANETTES[0], COOKIES[2], CAN
   .map(p => `<button type="button" data-open="${p.id}">${ph(p)}<p>${p.name}<small>${p.id[0] === 'c' ? 'dès 4,50 €' : '4,50 €'}</small></p></button>`).join('');
 
 // Navigation par onglets
-function go(tab, cat){
+const TABS = ['accueil','carte','traiteur','devis','contact'];
+function go(tab, cat, fromHistory){
+  if (!fromHistory && location.hash !== '#' + tab) history.pushState({tab}, '', '#' + tab);
   document.querySelectorAll('.screen').forEach(s => s.hidden = s.id !== 's-' + tab);
   document.querySelectorAll('.tabbar [data-tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === tab));
   $('s-' + tab).scrollTop = 0; window.scrollTo(0, 0);
@@ -627,6 +625,10 @@ function setCat(cat){
   document.querySelectorAll('.seg [data-cat]').forEach(b => b.setAttribute('aria-selected', b.dataset.cat === cat));
   ['canettes','cookies','box'].forEach(c => $('cat-' + c).hidden = c !== cat);
   replay($('cat-' + cat), 'enter-grid');
+  // Si la barre des catégories est collée en haut, on remonte au début de la nouvelle liste
+  const seg = document.querySelector('.seg'), list = $('cat-' + cat);
+  const top = list.getBoundingClientRect().top + window.scrollY - seg.offsetHeight - 63 - 12;
+  if (window.scrollY > top) window.scrollTo({top, behavior: 'instant'});
 }
 // Rejoue une animation CSS en retirant puis remettant sa classe
 function replay(el, cls){
@@ -651,7 +653,7 @@ function renderCart(){
   const n = cart.reduce((s, i) => s + i.qty, 0), t = total();
   $('badge').hidden = n === 0; $('badge').textContent = n;
   $('cartbar').hidden = n === 0;
-  $('cbCount').textContent = 'Voir le panier · ' + n + ' article' + (n > 1 ? 's' : '');
+  $('cbCount').textContent = (innerWidth < 360 ? 'Panier · ' : 'Voir le panier · ') + n + ' article' + (n > 1 ? 's' : '');
   $('cbTotal').textContent = eur(t);
   $('cLines').innerHTML = cart.map(i => `<li class="line">${ph({img:i.img, crop:i.crop, name:''})}<div><b>${i.name}</b><small>${i.detail}</small><div class="stepper sm" style="margin-top:4px"><button type="button" data-line="${i.key}" data-d="-1" aria-label="Retirer un"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg></button><output>${i.qty}</output><button type="button" data-line="${i.key}" data-d="1" aria-label="Ajouter un"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg></button></div></div><span class="lp">${eur(i.qty * i.price)}</span></li>`).join('');
   $('cEmpty').hidden = cart.length > 0;
@@ -687,17 +689,29 @@ let lastFocus = null;
 function openSheet(id){
   lastFocus = document.activeElement;
   document.querySelectorAll('.sheet.on').forEach(s => s.classList.remove('on'));
+  if (!document.querySelector('.sheet.on')) history.pushState({sheet: id}, '');
   $(id).classList.add('on'); $('scrim').classList.add('on'); lockPage();
   setTimeout(() => $(id).querySelector('[data-close]').focus({preventScroll:true}), 50);
 }
-function closeSheets(){
+let skipPop = false;
+function closeSheets(fromHistory){
+  if (!document.querySelector('.sheet.on')) return;
+  if (fromHistory !== true && history.state && history.state.sheet) { skipPop = true; history.back(); }
   document.querySelectorAll('.sheet.on').forEach(s => s.classList.remove('on'));
   $('scrim').classList.remove('on'); unlockPage();
   if (lastFocus) lastFocus.focus({preventScroll:true});
 }
 $('scrim').addEventListener('click', closeSheets);
-document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', closeSheets));
+// Bouton retour du téléphone : ferme d'abord le volet ouvert, sinon revient à l'onglet précédent
+window.addEventListener('popstate', () => {
+  if (skipPop) { skipPop = false; return; }
+  if (document.querySelector('.sheet.on')) { closeSheets(true); return; }
+  const h = location.hash.slice(1);
+  go(TABS.includes(h) ? h : 'accueil', null, true);
+});
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => closeSheets()));
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheets(); });
+{ const h = location.hash.slice(1); if (TABS.includes(h) && h !== 'accueil') go(h, null, true); }
 $('openCart').addEventListener('click', () => openSheet('cSheet'));
 $('cartbar').addEventListener('click', () => openSheet('cSheet'));
 
@@ -743,7 +757,7 @@ document.addEventListener('click', e => {
   const g = e.target.closest('[data-go]'); if (g) { go(g.dataset.go, g.dataset.cat); return; }
   const s = e.target.closest('[data-q]'); if (s) { setQ(s.dataset.q, q[s.dataset.q] + +s.dataset.d); return; }
   const c = e.target.closest('[data-copy]');
-  if (c) { try { navigator.clipboard.writeText(c.dataset.copy).then(() => toast('Copié : ' + c.dataset.copy), () => {}); } catch (_) {} }
+  if (c) { const fb = () => toast('Appuyez longuement sur le texte pour le copier'); try { navigator.clipboard.writeText(c.dataset.copy).then(() => toast('Copié : ' + c.dataset.copy), fb); } catch (_) { fb(); } }
 });
 
 // Box à composer
@@ -783,7 +797,8 @@ $('orderForm').addEventListener('submit', e => {
     '', 'Total : ' + eur(tot), 'Acompte (50 %) : ' + eur(dep), '',
     mode + (sdVal('o-date') ? ' le ' + sdDate('o-date') : ', date à convenir'), 'Nom : ' + sdVal('o-nom'), 'Téléphone : ' + sdVal('o-tel'), '', 'Merci !']);
   ok.textContent = 'Votre messagerie s\'ouvre avec la commande prête à envoyer. Sweet Délices vous recontacte ensuite pour confirmer et régler l\'acompte de ' + eur(dep) + '.' + sdFallback;
-  ok.hidden = false;
+  ok.hidden = false; ok.classList.remove('err');
+  setTimeout(() => ok.scrollIntoView({block:'center', behavior:'smooth'}), 60);
 });
 
 // Devis
@@ -819,18 +834,19 @@ $('devisForm').addEventListener('submit', e => {
   const t = estimate();
   const ok = $('devisOk');
   const ch = document.querySelector('[name=dtype]:checked');
-  if (!ch) { ok.textContent = 'Choisissez d\'abord une prestation.'; ok.hidden = false; return; }
+  if (!ch) { ok.textContent = 'Choisissez d\'abord une prestation.'; ok.classList.add('err'); ok.hidden = false; document.querySelector('[name=dtype]').closest('.choice').scrollIntoView({block:'center'}); return; }
   if (!sdNeed(['d-nom','d-tel'], ok)) return;
   const opts = [['d-assiette','Service à l\'assiette'],['d-cooking','Cooking show'],['d-dessert','Bar à desserts']].filter(([id]) => { const el = document.getElementById(id); return el.checked && !el.closest('[hidden]'); }).map(o => o[1]);
   const presta = (ch.value in F ? 'Repas de mariage, ' : '') + ch.parentNode.firstChild.nextSibling.textContent.trim() + ' (' + ch.parentNode.querySelector('small').textContent + ')';
   sdSend('Demande de devis ' + sdVal('d-nom') + ' : ' + presta, [
     'Bonjour Sweet Délices,', '', 'Je souhaite un devis :',
-    '- Prestation : ' + presta, '- Invités : ' + (sdVal('d-nb') || 'à préciser'), '- Date : ' + sdDate('d-date'),
+    '- Prestation : ' + presta, '- Invités : ' + (Math.floor(+sdVal('d-nb') || 0) > 0 ? Math.floor(+sdVal('d-nb')) : 'à préciser'), '- Date : ' + sdDate('d-date'),
     '- Options : ' + (opts.length ? opts.join(', ') : 'aucune'),
-    '- Estimation du site : ' + (t ? eur(t) : 'sur devis'), '',
+    '- Estimation du site : ' + (t ? $('e-total').textContent + ' (acompte 50 % : ' + eur(t / 2) + ')' : 'sur devis'), '',
     'Message : ' + (sdVal('d-msg') || '-'), '', 'Nom : ' + sdVal('d-nom'), 'Téléphone : ' + sdVal('d-tel'), '', 'Merci !']);
   ok.textContent = 'Votre messagerie s\'ouvre avec la demande prête à envoyer. Sweet Délices vous recontacte pour établir le devis.' + sdFallback;
-  ok.hidden = false;
+  ok.hidden = false; ok.classList.remove('err');
+  setTimeout(() => ok.scrollIntoView({block:'center', behavior:'smooth'}), 60);
 });
 
 let tt;

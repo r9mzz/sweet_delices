@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light">
-<script>(function(){try{var q=location.search;if(/[?&]v=site/.test(q))return;if(matchMedia('(max-width: 760px), (pointer: coarse) and (max-width: 1024px)').matches)location.replace('mobile.html'+location.hash);}catch(e){}})();</script>
+<script>(function(){try{var q=location.search;if(/[?&]v=site/.test(q))return;if(matchMedia('(max-width: 760px)').matches)location.replace('mobile.html'+location.hash);}catch(e){}})();</script>
 <title>Sweet Délices Traiteur</title>
 <meta name="description" content="Sweet Délices, pâtisserie et traiteur : canette cakes, box cookies, repas de mariage et buffets.">
 
@@ -819,7 +819,7 @@ $('devisForm').addEventListener('submit', e => {
     'Bonjour Sweet Délices,', '', 'Je souhaite un devis :',
     '- Prestation : ' + presta, '- Invités : ' + (Math.floor(+sdVal('d-nb') || 0) > 0 ? Math.floor(+sdVal('d-nb')) : 'à préciser'), '- Date : ' + sdDate('d-date'),
     '- Options : ' + (opts.length ? opts.join(', ') : 'aucune'),
-    '- Estimation du site : ' + (total ? eur(total) : 'sur devis'), '',
+    '- Estimation du site : ' + (total ? $('e-total').textContent + ' (acompte 50 % : ' + eur(total / 2) + ')' : 'sur devis'), '',
     'Message : ' + (sdVal('d-msg') || '-'), '', 'Nom : ' + sdVal('d-nom'), 'Téléphone : ' + sdVal('d-tel'), '', 'Merci !']);
   ok.textContent = 'Votre messagerie s\'ouvre avec la demande prête à envoyer. Sweet Délices vous recontacte pour établir le devis.' + sdFallback;
   ok.hidden = false;
