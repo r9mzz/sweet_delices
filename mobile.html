@@ -41,6 +41,7 @@
 
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
+input[aria-invalid],textarea[aria-invalid]{border-color:var(--rose)!important;box-shadow:0 0 0 3px rgba(176,122,105,.18)}
 html,body{height:100%}
 body{background:var(--stage);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;margin:0}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -339,7 +340,7 @@ input,select,textarea{min-width:0;max-width:100%}
 
 <div class="stage">
   <div class="intro">
-    <span class="script" style="font-size:2rem">maquette mobile</span>
+    <span class="script" style="font-size:2rem">version mobile</span>
     <h1>Sweet Délices</h1>
     <p>La version téléphone du site, pensée comme une appli. Tout est cliquable dans l'écran.</p>
     <ul>
@@ -348,7 +349,7 @@ input,select,textarea{min-width:0;max-width:100%}
       <li>Barre panier toujours visible</li>
       <li>Devis calculé en direct</li>
     </ul>
-    <p>Sur un téléphone, la maquette s'affiche en plein écran.</p>
+    <p>Sur un téléphone, le site s'affiche en plein écran.</p>
   </div>
 
   <div class="phone">
@@ -550,7 +551,7 @@ input,select,textarea{min-width:0;max-width:100%}
             <label class="field">Date souhaitée<input id="o-date" type="date"></label>
             <label class="field">Nom<input id="o-nom" autocomplete="name" placeholder="Prénom et nom"></label>
             <label class="field">Téléphone<input id="o-tel" type="tel" autocomplete="tel" placeholder="06 00 00 00 00"></label>
-            <button class="btn" type="submit" id="orderBtn">Payer l'acompte · <span id="oDep"></span></button>
+            <button class="btn" type="submit" id="orderBtn">Envoyer ma commande<span id="oDep" hidden></span></button>
             <p class="ok" id="orderOk" hidden></p>
           </form>
         </div>
@@ -563,6 +564,23 @@ input,select,textarea{min-width:0;max-width:100%}
 
 <script>
 const $ = id => document.getElementById(id);
+// Coordonnées de Sweet Délices : les commandes et devis partent par e-mail
+const SD_MAIL = 'salamataniang@gmail.com', SD_TEL = '06 26 68 65 98';
+const sdVal = id => (document.getElementById(id).value || '').trim();
+function sdNeed(ids, out){
+  for (const id of ids) {
+    const el = document.getElementById(id);
+    const bad = !el.value.trim();
+    el.toggleAttribute('aria-invalid', bad);
+    if (bad) { out.textContent = 'Merci d\'indiquer votre ' + (id.endsWith('tel') ? 'téléphone' : 'nom') + ' pour que Sweet Délices puisse vous recontacter.'; out.hidden = false; el.focus({preventScroll:false}); return false; }
+  }
+  return true;
+}
+function sdDate(id){ const v = sdVal(id); return v ? new Date(v + 'T12:00').toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long', year:'numeric'}) : 'à convenir'; }
+function sdSend(subject, lines){ location.href = 'mailto:' + SD_MAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n')); }
+const sdFallback = ' Si rien ne s\'ouvre, écrivez à ' + SD_MAIL + ' ou appelez le ' + SD_TEL + '.';
+// Pas de date passée dans les calendriers
+document.querySelectorAll('input[type=date]').forEach(d => { const n = new Date(); d.min = new Date(n - n.getTimezoneOffset() * 6e4).toISOString().slice(0, 10); });
 const eur = n => n.toLocaleString('fr-FR', {minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2}) + ' €';
 
 const CANETTES = [
@@ -755,8 +773,17 @@ $('bAdd').addEventListener('click', () => {
 // Commande
 $('orderForm').addEventListener('submit', e => {
   e.preventDefault();
-  $('orderOk').textContent = 'Maquette : sur le vrai site, cette étape ouvrirait le paiement de l\'acompte de ' + eur(Math.round(total() * 50) / 100) + '. Rien n\'a été envoyé.';
-  $('orderOk').hidden = false;
+  const ok = $('orderOk');
+  if (!cart.length || !sdNeed(['o-nom','o-tel'], ok)) return;
+  const tot = total(), dep = Math.round(tot * 50) / 100;
+  const mode = (document.querySelector('[name=mode]:checked') || {}).value === 'livraison' ? 'Livraison' : 'Retrait';
+  sdSend('Commande ' + sdVal('o-nom') + ' (' + eur(tot) + ')', [
+    'Bonjour Sweet Délices,', '', 'Je souhaite commander :',
+    ...cart.map(i => '- ' + i.qty + ' × ' + i.name + ' (' + i.detail + ') : ' + eur(i.qty * i.price)),
+    '', 'Total : ' + eur(tot), 'Acompte (50 %) : ' + eur(dep), '',
+    mode + (sdVal('o-date') ? ' le ' + sdDate('o-date') : ', date à convenir'), 'Nom : ' + sdVal('o-nom'), 'Téléphone : ' + sdVal('o-tel'), '', 'Merci !']);
+  ok.textContent = 'Votre messagerie s\'ouvre avec la commande prête à envoyer. Sweet Délices vous recontacte ensuite pour confirmer et régler l\'acompte de ' + eur(dep) + '.' + sdFallback;
+  ok.hidden = false;
 });
 
 // Devis
@@ -790,8 +817,20 @@ $('devisForm').addEventListener('change', estimate);
 $('devisForm').addEventListener('submit', e => {
   e.preventDefault();
   const t = estimate();
-  $('devisOk').textContent = 'Maquette : sur le vrai site, Sweet Délices recevrait cette demande' + (t ? ' (estimation ' + eur(t) + ')' : '') + ' et vous recontacterait. Rien n\'a été envoyé.';
-  $('devisOk').hidden = false;
+  const ok = $('devisOk');
+  const ch = document.querySelector('[name=dtype]:checked');
+  if (!ch) { ok.textContent = 'Choisissez d\'abord une prestation.'; ok.hidden = false; return; }
+  if (!sdNeed(['d-nom','d-tel'], ok)) return;
+  const opts = [['d-assiette','Service à l\'assiette'],['d-cooking','Cooking show'],['d-dessert','Bar à desserts']].filter(([id]) => { const el = document.getElementById(id); return el.checked && !el.closest('[hidden]'); }).map(o => o[1]);
+  const presta = (ch.value in F ? 'Repas de mariage, ' : '') + ch.parentNode.firstChild.nextSibling.textContent.trim() + ' (' + ch.parentNode.querySelector('small').textContent + ')';
+  sdSend('Demande de devis ' + sdVal('d-nom') + ' : ' + presta, [
+    'Bonjour Sweet Délices,', '', 'Je souhaite un devis :',
+    '- Prestation : ' + presta, '- Invités : ' + (sdVal('d-nb') || 'à préciser'), '- Date : ' + sdDate('d-date'),
+    '- Options : ' + (opts.length ? opts.join(', ') : 'aucune'),
+    '- Estimation du site : ' + (t ? eur(t) : 'sur devis'), '',
+    'Message : ' + (sdVal('d-msg') || '-'), '', 'Nom : ' + sdVal('d-nom'), 'Téléphone : ' + sdVal('d-tel'), '', 'Merci !']);
+  ok.textContent = 'Votre messagerie s\'ouvre avec la demande prête à envoyer. Sweet Délices vous recontacte pour établir le devis.' + sdFallback;
+  ok.hidden = false;
 });
 
 let tt;

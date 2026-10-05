@@ -1,6 +1,6 @@
 # Sweet Délices
 
-Maquette du site de Sweet Délices, pâtisserie et traiteur.
+Site de Sweet Délices, pâtisserie et traiteur. Les commandes et demandes de devis sont envoyées par e-mail à salamataniang@gmail.com (la messagerie du client s'ouvre avec le message prérempli).
 
 - `index.html` : le site (s'adapte à toutes les tailles d'écran)
 - `mobile.html` : la version mobile façon appli
