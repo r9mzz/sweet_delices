@@ -193,6 +193,9 @@ textarea{min-height:80px;resize:vertical}
 .opts{display:flex;flex-direction:column;gap:10px;min-height:86px;justify-content:center;background:var(--bg-alt);border-radius:16px;padding:12px 14px;box-sizing:border-box}
 .opts .none{font-size:.82rem;color:var(--muted)}
 #e-lines{min-height:84px;align-content:start}
+.e-empty{grid-column:1/-1;min-height:84px;display:flex;align-items:center;justify-content:center;text-align:center;padding:10px 14px;border:1px dashed rgba(255,255,255,.35);border-radius:14px;font-size:.84rem;line-height:1.4;opacity:.92}
+.estimate .amount{color:var(--on-olive);text-align:left}
+.estimate .amount.empty{opacity:.55}
 .quote-card{background:var(--olive-soft);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:8px;text-align:center;align-items:center}
 .quote-card .script{font-size:1.7rem}
 .quote-card h3{font-size:1.5rem}
@@ -457,8 +460,8 @@ input,select,textarea{min-width:0;max-width:100%}
             </div>
             <div class="estimate" aria-live="polite">
               <span class="eyebrow" style="color:inherit;opacity:.8">Estimation</span>
-              <div class="amount" id="e-total">—</div>
-              <dl id="e-lines"><dt style="grid-column:1/-1">Choisissez une prestation et le nombre d'invités.</dt></dl>
+              <div class="amount empty" id="e-total">0 €</div>
+              <dl id="e-lines"><dt class="e-empty">Choisissez une prestation et le nombre d'invités.</dt></dl>
               <p>Montant indicatif. Le devis final est confirmé par Sweet Délices.</p>
             </div>
             <label class="field">Nom<input id="d-nom" autocomplete="name" placeholder="Prénom et nom"></label>
@@ -751,8 +754,8 @@ function estimate(){
   $('w-none').textContent = isSweet ? 'Pas d\'option pour cette prestation : précisez vos envies dans le message.' : 'Les options s\'affichent selon la prestation choisie.';
   const rows = []; const quote = []; let t = 0;
   if (!type || (!isSweet && nb === 0)) {
-    $('e-total').textContent = '—';
-    $('e-lines').innerHTML = '<dt style="grid-column:1/-1">Choisissez une prestation et le nombre d\'invités.</dt>';
+    $('e-total').textContent = '0 €'; $('e-total').classList.add('empty');
+    $('e-lines').innerHTML = '<dt class="e-empty">Choisissez une prestation et le nombre d\'invités.</dt>';
     return 0;
   }
   if (isMeal) { t = F[type] * nb; rows.push(['Formule ' + type.slice(1) + ' × ' + nb + ' pers.', eur(t)]); if ($('d-assiette').checked) quote.push('Service à l\'assiette'); }
@@ -761,6 +764,7 @@ function estimate(){
   if ((isMeal || isBuffet) && $('d-dessert').checked) quote.push('Bar à desserts');
   quote.forEach(x => rows.push([x, 'sur devis']));
   if (t) rows.push(['Acompte (50 %)', eur(t / 2)]);
+  $('e-total').classList.remove('empty');
   $('e-total').textContent = t ? (quote.length ? 'dès ' : '') + eur(t) : 'Sur devis';
   $('e-lines').innerHTML = rows.map(r => `<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('');
   return t;
