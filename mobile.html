@@ -103,7 +103,7 @@ p{margin:0}
 @media (max-width:520px), (pointer:coarse) and (max-height:520px){.cartbar{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
 
 /* Accueil */
-.hero{position:relative;border-radius:180px 180px 26px 26px;overflow:hidden;aspect-ratio:4/4.4;background:var(--bg-alt)}
+.hero{position:relative;border-radius:180px 180px 26px 26px;overflow:hidden;aspect-ratio:1/1;max-height:62vh;width:100%;background:var(--bg-alt)}
 .hero img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
 .hero-cap{position:absolute;inset:auto 0 0 0;padding:60px 18px 18px;background:linear-gradient(to top,rgb(25 20 15 / .7),transparent);color:#fbf7f1}
 .hero-cap h1{font-size:2.3rem}
@@ -138,6 +138,7 @@ p{margin:0}
 .sec-title .script{font-size:1.7rem}
 .sec-title h2{font-size:2rem}
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tiles > :last-child:nth-child(odd){grid-column:1/-1;justify-self:center;width:calc(50% - 6px)}
 .tile{border:none;background:var(--surface);border-radius:20px;overflow:hidden;padding:0;text-align:left;box-shadow:var(--shadow);display:flex;flex-direction:column}
 .tile .ph{aspect-ratio:4/5}
 .tile div.t{padding:10px 12px 12px;display:flex;flex-direction:column;gap:2px}
@@ -270,7 +271,8 @@ textarea{min-height:80px;resize:vertical}
   .stage,.phone{height:auto;min-height:100%}
   .app{height:auto;min-height:100vh;overflow:visible;display:block}
   .screens{overflow:visible;min-height:0}
-  .screen{position:static;overflow:visible;padding-bottom:170px}
+  .screen{position:static;overflow:visible;padding-bottom:calc(100px + env(safe-area-inset-bottom,0px))}
+  body.has-cart .screen{padding-bottom:calc(168px + env(safe-area-inset-bottom,0px))}
   .topbar{position:sticky;top:0;z-index:15}
   .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:15}
   .cartbar{position:fixed;z-index:16}
@@ -652,7 +654,7 @@ function addItem(item, qty){
 function renderCart(){
   const n = cart.reduce((s, i) => s + i.qty, 0), t = total();
   $('badge').hidden = n === 0; $('badge').textContent = n;
-  $('cartbar').hidden = n === 0;
+  $('cartbar').hidden = n === 0; document.body.classList.toggle('has-cart', n > 0);
   $('cbCount').textContent = (innerWidth < 360 ? 'Panier · ' : 'Voir le panier · ') + n + ' article' + (n > 1 ? 's' : '');
   $('cbTotal').textContent = eur(t);
   $('cLines').innerHTML = cart.map(i => `<li class="line">${ph({img:i.img, crop:i.crop, name:''})}<div><b>${i.name}</b><small>${i.detail}</small><div class="stepper sm" style="margin-top:4px"><button type="button" data-line="${i.key}" data-d="-1" aria-label="Retirer un"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg></button><output>${i.qty}</output><button type="button" data-line="${i.key}" data-d="1" aria-label="Ajouter un"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg></button></div></div><span class="lp">${eur(i.qty * i.price)}</span></li>`).join('');
