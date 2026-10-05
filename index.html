@@ -84,8 +84,9 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:co
 .btn.small{padding:8px 16px;font-size:.85rem}
 .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
 .cart-btn{position:relative;background:var(--surface);color:var(--ink);border-color:var(--line)}
-.cart-count{line-height:1;min-width:22px;height:22px;border-radius:999px;background:var(--rose);color:var(--on-olive);font-size:.75rem;display:inline-grid;place-items:center;padding:0 6px;font-variant-numeric:tabular-nums}
-@media (max-width:860px){.nav ul{display:none}}
+.cart-count{line-height:1;min-width:22px;height:22px;border-radius:999px;background:#9a6253;color:var(--on-olive);font-size:.75rem;display:inline-grid;place-items:center;padding:0 6px;font-variant-numeric:tabular-nums}
+@media (max-width:860px){.nav ul{gap:16px}.nav ul a{font-size:.88rem}}
+@media (max-width:760px){.nav ul{display:none}}
 @media (max-width:420px){.nav-actions .ghost{display:none}}
 
 /* Hero */
@@ -128,6 +129,11 @@ section{padding-block:80px}
 .tab{padding:10px 22px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer;font-weight:600;font-size:.9rem;color:var(--muted)}
 .tab[aria-selected="true"]{background:var(--olive);border-color:var(--olive);color:var(--on-olive)}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+#panel-canettes{grid-template-columns:repeat(6,1fr)}
+#panel-canettes .card{grid-column:span 2}
+#panel-canettes .card:nth-child(4):nth-last-child(2){grid-column:2/span 2}
+@media (max-width:900px){#panel-canettes{grid-template-columns:repeat(2,1fr)}#panel-canettes .card,#panel-canettes .card:nth-child(4):nth-last-child(2){grid-column:auto}#panel-canettes .card:last-child:nth-child(odd){grid-column:1/-1;justify-self:center;width:calc(50% - 12px)}}
+@media (max-width:560px){#panel-canettes{grid-template-columns:1fr}#panel-canettes .card:last-child:nth-child(odd){width:auto;justify-self:stretch}}
 @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){.grid{grid-template-columns:1fr}}
 .card{background:var(--surface);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);min-width:0}
@@ -137,7 +143,7 @@ section{padding-block:80px}
 .tag{position:absolute;top:14px;left:14px;background:var(--surface);color:var(--olive);font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:999px}
 .card-body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:12px;flex:1}
 .card-body h3{font-size:1.5rem}
-.card-body p{font-size:.88rem;color:var(--muted)}
+.card-body p{font-size:.88rem;color:var(--muted);min-height:2.9em}
 .sizes{display:flex;gap:8px}
 .size{flex:1;border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:transparent;cursor:pointer;text-align:left;font-size:.8rem;color:var(--muted)}
 .size b{display:block;font-family:var(--f-display);font-weight:400;font-size:1.25rem;color:var(--ink);font-variant-numeric:tabular-nums}
@@ -196,7 +202,8 @@ body.lock{position:fixed;left:0;right:0;width:100%;overflow:hidden}
 .line{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center}
 .line img{width:56px;height:56px;border-radius:12px;object-fit:cover}
 .line b{font-weight:600;font-size:.92rem;display:block}
-.line small{color:var(--muted);font-size:.8rem}
+.line small{color:var(--muted);font-size:.8rem;display:block}
+.line .ph-mini{width:56px;height:56px;border-radius:12px;background-repeat:no-repeat;background-size:280% auto}
 .line .lp{font-variant-numeric:tabular-nums;font-weight:600;text-align:right}
 .line .stepper button{width:28px;height:28px}
 .empty{color:var(--muted);text-align:center;padding:30px 0}
@@ -238,7 +245,7 @@ body.lock{position:fixed;left:0;right:0;width:100%;overflow:hidden}
 .note{font-size:.86rem;color:var(--muted)}
 .note b{color:var(--ink);font-weight:600}
 .included{display:flex;flex-wrap:wrap;gap:8px}
-.included span{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--rose);border-radius:999px;color:var(--rose)}
+.included span{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--rose);border-radius:999px;color:#8e5a4a}
 
 /* Devis */
 .devis{margin-top:40px;display:grid;grid-template-columns:1.1fr 1fr;gap:0;border-radius:28px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
@@ -257,9 +264,15 @@ textarea{min-height:86px;resize:vertical}
 .estimate dl{min-height:104px;align-content:start;margin:0;display:grid;grid-template-columns:1fr auto;gap:6px 14px;font-size:.9rem;font-variant-numeric:tabular-nums}
 .estimate dt{opacity:.8}
 .estimate dd{margin:0;text-align:right;font-weight:600}
+.estimate .amount{color:var(--on-olive);text-align:left}
+.estimate .amount.empty{opacity:.5}
+.e-empty{grid-column:1/-1;min-height:104px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px 16px;border:1px dashed rgba(255,255,255,.35);border-radius:14px;opacity:1!important;line-height:1.45}
 .estimate .sep{grid-column:1/-1;height:1px;background:currentColor;opacity:.25}
 .estimate p{font-size:.82rem;opacity:.85}
 .ok{font-size:.88rem;color:var(--olive);background:var(--olive-soft);border-radius:12px;padding:12px 14px}
+.ok.err{color:#7a4636;background:#f6e3dc}
+.alt{--muted:#5f584d}
+#devis,section[id]{scroll-margin-top:80px}
 
 /* Contact */
 .contact{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
@@ -480,7 +493,7 @@ header{animation:sdFadeDown .6s cubic-bezier(.2,.8,.2,1) both}
           <div class="amount" id="e-total">Sur devis</div>
           <dl id="e-lines"></dl>
           <p id="e-note">Montant indicatif établi à partir de nos tarifs. Le devis final est confirmé par Sweet Délices.</p>
-          <p class="ok" id="devisOk" hidden style="color:var(--olive);opacity:1"></p>
+          <p class="ok" id="devisOk" hidden role="status" aria-live="polite"></p>
         </aside>
       </div>
     </div>
@@ -494,8 +507,8 @@ header{animation:sdFadeDown .6s cubic-bezier(.2,.8,.2,1) both}
       </div>
       <ul class="contact">
         <li><span>Instagram</span><b>@sweet_delices</b><a class="copy" href="https://www.instagram.com/sweet_delices/" target="_blank" rel="noopener">Ouvrir</a></li>
-        <li><span>Snapchat</span><b>sweetdelices24</b><button class="copy" type="button" data-copy="sweetdelices24">Copier</button></li>
-        <li><span>TikTok</span><b>salamataniang350</b><button class="copy" type="button" data-copy="salamataniang350">Copier</button></li>
+        <li><span>Snapchat</span><b>sweetdelices24</b><a class="copy" href="https://www.snapchat.com/add/sweetdelices24" target="_blank" rel="noopener">Ouvrir</a></li>
+        <li><span>TikTok</span><b>salamataniang350</b><a class="copy" href="https://www.tiktok.com/@salamataniang350" target="_blank" rel="noopener">Ouvrir</a></li>
         <li><span>Téléphone</span><b>06 26 68 65 98</b><button class="copy" type="button" data-copy="0626686598">Copier</button></li>
         <li><span>E-mail</span><b>salamataniang@<wbr>gmail.com</b><a class="copy" href="mailto:salamataniang@gmail.com">Écrire</a></li>
       </ul>
@@ -510,14 +523,14 @@ header{animation:sdFadeDown .6s cubic-bezier(.2,.8,.2,1) both}
       <li><span>Téléphone</span><b>06 26 68 65 98</b></li>
       <li><span>E-mail</span><a href="mailto:salamataniang@gmail.com"><b>salamataniang@<wbr>gmail.com</b></a></li>
       <li><span>Instagram</span><a href="https://www.instagram.com/sweet_delices/" target="_blank" rel="noopener"><b>@sweet_delices</b></a></li>
-      <li><span>Snapchat</span><b>sweetdelices24</b></li>
-      <li><span>TikTok</span><b>salamataniang350</b></li>
+      <li><span>Snapchat</span><a href="https://www.snapchat.com/add/sweetdelices24" target="_blank" rel="noopener"><b>sweetdelices24</b></a></li>
+      <li><span>TikTok</span><a href="https://www.tiktok.com/@salamataniang350" target="_blank" rel="noopener"><b>salamataniang350</b></a></li>
     </ul>
   </div>
 </footer>
 
 <div class="drawer-bg" id="drawerBg" hidden></div>
-<aside class="drawer" id="drawer" hidden aria-label="Panier">
+<aside class="drawer" id="drawer" hidden aria-label="Panier" role="dialog" aria-modal="true">
   <div class="drawer-head"><h2>Votre panier</h2><button class="x" id="closeCart" type="button" aria-label="Fermer le panier"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></button></div>
   <ul class="lines" id="lines"></ul>
   <div class="empty" id="empty"><span class="mono">SD</span>Votre panier est vide. Ajoutez une canette ou un cookie depuis la carte.</div>
@@ -535,7 +548,7 @@ header{animation:sdFadeDown .6s cubic-bezier(.2,.8,.2,1) both}
     <label>Nom<input id="o-nom" autocomplete="name" placeholder="Prénom et nom"></label>
     <label>Téléphone<input id="o-tel" type="tel" autocomplete="tel" placeholder="06 00 00 00 00"></label>
     <button class="btn" type="submit" id="orderBtn">Envoyer ma commande</button>
-    <p class="ok" id="orderOk" hidden></p>
+    <p class="ok" id="orderOk" hidden role="status" aria-live="polite"></p>
   </form>
 </aside>
 <div class="toast" id="toast" hidden></div>
@@ -547,10 +560,12 @@ const sdVal = id => (document.getElementById(id).value || '').trim();
 function sdNeed(ids, out){
   for (const id of ids) {
     const el = document.getElementById(id);
-    const bad = !el.value.trim();
+    const isTel = id.endsWith('tel'), v = el.value.trim();
+    const bad = isTel ? v.replace(/\D/g, '').length < 10 : !v;
     el.toggleAttribute('aria-invalid', bad);
-    if (bad) { out.textContent = 'Merci d\'indiquer votre ' + (id.endsWith('tel') ? 'téléphone' : 'nom') + ' pour que Sweet Délices puisse vous recontacter.'; out.hidden = false; el.focus({preventScroll:false}); return false; }
+    if (bad) { out.textContent = isTel ? 'Merci d\'indiquer un numéro de téléphone complet (10 chiffres) pour que Sweet Délices puisse vous rappeler.' : 'Merci d\'indiquer votre nom.'; out.classList.add('err'); out.hidden = false; el.focus({preventScroll:false}); return false; }
   }
+  out.classList.remove('err');
   return true;
 }
 function sdDate(id){ const v = sdVal(id); return v ? new Date(v + 'T12:00').toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long', year:'numeric'}) : 'à convenir'; }
@@ -582,6 +597,10 @@ const COOKIE_PRICE = 4.5, BOX = {id:'k-box', name:'Box assortie', price:25, img:
 
 let cart = [];
 try { cart = JSON.parse(localStorage.getItem('sd-cart') || '[]'); } catch (_) { cart = []; }
+// Prix toujours recalculés depuis la carte (un panier gardé dans le navigateur garde sinon d'anciens prix)
+const priceOf = k => k.startsWith('k-custom') || k === 'k-box' ? BOX.price : k.startsWith('k-') ? COOKIE_PRICE : SIZES[k.split('-').pop()];
+const cropOf = k => (COOKIES.find(c => c.id === k) || {}).crop;
+cart = cart.filter(i => i && i.key && priceOf(i.key)).map(i => ({...i, price: priceOf(i.key), crop: cropOf(i.key)}));
 const save = () => { try { localStorage.setItem('sd-cart', JSON.stringify(cart)); } catch (_) {} };
 
 function stepper(id){
@@ -623,6 +642,12 @@ document.addEventListener('click', e => {
   }
   const add = e.target.closest('[data-add]');
   if (add) addToCart(add.dataset.add);
+  const cp = e.target.closest('[data-copy]');
+  if (cp) {
+    const done = () => toast('Copié : ' + cp.previousElementSibling.textContent);
+    if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(cp.dataset.copy).then(done, () => toast(cp.dataset.copy));
+    else { const r = document.createRange(); r.selectNodeContents(cp.previousElementSibling); const s = getSelection(); s.removeAllRanges(); s.addRange(r); toast(cp.dataset.copy); }
+  }
   const ln = e.target.closest('[data-line]');
   if (ln) {
     const it = cart.find(i => i.key === ln.dataset.line);
@@ -642,13 +667,14 @@ function addToCart(id){
     item = {key: id, name: BOX.name, detail: 'Box de 6 cookies', price: BOX.price, img: BOX.img};
   } else {
     const k = COOKIES.find(p => p.id === id);
-    item = {key: id, name: k.name, detail: 'Cookie à l\'unité', price: COOKIE_PRICE, img: k.img};
+    item = {key: id, name: k.name, detail: 'Cookie à l\'unité', price: COOKIE_PRICE, img: k.img, crop: k.crop};
   }
   const ex = cart.find(i => i.key === item.key);
   if (ex) ex.qty += qty; else cart.push({...item, qty});
   save(); renderCart();
   const a = document.getElementById('a-' + id);
-  a.textContent = '✓ ' + qty + ' ajouté' + (qty > 1 ? 's' : '') + ' au panier';
+  a.textContent = '✓ ' + qty + ' ajouté' + (c || id === 'k-box' ? 'e' : '') + (qty > 1 ? 's' : '') + ' au panier';
+  const q = document.getElementById('q-' + id); q.value = q.textContent = 1;
   setTimeout(() => a.textContent = '', 2200);
   toast('Ajouté au panier : ' + item.name);
   const cc = document.getElementById('cartCount'); cc.classList.remove('bump'); void cc.offsetWidth; cc.classList.add('bump');
@@ -658,7 +684,8 @@ function renderCart(){
   const n = cart.reduce((s, i) => s + i.qty, 0);
   const total = cart.reduce((s, i) => s + i.qty * i.price, 0);
   document.getElementById('cartCount').textContent = n;
-  document.getElementById('lines').innerHTML = cart.map(i => `<li class="line"><img src="${i.img}" alt=""><div><b>${i.name}</b><small>${i.detail} · ${eur(i.price)}</small><div class="stepper" style="margin-top:4px"><button type="button" data-line="${i.key}" data-d="-1" aria-label="Retirer un"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg></button><output>${i.qty}</output><button type="button" data-line="${i.key}" data-d="1" aria-label="Ajouter un"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg></button></div></div><span class="lp">${eur(i.qty * i.price)}</span></li>`).join('');
+  document.getElementById('openCart').setAttribute('aria-label', 'Panier, ' + n + ' article' + (n > 1 ? 's' : ''));
+  document.getElementById('lines').innerHTML = cart.map(i => `<li class="line">${i.crop ? `<div class="ph-mini" style="background-image:url('${i.img}');background-position:${i.crop[0]}% ${i.crop[1]}%"></div>` : `<img src="${i.img}" alt="">`}<div><b>${i.name}</b><small>${i.detail} · ${eur(i.price)}</small><div class="stepper" style="margin-top:4px"><button type="button" data-line="${i.key}" data-d="-1" aria-label="Retirer un"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg></button><output>${i.qty}</output><button type="button" data-line="${i.key}" data-d="1" aria-label="Ajouter un"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg></button></div></div><span class="lp">${eur(i.qty * i.price)}</span></li>`).join('');
   document.getElementById('empty').hidden = cart.length > 0;
   document.getElementById('totals').hidden = cart.length === 0;
   document.getElementById('t-sub').textContent = eur(total);
@@ -678,7 +705,16 @@ const closeCart = () => { drawer.hidden = bg.hidden = true; unlockPage(); docume
 document.getElementById('openCart').onclick = openCart;
 document.getElementById('closeCart').onclick = closeCart;
 bg.onclick = closeCart;
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && !drawer.hidden) closeCart(); });
+document.addEventListener('keydown', e => {
+  if (drawer.hidden) return;
+  if (e.key === 'Escape') closeCart();
+  if (e.key === 'Tab') {
+    const f = [...drawer.querySelectorAll('button:not([disabled]),input,a[href],textarea,select')].filter(x => x.offsetParent);
+    if (!f.length) return;
+    if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length - 1].focus(); }
+    else if (!e.shiftKey && document.activeElement === f[f.length - 1]) { e.preventDefault(); f[0].focus(); }
+  }
+});
 
 document.getElementById('orderForm').addEventListener('submit', e => {
   e.preventDefault();
@@ -762,11 +798,12 @@ function estimate(){
     rows.push(['sep']);
     rows.push(['Acompte (50 %)', eur(total / 2)]);
   }
+  $('e-total').classList.toggle('empty', false);
   $('e-total').textContent = total > 0 ? (quote.length ? 'dès ' : '') + eur(total) : 'Sur devis';
   $('e-lines').innerHTML = rows.map(r => r[0] === 'sep' ? '<div class="sep"></div>' : `<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join('');
   if (!isSweet && nb === 0) {
-    $('e-total').textContent = '—';
-    $('e-lines').innerHTML = '<dt style="grid-column:1/-1">Indiquez le nombre d\'invités pour voir l\'estimation.</dt>';
+    $('e-total').textContent = '0 €'; $('e-total').classList.add('empty');
+    $('e-lines').innerHTML = '<dt class="e-empty">Indiquez le nombre d\'invités pour voir l\'estimation.</dt>';
   }
   return {total, nb};
 }
@@ -780,7 +817,7 @@ $('devisForm').addEventListener('submit', e => {
   const presta = $('d-type').options[$('d-type').selectedIndex].text;
   sdSend('Demande de devis ' + sdVal('d-nom') + ' : ' + presta, [
     'Bonjour Sweet Délices,', '', 'Je souhaite un devis :',
-    '- Prestation : ' + presta, '- Invités : ' + (sdVal('d-nb') || 'à préciser'), '- Date : ' + sdDate('d-date'),
+    '- Prestation : ' + presta, '- Invités : ' + (Math.floor(+sdVal('d-nb') || 0) > 0 ? Math.floor(+sdVal('d-nb')) : 'à préciser'), '- Date : ' + sdDate('d-date'),
     '- Options : ' + (opts.length ? opts.join(', ') : 'aucune'),
     '- Estimation du site : ' + (total ? eur(total) : 'sur devis'), '',
     'Message : ' + (sdVal('d-msg') || '-'), '', 'Nom : ' + sdVal('d-nom'), 'Téléphone : ' + sdVal('d-tel'), '', 'Merci !']);
