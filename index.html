@@ -336,7 +336,7 @@ header{animation:sdFadeDown .6s cubic-bezier(.2,.8,.2,1) both}
 .sdf{background:#1f1c17;color:#d9d1c4;font-family:var(--f-body,system-ui,sans-serif);font-size:.95rem;line-height:1.6}
 .sdf a{color:inherit;text-decoration:none}
 .sdf a:hover{color:#fff}
-.sdf-in{max-width:1120px;margin:0 auto;padding:48px 22px 28px;display:grid;grid-template-columns:1.1fr 1fr 1.2fr 1.4fr;gap:36px}
+.sdf-in{max-width:1120px;margin:0 auto;padding:48px 22px 28px;display:grid;grid-template-columns:1.4fr 1fr 1.3fr;gap:36px}
 .sdf-brand .mono{font-family:var(--f-script,serif);color:#cdb38f;font-size:2.6rem;line-height:1;display:block;letter-spacing:-.14em}
 .sdf-brand p{margin:.5rem 0 0;font-size:.85rem;color:#a99f90}
 .sdf h4{margin:0 0 12px;font-family:var(--f-body,system-ui,sans-serif);font-weight:600;font-size:1.05rem;color:#cdb38f;letter-spacing:.02em}
@@ -349,9 +349,17 @@ header{animation:sdFadeDown .6s cubic-bezier(.2,.8,.2,1) both}
 .sdf button:hover{background:#d9c19f}
 .sdf-msg{font-size:.82rem;min-height:1.3em;margin:0;color:#cdb38f}
 .sdf-bottom{max-width:1120px;margin:0 auto;padding:18px 22px 26px;border-top:1px solid #6f5f48;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 22px;font-size:.85rem;color:#a99f90;text-align:center}
-@media (max-width:900px){.sdf-in{grid-template-columns:1fr 1fr}}
+@media (max-width:900px){.sdf-in{grid-template-columns:1fr 1fr}.sdf-brand{grid-column:1/-1}}
 @media (max-width:560px){.sdf-in{grid-template-columns:1fr;gap:28px;padding:40px 22px 24px}.sdf-bottom{flex-direction:column;gap:6px}}
-
+.sdf-co{gap:12px!important}
+.sdf-co a{display:flex;align-items:center;gap:12px;min-width:0}
+.sdf-co a > span:last-child{display:flex;flex-direction:column;line-height:1.35;min-width:0;overflow-wrap:anywhere}
+.sdf-co small{font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#a99f90}
+.sdf-ic{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid #6f5f48;display:grid;place-items:center;color:#cdb38f;transition:background .2s,color .2s}
+.sdf-ic svg,.sdf-social svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.sdf-co a:hover .sdf-ic,.sdf-social a:hover{background:#cdb38f;color:#1f1c17;border-color:#cdb38f}
+.sdf-social{display:flex;gap:10px;margin-top:16px}
+.sdf-social a{width:40px;height:40px;border-radius:50%;border:1px solid #6f5f48;display:grid;place-items:center;color:#cdb38f;transition:background .2s,color .2s}
 footer.sdf{padding:0;border-top:0;font-size:.95rem;color:#d9d1c4}
 footer.sdf .mono{font-size:2.6rem}
 </style>
@@ -552,36 +560,19 @@ footer.sdf .mono{font-size:2.6rem}
     </div>
     <div>
       <h4>Coordonnées</h4>
-      <ul>
-        <li><a class="sdf-mail" href="mailto:salamataniang@gmail.com">salamataniang@gmail.com</a></li>
-        <li><a href="tel:+33658418337">06 58 41 83 37</a></li>
-        <li><a href="https://www.instagram.com/sweet_delices/" target="_blank" rel="noopener">Instagram @sweet_delices</a></li>
-        <li><a href="https://www.snapchat.com/add/sweetdelices24" target="_blank" rel="noopener">Snapchat sweetdelices24</a></li>
-        <li><a href="https://www.tiktok.com/@salamataniang350" target="_blank" rel="noopener">TikTok salamataniang350</a></li>
+      <ul class="sdf-co">
+        <li><a href="mailto:salamataniang@gmail.com"><span class="sdf-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M4 7l8 6 8-6"/></svg></span><span><small>E-mail</small>salamataniang@gmail.com</span></a></li>
+        <li><a href="tel:+33658418337"><span class="sdf-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5h2.6l1.4 4-2 1.3a12 12 0 0 0 6.6 6.6l1.3-2 4 1.4v2.6a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z"/></svg></span><span><small>Téléphone</small>06 58 41 83 37</span></a></li>
       </ul>
-    </div>
-    <div>
-      <h4>Newsletter</h4>
-      <p style="margin:0">Rejoignez la team Sweet Délices : nouveautés, éditions limitées et dates de commande.</p>
-      <form class="sdf-news" novalidate>
-        <input type="email" name="email" autocomplete="email" placeholder="Votre e-mail" aria-label="Votre e-mail">
-        <button type="submit">S'abonner</button>
-        <p class="sdf-msg" role="status" aria-live="polite"></p>
-      </form>
+      <div class="sdf-social" aria-label="Réseaux sociaux">
+        <a href="https://www.instagram.com/sweet_delices/" target="_blank" rel="noopener" aria-label="Instagram @sweet_delices" title="Instagram @sweet_delices"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6" fill="currentColor"/></svg></a>
+        <a href="https://www.snapchat.com/add/sweetdelices24" target="_blank" rel="noopener" aria-label="Snapchat sweetdelices24" title="Snapchat sweetdelices24"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5c3 0 5 2.2 5 5.2v2.1l1.6-.5c.6-.2 1 .6.5 1l-1.9 1.2c.6 1.7 1.8 2.9 3.3 3.4.5.2.4.9-.1 1l-2 .4-.4 1.4-2.1-.2c-1 0-1.8 1.4-3.9 1.4s-2.9-1.4-3.9-1.4l-2.1.2-.4-1.4-2-.4c-.5-.1-.6-.8-.1-1 1.5-.5 2.7-1.7 3.3-3.4L4.9 11.3c-.5-.4-.1-1.2.5-1l1.6.5V8.7c0-3 2-5.2 5-5.2z"/></svg></a>
+        <a href="https://www.tiktok.com/@salamataniang350" target="_blank" rel="noopener" aria-label="TikTok salamataniang350" title="TikTok salamataniang350"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3.5v11.2a3.3 3.3 0 1 1-3.3-3.3"/><path d="M14 3.5c.4 2.6 2.2 4.4 5 4.6"/></svg></a>
+      </div>
     </div>
   </div>
   <div class="sdf-bottom"><span>© 2026 Sweet Délices | Tous droits réservés</span><a href="mentions-legales.html">Mentions légales</a><a href="cgv.html">CGV</a></div>
 </footer>
-<script>
-document.querySelectorAll('.sdf-news').forEach(f => f.addEventListener('submit', e => {
-  e.preventDefault();
-  const v = f.email.value.trim(), msg = f.querySelector('.sdf-msg');
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { msg.textContent = 'Merci d\'indiquer une adresse e-mail valide.'; f.email.focus(); return; }
-  location.href = 'mailto:salamataniang@gmail.com?subject=' + encodeURIComponent('Inscription à la newsletter') + '&body=' + encodeURIComponent('Bonjour Sweet Délices,\n\nJe souhaite recevoir la newsletter à cette adresse : ' + v + '\n\nMerci !');
-  msg.textContent = 'Votre messagerie s\'ouvre : envoyez le message pour confirmer votre inscription.';
-  f.reset();
-}));
-</script>
 
 
 <div class="drawer-bg" id="drawerBg" hidden></div>
