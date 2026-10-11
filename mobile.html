@@ -189,6 +189,21 @@ p{margin:0}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chips span{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;padding:6px 11px;border:1px solid var(--rose);border-radius:999px;color:var(--rose)}
 .small{font-size:.82rem;color:var(--muted)}
+.pc-d{border-top:1px solid var(--line)}
+.pc-d summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;cursor:pointer}
+.pc-d summary::-webkit-details-marker{display:none}
+.pc-d summary::after{content:"+";font-size:1.4rem;color:var(--olive);line-height:1}
+.pc-d[open] summary::after{content:"–"}
+.pc-d .pc-grp:first-of-type{border-top:0;padding-top:2px}
+.pieces .pc-h{font-size:1.7rem;color:var(--rose);font-weight:400;flex:1}
+.pc-sum{font-size:.74rem;color:var(--muted)}
+.pc-grp{padding:10px 0;border-top:1px solid var(--line)}
+.pc-price{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+.pc-price b{font-family:var(--f-display);font-size:1.25rem;color:var(--olive);font-weight:400}
+.pc-price small{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pc-grp ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.pc-grp li{font-size:.8rem;padding:5px 10px;border-radius:999px;background:var(--bg,#f7f1ea);border:1px solid var(--line)}
+
 .small b{color:var(--ink)}
 .common{font-size:.85rem;color:var(--muted)}
 .common strong{color:var(--olive);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;margin-right:6px}
@@ -479,6 +494,11 @@ input,select,textarea{min-width:0;max-width:100%}
             </div>
             <p class="small">Puis <b>250 €</b> par tranche de 10 personnes. 6 apéritifs salés, 6 mignardises sucrées et 2 cocktails. Nappes, présentoirs, fleurs, assiettes et couverts fournis.</p>
             <div class="chips"><span>Livraison</span><span>Installation</span><span>Décoration</span></div>
+          </div>
+          <div class="panel pieces">
+            <div class="row-head"><h2>À la pièce</h2></div>
+            <p class="small">Pièces cocktail pour composer un buffet ou un apéritif. Prix à la pièce.</p>
+            <details class="pc-d"><summary><span class="script pc-h">Salé</span><span class="pc-sum">18 pièces · dès 1,80 €</span></summary><div class="pc-grp"><div class="pc-price"><b>1,80 €</b><small>la pièce</small></div><ul><li>Beef burger</li><li>Chicken burger</li><li>Fish burger</li><li>Hot dog</li><li>Tacos mexicain</li><li>Wrap poulet pané</li><li>Navette saumon</li><li>Navette poulet</li><li>Bruschetta tomate à l’ail</li></ul></div><div class="pc-grp"><div class="pc-price"><b>2,50 €</b><small>la pièce</small></div><ul><li>Salade César</li><li>Brochette à la libanaise</li><li>Dynamite chicken</li><li>Crevettes au parmesan</li><li>Salade mozzarella pesto</li><li>Verrine avocat crevettes</li><li>Mille-feuille avocat, crevettes et mangue</li><li>Brochette de poulet</li><li>Brochette de crevettes</li></ul></div></details><details class="pc-d"><summary><span class="script pc-h">Sucré</span><span class="pc-sum">17 pièces · dès 2 €</span></summary><div class="pc-grp"><div class="pc-price"><b>2 €</b><small>la pièce</small></div><ul><li>Choux à la crème</li><li>Moelleux au chocolat</li><li>Tartelette au citron</li><li>Tartelette aux fruits</li><li>Tartelette au chocolat</li><li>Macarons</li><li>Crème brûlée</li><li>Panna cotta</li></ul></div><div class="pc-grp"><div class="pc-price"><b>2,50 €</b><small>la pièce</small></div><ul><li>Tiramisu</li><li>Verrine façon pomme tatin</li><li>Mousse au chocolat</li><li>Verrine façon sundae</li><li>Verrine mangue passion</li><li>Verrine brownie Dulcey</li><li>Verrine façon poire Belle-Hélène</li></ul></div><div class="pc-grp"><div class="pc-price"><b>3 €</b><small>la pièce</small></div><ul><li>Mini entremets</li><li>Pavlova</li></ul></div></details>
           </div>
           <button class="btn" type="button" data-go="devis">Calculer mon devis</button>
         </section>

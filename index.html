@@ -219,6 +219,17 @@ body.lock{position:fixed;left:0;right:0;width:100%;overflow:hidden}
 
 /* Traiteur */
 .menus{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.pieces{grid-column:1/-1}
+.pc-cols{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.pc-col h4{font-size:2rem;color:var(--rose);margin:0 0 6px;font-weight:400}
+.pc-grp{padding:14px 0;border-top:1px solid var(--line)}
+.pc-price{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+.pc-price b{font-family:var(--f-display);font-size:1.4rem;color:var(--olive);font-weight:400}
+.pc-price small{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pc-grp ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.pc-grp li{font-size:.86rem;padding:5px 11px;border-radius:999px;background:var(--bg,#f7f1ea);border:1px solid var(--line)}
+@media (max-width:760px){.pc-cols{grid-template-columns:1fr}}
+
 @media (max-width:860px){.menus{grid-template-columns:1fr}}
 .menu-card{background:var(--surface);border-radius:24px;padding:26px;display:flex;flex-direction:column;gap:18px;min-width:0;box-shadow:var(--shadow)}
 .strip{border-radius:16px;max-width:100%;background-repeat:no-repeat;background-size:100% auto}
@@ -492,6 +503,12 @@ footer.sdf .mono{font-size:2.6rem}
           </div>
           <div class="included"><span>Livraison</span><span>Installation</span><span>Décoration</span></div>
           <p class="note">Cooking show : <b>devis sur demande</b>.</p>
+        </article>
+        <article class="menu-card pieces" aria-labelledby="t-pieces">
+          <div><p class="eyebrow">Pièces cocktail</p><h3 id="t-pieces">À la pièce</h3></div>
+          <p class="note">Pour composer votre buffet, un apéritif ou compléter une commande. Prix à la pièce.</p>
+          <div class="pc-cols"><div class="pc-col"><h4 class="script">Salé</h4><div class="pc-grp"><div class="pc-price"><b>1,80 €</b><small>la pièce</small></div><ul><li>Beef burger</li><li>Chicken burger</li><li>Fish burger</li><li>Hot dog</li><li>Tacos mexicain</li><li>Wrap poulet pané</li><li>Navette saumon</li><li>Navette poulet</li><li>Bruschetta tomate à l’ail</li></ul></div><div class="pc-grp"><div class="pc-price"><b>2,50 €</b><small>la pièce</small></div><ul><li>Salade César</li><li>Brochette à la libanaise</li><li>Dynamite chicken</li><li>Crevettes au parmesan</li><li>Salade mozzarella pesto</li><li>Verrine avocat crevettes</li><li>Mille-feuille avocat, crevettes et mangue</li><li>Brochette de poulet</li><li>Brochette de crevettes</li></ul></div></div><div class="pc-col"><h4 class="script">Sucré</h4><div class="pc-grp"><div class="pc-price"><b>2 €</b><small>la pièce</small></div><ul><li>Choux à la crème</li><li>Moelleux au chocolat</li><li>Tartelette au citron</li><li>Tartelette aux fruits</li><li>Tartelette au chocolat</li><li>Macarons</li><li>Crème brûlée</li><li>Panna cotta</li></ul></div><div class="pc-grp"><div class="pc-price"><b>2,50 €</b><small>la pièce</small></div><ul><li>Tiramisu</li><li>Verrine façon pomme tatin</li><li>Mousse au chocolat</li><li>Verrine façon sundae</li><li>Verrine mangue passion</li><li>Verrine brownie Dulcey</li><li>Verrine façon poire Belle-Hélène</li></ul></div><div class="pc-grp"><div class="pc-price"><b>3 €</b><small>la pièce</small></div><ul><li>Mini entremets</li><li>Pavlova</li></ul></div></div></div>
+          <p class="note">Quantités et choix à préciser dans votre <a href="#devis"><b>demande de devis</b></a>.</p>
         </article>
       </div>
 
