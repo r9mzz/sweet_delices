@@ -823,6 +823,7 @@ $('pSizes').addEventListener('click', e => {
   updatePrices();
 });
 $('pAdd').addEventListener('click', () => {
+  if (!cur) return;
   const isCan = cur.id[0] === 'c';
   addItem(isCan
     ? {key: cur.id + '-' + size, name: cur.name, detail: 'Canette ' + size + ' ml · ' + eur(SIZES[size]), price: SIZES[size], img: cur.img}
