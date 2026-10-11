@@ -155,7 +155,10 @@ section{padding-block:80px}
 .stepper button{width:34px;height:34px;border:none;background:none;cursor:pointer;font-size:1.1rem;color:var(--olive)}
 .stepper output{min-width:24px;text-align:center;font-variant-numeric:tabular-nums;font-weight:600}
 .buy-row{display:flex;gap:10px;align-items:center}
-.added{font-size:.8rem;color:var(--olive);min-height:1.6em;line-height:1.6}
+.added{position:absolute;left:20px;right:20px;bottom:6px;font-size:.8rem;color:var(--olive);line-height:1.4;pointer-events:none}
+.card-body{position:relative;padding-bottom:28px}
+.ttl{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.ttl .price-big{font-size:1.35rem;white-space:nowrap}
 .card.feature{grid-column:span 2;flex-direction:row}
 .card.feature .ph{aspect-ratio:auto;flex:1.2;min-height:340px}
 .card.feature .card-body{flex:1;justify-content:center;padding:28px}
@@ -219,21 +222,7 @@ body.lock{position:fixed;left:0;right:0;width:100%;overflow:hidden}
 
 /* Traiteur */
 .menus{display:grid;grid-template-columns:1fr 1fr;gap:24px}
-.pieces{grid-column:1/-1}
-.pc-photos{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 0 12px;margin-bottom:4px;scrollbar-width:thin}
-.pc-photos figure{margin:0;flex:0 0 31%;scroll-snap-align:start;position:relative;border-radius:16px;overflow:hidden;background:var(--bg-alt,#efe1dc)}
-.pc-photos img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
-.pc-photos figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 10px 8px;font-size:.74rem;line-height:1.3;color:#fff;background:linear-gradient(transparent,rgba(31,28,23,.75))}
 
-.pc-cols{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-.pc-col h4{font-size:2rem;color:var(--rose);margin:0 0 6px;font-weight:400}
-.pc-grp{padding:14px 0;border-top:1px solid var(--line)}
-.pc-price{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
-.pc-price b{font-family:var(--f-display);font-size:1.4rem;color:var(--olive);font-weight:400}
-.pc-price small{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.pc-grp ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
-.pc-grp li{font-size:.86rem;padding:5px 11px;border-radius:999px;background:var(--bg,#f7f1ea);border:1px solid var(--line)}
-@media (max-width:760px){.pc-cols{grid-template-columns:1fr}}
 
 @media (max-width:860px){.menus{grid-template-columns:1fr}}
 .menu-card{background:var(--surface);border-radius:24px;padding:26px;display:flex;flex-direction:column;gap:18px;min-width:0;box-shadow:var(--shadow)}
@@ -319,7 +308,7 @@ input,select,textarea{min-width:0;max-width:100%;font-size:16px}
 #devisForm > *,#orderForm > *{min-width:0}
 .estimate .amount{white-space:nowrap}
 /* Photos de canettes : tout le cadre, pour laisser de l'air autour */
-.card .ph.can{aspect-ratio:1206/1427}
+.card .ph.can{aspect-ratio:1/1}
 /* Icônes des boutons (−, +, ✕) en dessin vectoriel : centrées exactement, quelle que soit la police */
 .ico{width:14px;height:14px;display:block;margin:auto;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;pointer-events:none}
 .stepper button,.close,.x{display:inline-flex;align-items:center;justify-content:center;padding:0;line-height:0}
@@ -381,6 +370,36 @@ footer.sdf .mono{font-size:2.6rem}
 
 /* Prix un peu plus épais (Italiana n'existe qu'en un seul poids) */
 .price-big,.pc-price b,.formule b,.tarifs td:last-child,.estimate .amount,.totals .grand{-webkit-text-stroke:.6px currentColor;paint-order:stroke fill}
+/* Pièces cocktail */
+#pieces{scroll-margin-top:80px}
+.pieces-box{background:var(--surface);border-radius:24px;padding:24px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:16px}
+.pieces-box .pc-toggle{align-self:flex-start}
+.pc-toggle{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;background:var(--bg-alt);border-radius:999px}
+.pc-toggle button{border:0;background:none;border-radius:999px;padding:9px 26px;font:600 .95rem var(--f-body);color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;line-height:1.25}
+.pc-toggle button small{font-weight:500;font-size:.72rem}
+.pc-toggle button[aria-selected="true"]{background:var(--surface);color:var(--olive);box-shadow:0 2px 8px rgb(0 0 0 / .08)}
+.pc-hint{margin:0;font-size:.86rem;color:var(--muted)}
+.pc-panel{display:flex;flex-direction:column;gap:22px}
+.pc-panel[hidden]{display:none}
+.pc-mosaic{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(150px,1fr);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.pc-mosaic::-webkit-scrollbar{display:none}
+.pc-mosaic figure{margin:0;position:relative;border-radius:18px;overflow:hidden;scroll-snap-align:start;background:var(--bg-alt)}
+.pc-mosaic img{display:block;width:100%;height:240px;object-fit:cover}
+.pc-mosaic figcaption{position:absolute;inset:auto 0 0;padding:26px 12px 10px;font-size:.78rem;line-height:1.3;color:#fff;background:linear-gradient(transparent,rgb(31 28 23 / .78))}
+.pc-grp h4{margin:0 0 12px;display:flex;align-items:baseline;gap:8px;font:600 .7rem var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pc-grp h4 b{font:400 1.5rem var(--f-display);letter-spacing:0;text-transform:none;color:var(--olive);-webkit-text-stroke:.6px currentColor}
+.pc-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px}
+@media (max-width:700px){.pc-list{grid-template-columns:1fr}}
+.pc-item{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 16px;border:1px solid var(--line);border-radius:16px;background:var(--bg);min-height:56px}
+.pc-name{flex:1;min-width:0;font-weight:500;font-size:.92rem;line-height:1.3}
+.pc-step{background:var(--surface);flex:none}
+.pc-step button{width:30px;height:30px}
+.pc-step input{width:36px;border:0;background:none;text-align:center;font:600 .95rem var(--f-body);color:var(--ink);appearance:textfield;-moz-appearance:textfield;padding:0}
+.pc-step input::-webkit-inner-spin-button,.pc-step input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.pc-add{flex:none;border:1px solid var(--olive);background:var(--olive);color:var(--on-olive);border-radius:999px;padding:8px 14px;font:600 .82rem var(--f-body);cursor:pointer;white-space:nowrap;min-width:84px}
+.pc-add.done{background:var(--surface);color:var(--olive)}
+.pc-add:focus-visible,.pc-toggle button:focus-visible{outline:2px solid var(--olive);outline-offset:2px}
+@media (max-width:560px){.pieces-box{padding:16px}.pieces-box .pc-toggle{align-self:stretch}.pc-mosaic{grid-auto-columns:42%}.pc-mosaic img{height:auto;aspect-ratio:4/5}.pc-list{grid-template-columns:1fr}.pc-item{padding-left:12px}}
 </style>
 <style>img{max-width:100%}</style>
 </head>
@@ -459,6 +478,8 @@ footer.sdf .mono{font-size:2.6rem}
 
       <div class="sub-head"><h3>Cookies à l'unité</h3><p>4,50 € le cookie</p></div>
       <div id="panel-cookies" class="grid four"></div>
+      <div class="sub-head" id="pieces"><h3>Pièces cocktail</h3><p>Pour vos buffets et apéritifs, à la pièce, dès 1,80 €</p></div>
+      <div class="pieces-box" id="pieces-box"></div>
       <div class="quote-band">
         <div><span class="script">sur devis</span><h3>Une grosse commande ?</h3><p>Anniversaire, baptême, mariage : dites-nous la quantité, on vous prépare un devis.</p></div>
         <a class="btn" href="#devis">Demander un devis</a>
@@ -511,12 +532,7 @@ footer.sdf .mono{font-size:2.6rem}
           </div>
           <div class="included"><span>Livraison</span><span>Installation</span><span>Décoration</span></div>
           <p class="note">Cooking show : <b>devis sur demande</b>.</p>
-        </article>
-        <article class="menu-card pieces" aria-labelledby="t-pieces">
-          <div><p class="eyebrow">Pièces cocktail</p><h3 id="t-pieces">À la pièce</h3></div>
-          <p class="note">Pour composer votre buffet, un apéritif ou compléter une commande. Prix à la pièce.</p>
-          <div class="pc-cols"><div class="pc-col"><h4 class="script">Salé</h4><div class="pc-photos"><figure><img src="img/pieces/sale-brochettes.jpg" alt="Brochette à la libanaise" loading="lazy" width="640" height="800"><figcaption>Brochette à la libanaise</figcaption></figure><figure><img src="img/pieces/sale-crevettes.jpg" alt="Crevettes au parmesan" loading="lazy" width="640" height="800"><figcaption>Crevettes au parmesan</figcaption></figure><figure><img src="img/pieces/sale-plateau.jpg" alt="Burgers, tacos et bruschettas" loading="lazy" width="640" height="800"><figcaption>Burgers, tacos et bruschettas</figcaption></figure><figure><img src="img/pieces/sale-wraps.jpg" alt="Wraps, navettes et burgers" loading="lazy" width="640" height="800"><figcaption>Wraps, navettes et burgers</figcaption></figure><figure><img src="img/pieces/sale-burgers.jpg" alt="Burgers et navettes saumon" loading="lazy" width="640" height="800"><figcaption>Burgers et navettes saumon</figcaption></figure><figure><img src="img/pieces/sale-taboule.jpg" alt="Verrines salées" loading="lazy" width="640" height="800"><figcaption>Verrines salées</figcaption></figure></div><div class="pc-grp"><div class="pc-price"><b>1,80 €</b><small>la pièce</small></div><ul><li>Beef burger</li><li>Chicken burger</li><li>Fish burger</li><li>Hot dog</li><li>Tacos mexicain</li><li>Wrap poulet pané</li><li>Navette saumon</li><li>Navette poulet</li><li>Bruschetta tomate à l’ail</li></ul></div><div class="pc-grp"><div class="pc-price"><b>2,50 €</b><small>la pièce</small></div><ul><li>Salade César</li><li>Brochette à la libanaise</li><li>Dynamite chicken</li><li>Crevettes au parmesan</li><li>Salade mozzarella pesto</li><li>Verrine avocat crevettes</li><li>Mille-feuille avocat, crevettes et mangue</li><li>Brochette de poulet</li><li>Brochette de crevettes</li></ul></div></div><div class="pc-col"><h4 class="script">Sucré</h4><div class="pc-photos"><figure><img src="img/pieces/sucre-verrines.jpg" alt="Tiramisu et verrine mangue passion" loading="lazy" width="640" height="800"><figcaption>Tiramisu et verrine mangue passion</figcaption></figure><figure><img src="img/pieces/sucre-pannacotta.jpg" alt="Panna cotta" loading="lazy" width="640" height="800"><figcaption>Panna cotta</figcaption></figure><figure><img src="img/pieces/sucre-mignardises.jpg" alt="Choux, macarons et mini entremets" loading="lazy" width="640" height="800"><figcaption>Choux, macarons et mini entremets</figcaption></figure><figure><img src="img/pieces/sucre-macarons.jpg" alt="Macarons" loading="lazy" width="640" height="800"><figcaption>Macarons</figcaption></figure></div><div class="pc-grp"><div class="pc-price"><b>2 €</b><small>la pièce</small></div><ul><li>Choux à la crème</li><li>Moelleux au chocolat</li><li>Tartelette au citron</li><li>Tartelette aux fruits</li><li>Tartelette au chocolat</li><li>Macarons</li><li>Crème brûlée</li><li>Panna cotta</li></ul></div><div class="pc-grp"><div class="pc-price"><b>2,50 €</b><small>la pièce</small></div><ul><li>Tiramisu</li><li>Verrine façon pomme tatin</li><li>Mousse au chocolat</li><li>Verrine façon sundae</li><li>Verrine mangue passion</li><li>Verrine brownie Dulcey</li><li>Verrine façon poire Belle-Hélène</li></ul></div><div class="pc-grp"><div class="pc-price"><b>3 €</b><small>la pièce</small></div><ul><li>Mini entremets</li><li>Pavlova</li></ul></div></div></div>
-          <p class="note">Quantités et choix à préciser dans votre <a href="#devis"><b>demande de devis</b></a>.</p>
+          <a class="btn ghost small" href="#pieces" style="align-self:flex-start">Composer à la pièce · dès 1,80 €</a>
         </article>
       </div>
 
@@ -624,6 +640,7 @@ footer.sdf .mono{font-size:2.6rem}
 </aside>
 <div class="toast" id="toast" hidden></div>
 
+<script src="pieces.js"></script>
 <script>
 // Coordonnées de Sweet Délices : les commandes et devis partent par e-mail
 const SD_MAIL = 'salamataniang@gmail.com', SD_TEL = '06 58 41 83 37';
@@ -669,7 +686,7 @@ const COOKIE_PRICE = 4.5, BOX = {id:'k-box', name:'Box assortie', price:25, img:
 let cart = [];
 try { cart = JSON.parse(localStorage.getItem('sd-cart') || '[]'); } catch (_) { cart = []; }
 // Prix toujours recalculés depuis la carte (un panier gardé dans le navigateur garde sinon d'anciens prix)
-const priceOf = k => k.startsWith('k-custom') || k === 'k-box' ? BOX.price : k.startsWith('k-') ? COOKIE_PRICE : SIZES[k.split('-').pop()];
+const priceOf = k => k.startsWith('p-') ? (pieceOf(k) || {}).price : k.startsWith('k-custom') || k === 'k-box' ? BOX.price : k.startsWith('k-') ? COOKIE_PRICE : SIZES[k.split('-').pop()];
 const cropOf = k => (COOKIES.find(c => c.id === k) || {}).crop;
 cart = cart.filter(i => i && i.key && priceOf(i.key)).map(i => ({...i, price: priceOf(i.key), crop: cropOf(i.key)}));
 const save = () => { try { localStorage.setItem('sd-cart', JSON.stringify(cart)); } catch (_) {} };
@@ -692,12 +709,18 @@ function cookieCard(p){
     ? `<div class="ph crop" role="img" aria-label="Cookie ${p.name}" style="background-image:url('${p.img}');background-position:${p.crop[0]}% ${p.crop[1]}%"></div>`
     : `<div class="ph"><img src="${p.img}" alt="Cookie ${p.name}" loading="lazy"></div>`;
   return `<article class="card">${ph}
-  <div class="card-body"><h3>${p.name}</h3><p>${p.desc}</p>
-  <div class="buy"><span class="price-big" style="font-size:1.35rem">${eur(COOKIE_PRICE)}</span>${stepper(p.id)}<button class="btn small" type="button" data-add="${p.id}">Ajouter</button></div>
+  <div class="card-body"><div class="ttl"><h3>${p.name}</h3><span class="price-big">${eur(COOKIE_PRICE)}</span></div><p>${p.desc}</p>
+  <div class="buy">${stepper(p.id)}<button class="btn small" type="button" data-add="${p.id}">Ajouter</button></div>
   <div class="added" id="a-${p.id}"></div></div></article>`;
 }
 document.getElementById('panel-canettes').innerHTML = CANETTES.map(canetteCard).join('');
 document.getElementById('panel-cookies').innerHTML = COOKIES.map(cookieCard).join('');
+sdPieces(document.getElementById('pieces-box'), (p, n) => {
+  const ex = cart.find(i => i.key === p.id);
+  if (ex) ex.qty += n; else cart.push({key: p.id, name: p.name, detail: p.detail, price: p.price, img: p.img, qty: n});
+  save(); renderCart(); toast('Ajouté au panier : ' + n + ' × ' + p.name);
+  const cc = document.getElementById('cartCount'); cc.classList.remove('bump'); void cc.offsetWidth; cc.classList.add('bump');
+});
 
 const chosenSize = {};
 document.addEventListener('click', e => {

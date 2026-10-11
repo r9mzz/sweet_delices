@@ -131,7 +131,7 @@ p{margin:0}
 .promise div::before{content:"✿";color:var(--rose)}
 
 /* Carte */
-.seg{display:grid;grid-template-columns:repeat(3,1fr);background:var(--bg-alt);border-radius:14px;padding:4px;gap:4px;position:sticky;top:-18px;z-index:2}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);background:var(--bg-alt);border-radius:14px;padding:4px;gap:4px;position:sticky;top:-18px;z-index:2}
 .seg button{border:none;background:none;border-radius:10px;padding:9px 4px;font-weight:600;font-size:.84rem;color:var(--muted)}
 .seg button[aria-selected="true"]{background:var(--surface);color:var(--olive);box-shadow:0 2px 8px rgb(0 0 0 / .08)}
 .sec-title{display:flex;flex-direction:column;gap:4px}
@@ -189,24 +189,6 @@ p{margin:0}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chips span{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;padding:6px 11px;border:1px solid var(--rose);border-radius:999px;color:var(--rose)}
 .small{font-size:.82rem;color:var(--muted)}
-.pc-photos{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 0 12px;margin-bottom:4px;scrollbar-width:thin}
-.pc-photos figure{margin:0;flex:0 0 42%;scroll-snap-align:start;position:relative;border-radius:16px;overflow:hidden;background:var(--bg-alt,#efe1dc)}
-.pc-photos img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover}
-.pc-photos figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 10px 8px;font-size:.74rem;line-height:1.3;color:#fff;background:linear-gradient(transparent,rgba(31,28,23,.75))}
-.pc-d{border-top:1px solid var(--line)}
-.pc-d summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;cursor:pointer}
-.pc-d summary::-webkit-details-marker{display:none}
-.pc-d summary::after{content:"+";font-size:1.4rem;color:var(--olive);line-height:1}
-.pc-d[open] summary::after{content:"–"}
-.pc-d .pc-grp:first-of-type{border-top:0;padding-top:2px}
-.pieces .pc-h{font-size:1.7rem;color:var(--rose);font-weight:400;flex:1}
-.pc-sum{font-size:.74rem;color:var(--muted)}
-.pc-grp{padding:10px 0;border-top:1px solid var(--line)}
-.pc-price{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
-.pc-price b{font-family:var(--f-display);font-size:1.25rem;color:var(--olive);font-weight:400}
-.pc-price small{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.pc-grp ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
-.pc-grp li{font-size:.8rem;padding:5px 10px;border-radius:999px;background:var(--bg,#f7f1ea);border:1px solid var(--line)}
 
 .small b{color:var(--ink)}
 .common{font-size:.85rem;color:var(--muted)}
@@ -394,6 +376,40 @@ input,select,textarea{min-width:0;max-width:100%}
 
 /* Prix un peu plus épais (Italiana n'existe qu'en un seul poids) */
 .price,.pc-price b,.formule b,.kv div b,.estimate .amount{-webkit-text-stroke:.6px currentColor;paint-order:stroke fill}
+/* Pièces cocktail */
+.pieces-m{display:flex;flex-direction:column;gap:14px}
+.pieces-m[hidden]{display:none}
+.pc-toggle{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;background:var(--bg-alt);border-radius:999px}
+.pc-toggle button{border:0;background:none;border-radius:999px;padding:9px 26px;font:600 .95rem var(--f-body);color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;line-height:1.25}
+.pc-toggle button small{font-weight:500;font-size:.72rem}
+.pc-toggle button[aria-selected="true"]{background:var(--surface);color:var(--olive);box-shadow:0 2px 8px rgb(0 0 0 / .08)}
+.pc-hint{margin:0;font-size:.86rem;color:var(--muted)}
+.pc-panel{display:flex;flex-direction:column;gap:22px}
+.pc-panel[hidden]{display:none}
+.pc-mosaic{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(150px,1fr);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.pc-mosaic::-webkit-scrollbar{display:none}
+.pc-mosaic figure{margin:0;position:relative;border-radius:18px;overflow:hidden;scroll-snap-align:start;background:var(--bg-alt)}
+.pc-mosaic img{display:block;width:100%;height:240px;object-fit:cover}
+.pc-mosaic figcaption{position:absolute;inset:auto 0 0;padding:26px 12px 10px;font-size:.78rem;line-height:1.3;color:#fff;background:linear-gradient(transparent,rgb(31 28 23 / .78))}
+.pc-grp h4{margin:0 0 12px;display:flex;align-items:baseline;gap:8px;font:600 .7rem var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pc-grp h4 b{font:400 1.5rem var(--f-display);letter-spacing:0;text-transform:none;color:var(--olive);-webkit-text-stroke:.6px currentColor}
+.pc-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:10px}
+.pc-item{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 16px;border:1px solid var(--line);border-radius:16px;background:var(--bg);min-height:56px}
+.pc-name{flex:1;min-width:0;font-weight:500;font-size:.92rem;line-height:1.3}
+.pc-step{background:var(--surface);flex:none}
+.pc-step button{width:30px;height:30px}
+.pc-step input{width:36px;border:0;background:none;text-align:center;font:600 .95rem var(--f-body);color:var(--ink);appearance:textfield;-moz-appearance:textfield;padding:0}
+.pc-step input::-webkit-inner-spin-button,.pc-step input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.pc-add{flex:none;border:1px solid var(--olive);background:var(--olive);color:var(--on-olive);border-radius:999px;padding:8px 14px;font:600 .82rem var(--f-body);cursor:pointer;white-space:nowrap;min-width:84px}
+.pc-add.done{background:var(--surface);color:var(--olive)}
+.pc-add:focus-visible,.pc-toggle button:focus-visible{outline:2px solid var(--olive);outline-offset:2px}
+.pieces-m .pc-mosaic{grid-auto-columns:42%;margin:0 -18px;padding:0 18px;scroll-padding-inline:18px}
+.pieces-m .pc-mosaic img{height:auto;aspect-ratio:4/5}
+.pieces-m .pc-list{grid-template-columns:1fr;gap:8px}
+.pieces-m .pc-item{padding:8px 8px 8px 14px;background:var(--surface)}
+.pieces-m .pc-name{font-size:.88rem}
+.pieces-m .pc-add{min-width:78px;padding:8px 12px}
+.pieces-m .pc-grp h4 b{font-size:1.35rem}
 </style>
 <style>img{max-width:100%}</style>
 </head>
@@ -446,6 +462,7 @@ input,select,textarea{min-width:0;max-width:100%}
             <button type="button" role="tab" data-cat="canettes" aria-selected="true">Canettes</button>
             <button type="button" role="tab" data-cat="cookies" aria-selected="false">Cookies</button>
             <button type="button" role="tab" data-cat="box" aria-selected="false">Box</button>
+            <button type="button" role="tab" data-cat="pieces" aria-selected="false">Pièces</button>
           </div>
           <div id="cat-canettes" class="tiles"></div>
           <div id="cat-cookies" class="tiles" hidden></div>
@@ -469,6 +486,7 @@ input,select,textarea{min-width:0;max-width:100%}
               </div>
             </div>
           </div>
+          <div id="cat-pieces" class="pieces-m" hidden></div>
           <div class="quote-card">
             <span class="script">sur devis</span>
             <h3>Une grosse commande ?</h3>
@@ -501,11 +519,7 @@ input,select,textarea{min-width:0;max-width:100%}
             </div>
             <p class="small">Puis <b>250 €</b> par tranche de 10 personnes. 6 apéritifs salés, 6 mignardises sucrées et 2 cocktails. Nappes, présentoirs, fleurs, assiettes et couverts fournis.</p>
             <div class="chips"><span>Livraison</span><span>Installation</span><span>Décoration</span></div>
-          </div>
-          <div class="panel pieces">
-            <div class="row-head"><h2>À la pièce</h2></div>
-            <p class="small">Pièces cocktail pour composer un buffet ou un apéritif. Prix à la pièce.</p>
-            <details class="pc-d"><summary><span class="script pc-h">Salé</span><span class="pc-sum">18 pièces · dès 1,80 €</span></summary><div class="pc-photos"><figure><img src="img/pieces/sale-brochettes.jpg" alt="Brochette à la libanaise" loading="lazy" width="640" height="800"><figcaption>Brochette à la libanaise</figcaption></figure><figure><img src="img/pieces/sale-crevettes.jpg" alt="Crevettes au parmesan" loading="lazy" width="640" height="800"><figcaption>Crevettes au parmesan</figcaption></figure><figure><img src="img/pieces/sale-plateau.jpg" alt="Burgers, tacos et bruschettas" loading="lazy" width="640" height="800"><figcaption>Burgers, tacos et bruschettas</figcaption></figure><figure><img src="img/pieces/sale-wraps.jpg" alt="Wraps, navettes et burgers" loading="lazy" width="640" height="800"><figcaption>Wraps, navettes et burgers</figcaption></figure><figure><img src="img/pieces/sale-burgers.jpg" alt="Burgers et navettes saumon" loading="lazy" width="640" height="800"><figcaption>Burgers et navettes saumon</figcaption></figure><figure><img src="img/pieces/sale-taboule.jpg" alt="Verrines salées" loading="lazy" width="640" height="800"><figcaption>Verrines salées</figcaption></figure></div><div class="pc-grp"><div class="pc-price"><b>1,80 €</b><small>la pièce</small></div><ul><li>Beef burger</li><li>Chicken burger</li><li>Fish burger</li><li>Hot dog</li><li>Tacos mexicain</li><li>Wrap poulet pané</li><li>Navette saumon</li><li>Navette poulet</li><li>Bruschetta tomate à l’ail</li></ul></div><div class="pc-grp"><div class="pc-price"><b>2,50 €</b><small>la pièce</small></div><ul><li>Salade César</li><li>Brochette à la libanaise</li><li>Dynamite chicken</li><li>Crevettes au parmesan</li><li>Salade mozzarella pesto</li><li>Verrine avocat crevettes</li><li>Mille-feuille avocat, crevettes et mangue</li><li>Brochette de poulet</li><li>Brochette de crevettes</li></ul></div></details><details class="pc-d"><summary><span class="script pc-h">Sucré</span><span class="pc-sum">17 pièces · dès 2 €</span></summary><div class="pc-photos"><figure><img src="img/pieces/sucre-verrines.jpg" alt="Tiramisu et verrine mangue passion" loading="lazy" width="640" height="800"><figcaption>Tiramisu et verrine mangue passion</figcaption></figure><figure><img src="img/pieces/sucre-pannacotta.jpg" alt="Panna cotta" loading="lazy" width="640" height="800"><figcaption>Panna cotta</figcaption></figure><figure><img src="img/pieces/sucre-mignardises.jpg" alt="Choux, macarons et mini entremets" loading="lazy" width="640" height="800"><figcaption>Choux, macarons et mini entremets</figcaption></figure><figure><img src="img/pieces/sucre-macarons.jpg" alt="Macarons" loading="lazy" width="640" height="800"><figcaption>Macarons</figcaption></figure></div><div class="pc-grp"><div class="pc-price"><b>2 €</b><small>la pièce</small></div><ul><li>Choux à la crème</li><li>Moelleux au chocolat</li><li>Tartelette au citron</li><li>Tartelette aux fruits</li><li>Tartelette au chocolat</li><li>Macarons</li><li>Crème brûlée</li><li>Panna cotta</li></ul></div><div class="pc-grp"><div class="pc-price"><b>2,50 €</b><small>la pièce</small></div><ul><li>Tiramisu</li><li>Verrine façon pomme tatin</li><li>Mousse au chocolat</li><li>Verrine façon sundae</li><li>Verrine mangue passion</li><li>Verrine brownie Dulcey</li><li>Verrine façon poire Belle-Hélène</li></ul></div><div class="pc-grp"><div class="pc-price"><b>3 €</b><small>la pièce</small></div><ul><li>Mini entremets</li><li>Pavlova</li></ul></div></details>
+            <button class="btn ghost" type="button" data-go="carte" data-cat="pieces">Composer à la pièce · dès 1,80 €</button>
           </div>
           <button class="btn" type="button" data-go="devis">Calculer mon devis</button>
         </section>
@@ -643,6 +657,7 @@ input,select,textarea{min-width:0;max-width:100%}
   </div>
 </div>
 
+<script src="pieces.js"></script>
 <script>
 const $ = id => document.getElementById(id);
 // Coordonnées de Sweet Délices : les commandes et devis partent par e-mail
@@ -710,7 +725,7 @@ function go(tab, cat, fromHistory){
 }
 function setCat(cat){
   document.querySelectorAll('.seg [data-cat]').forEach(b => b.setAttribute('aria-selected', b.dataset.cat === cat));
-  ['canettes','cookies','box'].forEach(c => $('cat-' + c).hidden = c !== cat);
+  ['canettes','cookies','box','pieces'].forEach(c => $('cat-' + c).hidden = c !== cat);
   replay($('cat-' + cat), 'enter-grid');
   // Si la barre des catégories est collée en haut, on remonte au début de la nouvelle liste
   const seg = document.querySelector('.seg'), list = $('cat-' + cat);
@@ -749,6 +764,7 @@ function renderCart(){
   $('tDep').textContent = $('oDep').textContent = eur(Math.round(t * 50) / 100);
   $('orderOk').hidden = true;
 }
+sdPieces($('cat-pieces'), (p, n) => addItem({key: p.id, name: p.name, detail: p.detail + ' · ' + eur(p.price), price: p.price, img: p.img}, n));
 $('cLines').addEventListener('click', e => {
   const b = e.target.closest('[data-line]'); if (!b) return;
   const it = cart.find(i => i.key === b.dataset.line);
