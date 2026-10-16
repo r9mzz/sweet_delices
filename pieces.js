@@ -8,17 +8,18 @@ const PIECES = {
     [2, ['Choux à la crème', 'Moelleux au chocolat', 'Tartelette au citron', 'Tartelette aux fruits', 'Tartelette au chocolat', 'Macarons', 'Crème brûlée', 'Panna cotta']],
     [2.5, ['Tiramisu', 'Verrine façon pomme tatin', 'Mousse au chocolat', 'Verrine façon sundae', 'Verrine mangue passion', 'Verrine brownie Dulcey', 'Verrine façon poire Belle-Hélène']],
     [3, ['Mini entremets', 'Pavlova']],
-  ], photos: [['sucre-verrines', 'Tiramisu et verrine mangue passion'], ['sucre-pannacotta', 'Panna cotta'], ['sucre-mignardises', 'Choux, macarons et mini entremets'], ['sucre-macarons', 'Macarons']]},
+  ], photos: [['sucre-verrines', 'Tiramisu et verrine mangue passion'], ['sucre-mignardises', 'Choux, macarons et mini entremets'], ['sucre-macarons', 'Macarons']]},
 };
 // Photo montrée dans le panier quand la pièce a la sienne, sinon celle de la catégorie
-const PIECE_IMG = {'Beef burger': 'sale-burgers', 'Chicken burger': 'sale-burgers', 'Fish burger': 'sale-burgers', 'Navette saumon': 'sale-burgers', 'Navette poulet': 'sale-wraps', 'Wrap poulet pané': 'sale-wraps', 'Brochette à la libanaise': 'sale-brochettes', 'Crevettes au parmesan': 'sale-crevettes', 'Tiramisu': 'sucre-verrines', 'Verrine mangue passion': 'sucre-verrines', 'Panna cotta': 'sucre-pannacotta', 'Macarons': 'sucre-macarons'};
-const PIECE_START = 10;
+const PIECE_IMG = {'Beef burger': 'sale-burgers', 'Chicken burger': 'sale-burgers', 'Fish burger': 'sale-burgers', 'Navette saumon': 'sale-burgers', 'Navette poulet': 'sale-wraps', 'Wrap poulet pané': 'sale-wraps', 'Brochette à la libanaise': 'sale-brochettes', 'Crevettes au parmesan': 'sale-crevettes', 'Tiramisu': 'sucre-verrines', 'Verrine mangue passion': 'sucre-verrines', 'Macarons': 'sucre-macarons'};
+const PIECE_MIN = 15; // minimum par sorte demandé par la cliente
+const PIECE_START = PIECE_MIN;
 const pieceSlug = s => 'p-' + s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const PIECE_LIST = [];
 for (const [cat, c] of Object.entries(PIECES)) for (const [price, names] of c.groups) for (const name of names)
   PIECE_LIST.push({id: pieceSlug(name), name, price, cat, detail: c.detail, img: 'img/pieces/' + (PIECE_IMG[name] || c.fallback) + '.jpg'});
 const pieceOf = k => PIECE_LIST.find(p => p.id === k);
-const pieceQty = v => Math.max(1, Math.min(999, Math.round(v) || 1));
+const pieceQty = v => Math.max(PIECE_MIN, Math.min(999, Math.round(v) || 1));
 
 // Construit le choix Salé / Sucré, les photos et la liste ; onAdd(pièce, quantité) ajoute au panier
 function sdPieces(root, onAdd){
@@ -26,14 +27,14 @@ function sdPieces(root, onAdd){
   const minus = '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg>';
   const plus = '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg>';
   const item = n => { const p = pieceOf(pieceSlug(n)); return `<li class="pc-item"><span class="pc-name">${n}</span>
-    <div class="stepper sm pc-step"><button type="button" data-pstep="-1" data-for="${p.id}" aria-label="Moins de ${n}">${minus}</button><input id="pq-${p.id}" type="number" inputmode="numeric" min="1" max="999" value="${PIECE_START}" aria-label="Quantité de ${n}"><button type="button" data-pstep="1" data-for="${p.id}" aria-label="Plus de ${n}">${plus}</button></div>
+    <div class="stepper sm pc-step"><button type="button" data-pstep="-1" data-for="${p.id}" aria-label="Moins de ${n}">${minus}</button><input id="pq-${p.id}" type="number" inputmode="numeric" min="${PIECE_MIN}" max="999" value="${PIECE_START}" aria-label="Quantité de ${n}"><button type="button" data-pstep="1" data-for="${p.id}" aria-label="Plus de ${n}">${plus}</button></div>
     <button type="button" class="pc-add" data-padd="${p.id}" aria-label="Ajouter ${n} au panier">Ajouter</button></li>`; };
   const panel = ([cat, c], i) => `<div class="pc-panel" id="pc-${cat}" role="tabpanel"${i ? ' hidden' : ''}>
     <div class="pc-mosaic">${c.photos.map(([f, t]) => `<figure><img src="img/pieces/${f}.jpg" alt="${t}" loading="lazy" width="640" height="800"><figcaption>${t}</figcaption></figure>`).join('')}</div>
     ${c.groups.map(([price, names]) => `<div class="pc-grp"><h4><b>${eurP(price)}</b> la pièce</h4><ul class="pc-list">${names.map(item).join('')}</ul></div>`).join('')}</div>`;
   const cats = Object.entries(PIECES);
   root.innerHTML = `<div class="pc-toggle" role="tablist" aria-label="Pièces salées ou sucrées">${cats.map(([cat, c], i) => `<button type="button" role="tab" data-pc="${cat}" aria-selected="${!i}">${c.label}<small>dès ${eurP(c.groups[0][0])}</small></button>`).join('')}</div>
-    <p class="pc-hint">Choisissez la quantité de chaque pièce puis ajoutez-la au panier.</p>` + cats.map(panel).join('');
+    <p class="pc-hint">Minimum ${PIECE_MIN} pièces par sorte. Choisissez la quantité puis ajoutez au panier.</p>` + cats.map(panel).join('');
   root.addEventListener('click', e => {
     const t = e.target.closest('[data-pc]');
     if (t) {

@@ -412,6 +412,18 @@ input,select,textarea{min-width:0;max-width:100%}
 .pieces-m .pc-grp h4 b{font-size:1.35rem}
 .choix{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .choix span{font-size:.8rem;padding:4px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+
+/* La maison : présentation */
+.maison{background:var(--surface);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px;box-shadow:var(--shadow)}
+.maison .script{font-size:1.6rem}
+.maison h2{font-size:1.7rem}
+.maison p{margin:0;color:var(--muted);font-size:.92rem}
+.maison strong{color:var(--ink);font-weight:600}
+.maison p.tag{color:var(--olive);font-family:var(--f-display);font-size:1.15rem}
+.maison p.motto{font-family:var(--f-display);font-size:1.15rem;color:var(--ink);border-left:3px solid var(--rose);padding:8px 12px;background:var(--bg-alt);border-radius:0 12px 12px 0}
+.maison p.sign{color:var(--ink);font-family:var(--f-display);font-size:1.05rem;border-top:1px solid var(--line);padding-top:10px}
+.maison .more{display:flex;flex-direction:column;gap:10px}
+.maison-btn{align-self:flex-start;background:none;border:0;padding:4px 0;color:var(--olive);font-weight:600;font-size:.88rem;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 </style>
 <style>img{max-width:100%}</style>
 </head>
@@ -442,6 +454,21 @@ input,select,textarea{min-width:0;max-width:100%}
           <div class="ctas">
             <button class="cta main" type="button" data-go="carte"><em>À L'UNITÉ</em><b>Commander des douceurs</b></button>
             <button class="cta" type="button" data-go="devis"><em>SUR DEVIS</em><b>Préparer un événement</b></button>
+          </div>
+          <div class="maison" id="maison">
+            <span class="script">la maison</span>
+            <h2>Bienvenue chez Sweet Délice’S</h2>
+            <p class="tag">L’élégance du goût, l’art de recevoir.</p>
+            <p>Bienvenue dans l’univers de Sweet Délice’S, votre maison de traiteur et de pâtisserie dédiée à la création de moments uniques et gourmands.</p>
+            <div class="more" id="maisonMore" hidden>
+              <p>Nous imaginons et réalisons des prestations sur mesure, pensées pour sublimer vos événements et faire de chaque occasion un souvenir inoubliable. Mariages, anniversaires, baptêmes, événements privés ou professionnels : chaque détail est soigneusement travaillé pour vous offrir une expérience à la hauteur de vos envies.</p>
+              <p><strong>Notre signature ?</strong> Le raffinement, la gourmandise et la personnalisation. Des créations généreuses et élégantes, une présentation soignée et un accompagnement attentif pour donner vie à vos plus belles idées.</p>
+              <p>Chez Sweet Délice’S, chaque événement est unique, chaque création raconte une histoire et chaque détail compte.</p>
+              <p class="motto">Vous imaginez, nous créons, vous savourez.</p>
+              <p>Parce que vos plus beaux moments méritent une touche d’exception, confiez-nous vos envies et créons ensemble une prestation qui vous ressemble.</p>
+              <p class="sign">Sweet Délice’S — L’excellence dans chaque détail, la gourmandise à chaque instant.</p>
+            </div>
+            <button type="button" class="maison-btn" id="maisonBtn" aria-expanded="false" aria-controls="maisonMore">Lire la suite</button>
           </div>
           <div class="row-head"><h2>Nos créations</h2><button type="button" data-go="carte">Tout voir</button></div>
           <div class="carousel" id="carousel"></div>
@@ -511,15 +538,14 @@ input,select,textarea{min-width:0;max-width:100%}
           <p class="common"><strong>Dessert</strong>Plateau de fruits frais de saison<br><strong>Compris</strong>Eau plate et gazeuse, thé, café, pain et service</p>
           <div class="photos"><div class="ptile" role="img" aria-label="Wraps du buffet" style="--img:url('img/buffet.jpg');--x:0;--y:970;--w:256;--h:450"></div><div class="ptile" role="img" aria-label="Verrines et mignardises" style="--img:url('img/buffet.jpg');--x:262;--y:970;--w:247;--h:450"></div><div class="ptile" role="img" aria-label="Pastels et sauce" style="--img:url('img/buffet.jpg');--x:515;--y:970;--w:259;--h:450"></div><div class="ptile" role="img" aria-label="Bar à cocktails" style="--img:url('img/buffet.jpg');--x:780;--y:970;--w:300;--h:450"></div></div>
           <div class="panel">
-            <div class="row-head"><h2>Buffet apéritif</h2></div>
+            <div class="row-head"><h2>Buffets &amp; brunch</h2></div>
             <div class="kv">
-              <div><span>10 personnes</span><b>250 €</b></div>
-              <div><span>20 personnes</span><b>500 €</b></div>
-              <div><span>30 personnes</span><b>750 €</b></div>
-              <div><span>40 personnes</span><b>1 000 €</b></div>
-              <div><span>50 personnes</span><b>1 250 €</b></div>
+              <div><span>Buffet classique</span><b>25 € <small>/ pers.</small></b></div>
+              <div><span>Buffet premium</span><b>30 € <small>/ pers.</small></b></div>
+              <div><span>Buffet prestige</span><b>35 € <small>/ pers.</small></b></div>
+              <div><span>Brunch</span><b>35 € <small>/ pers.</small></b></div>
             </div>
-            <p class="small">Puis <b>250 €</b> par tranche de 10 personnes. 6 apéritifs salés, 6 mignardises sucrées et 2 cocktails. Nappes, présentoirs, fleurs, assiettes et couverts fournis.</p>
+            <p class="small"><b>Buffet classique</b> : 6 apéritifs salés, 6 mignardises sucrées et 2 cocktails. Nappes, présentoirs, fleurs, assiettes et couverts fournis.</p>
             <div class="chips"><span>Livraison</span><span>Installation</span><span>Décoration</span></div>
             <button class="btn ghost" type="button" data-go="carte" data-cat="pieces">Composer à la pièce · dès 1,80 €</button>
           </div>
@@ -534,8 +560,11 @@ input,select,textarea{min-width:0;max-width:100%}
               <label><input type="radio" name="dtype" value="f1">Formule 1<small>35 € / pers.</small></label>
               <label><input type="radio" name="dtype" value="f2">Formule 2<small>40 € / pers.</small></label>
               <label><input type="radio" name="dtype" value="f3">Formule 3<small>42 € / pers.</small></label>
-              <label><input type="radio" name="dtype" value="buffet">Buffet<small>250 € / 10 pers.</small></label>
-              <label style="grid-column:1/-1"><input type="radio" name="dtype" value="sucre">Grosse commande sucrée<small>Canettes, cookies, box</small></label>
+              <label><input type="radio" name="dtype" value="bc">Buffet classique<small>25 € / pers.</small></label>
+              <label><input type="radio" name="dtype" value="bp">Buffet premium<small>30 € / pers.</small></label>
+              <label><input type="radio" name="dtype" value="bx">Buffet prestige<small>35 € / pers.</small></label>
+              <label><input type="radio" name="dtype" value="br">Brunch<small>35 € / pers.</small></label>
+              <label><input type="radio" name="dtype" value="sucre">Grosse commande sucrée<small>Canettes, cookies, box</small></label>
             </div>
             <label class="field">Nombre d'invités<input id="d-nb" type="number" inputmode="numeric" min="1" placeholder="Ex. 80"></label>
             <label class="field">Date de l'événement<input id="d-date" type="date"></label>
@@ -770,7 +799,7 @@ sdPieces($('cat-pieces'), (p, n) => addItem({key: p.id, name: p.name, detail: p.
 $('cLines').addEventListener('click', e => {
   const b = e.target.closest('[data-line]'); if (!b) return;
   const it = cart.find(i => i.key === b.dataset.line);
-  if (it) { it.qty += +b.dataset.d; if (it.qty <= 0) cart = cart.filter(i => i !== it); }
+  if (it) { it.qty += +b.dataset.d; if (it.qty < (pieceOf(it.key) ? PIECE_MIN : 1)) cart = cart.filter(i => i !== it); }
   save(); renderCart();
 });
 
@@ -909,10 +938,11 @@ $('orderForm').addEventListener('submit', e => {
 
 // Devis
 const F = {f1:35, f2:40, f3:42};
+const B = {bc:['Buffet classique', 25], bp:['Buffet premium', 30], bx:['Buffet prestige', 35], br:['Brunch', 35]};
 function estimate(){
   const type = (document.querySelector('[name=dtype]:checked') || {}).value;
   const nb = Math.max(0, Math.floor(+$('d-nb').value || 0));
-  const isMeal = type in F, isBuffet = type === 'buffet', isSweet = type === 'sucre';
+  const isMeal = type in F, isBuffet = type in B, isSweet = type === 'sucre';
   $('w-assiette').hidden = !isMeal; $('w-cooking').hidden = !isBuffet; $('w-dessert').hidden = !(isMeal || isBuffet);
   $('w-none').hidden = isMeal || isBuffet;
   $('w-none').textContent = isSweet ? 'Pas d\'option pour cette prestation : précisez vos envies dans le message.' : 'Les options s\'affichent selon la prestation choisie.';
@@ -923,7 +953,7 @@ function estimate(){
     return 0;
   }
   if (isMeal) { t = F[type] * nb; rows.push(['Formule ' + type.slice(1) + ' × ' + nb + ' pers.', eur(t)]); if ($('d-assiette').checked) quote.push('Service à l\'assiette'); }
-  else if (isBuffet) { const tr = Math.ceil(nb / 10); t = tr * 250; rows.push([tr + ' tranche' + (tr > 1 ? 's' : '') + ' de 10 pers.', eur(t)]); if ($('d-cooking').checked) quote.push('Cooking show'); }
+  else if (isBuffet) { t = B[type][1] * nb; rows.push([B[type][0] + ' × ' + nb + ' pers.', eur(t)]); if ($('d-cooking').checked) quote.push('Cooking show'); }
   else quote.push('Douceurs en grande quantité');
   if ((isMeal || isBuffet) && $('d-dessert').checked) quote.push('Bar à desserts');
   quote.forEach(x => rows.push([x, 'sur devis']));
@@ -953,6 +983,11 @@ $('devisForm').addEventListener('submit', e => {
   ok.textContent = 'Votre messagerie s\'ouvre avec la demande prête à envoyer. Sweet Délices vous recontacte pour établir le devis.' + sdFallback;
   ok.hidden = false; ok.classList.remove('err');
   setTimeout(() => ok.scrollIntoView({block:'center', behavior:'smooth'}), 60);
+});
+
+$('maisonBtn').addEventListener('click', e => {
+  const m = $('maisonMore'), open = m.hidden; m.hidden = !open;
+  e.currentTarget.setAttribute('aria-expanded', open); e.currentTarget.textContent = open ? 'Réduire' : 'Lire la suite';
 });
 
 let tt;

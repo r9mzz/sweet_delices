@@ -402,6 +402,19 @@ footer.sdf .mono{font-size:2.6rem}
 @media (max-width:560px){.pieces-box{padding:16px}.pieces-box .pc-toggle{align-self:stretch}.pc-mosaic{grid-auto-columns:42%}.pc-mosaic img{height:auto;aspect-ratio:4/5}.pc-list{grid-template-columns:1fr}.pc-item{padding-left:12px}}
 .choix{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .choix span{font-size:.8rem;padding:4px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+
+/* La maison : présentation */
+.maison{background:var(--surface);border-block:1px solid var(--line)}
+.maison-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:start}
+.maison-head{display:flex;flex-direction:column;gap:14px;position:sticky;top:110px}
+.maison-head h2{font-size:clamp(2.2rem,4.2vw,3.2rem)}
+.maison-tag{font-family:var(--f-display);font-size:1.4rem;color:var(--olive)}
+.maison-motto{margin-top:12px;padding:16px 20px;border-left:3px solid var(--rose);background:var(--bg-alt);border-radius:0 16px 16px 0;font-family:var(--f-display);font-size:1.35rem}
+.maison-text{display:flex;flex-direction:column;gap:16px;color:var(--muted);max-width:62ch}
+.maison-text strong{color:var(--ink);font-weight:600}
+.maison-sign{font-family:var(--f-display);font-size:1.25rem;color:var(--ink);padding-top:16px;border-top:1px solid var(--line)}
+@media (max-width:860px){.maison-grid{grid-template-columns:1fr;gap:24px}.maison-head{position:static}}
+.tarifs td small{font-size:.75em;color:var(--muted);-webkit-text-stroke:0}
 </style>
 <style>img{max-width:100%}</style>
 </head>
@@ -415,6 +428,7 @@ footer.sdf .mono{font-size:2.6rem}
       <span class="brand-name">Sweet Délices<small>Traiteur</small></span>
     </a>
     <ul>
+      <li><a href="#maison">La maison</a></li>
       <li><a href="#carte">La carte</a></li>
       <li><a href="#traiteur">Traiteur</a></li>
       <li><a href="#devis">Devis</a></li>
@@ -449,6 +463,25 @@ footer.sdf .mono{font-size:2.6rem}
       </div>
     </div>
   </div>
+
+  <section id="maison" class="maison">
+    <div class="wrap maison-grid">
+      <div class="maison-head">
+        <span class="script">la maison</span>
+        <h2>Bienvenue chez Sweet Délice’S</h2>
+        <p class="maison-tag">L’élégance du goût, l’art de recevoir.</p>
+        <p class="maison-motto">Vous imaginez, nous créons, vous savourez.</p>
+      </div>
+      <div class="maison-text">
+        <p>Bienvenue dans l’univers de Sweet Délice’S, votre maison de traiteur et de pâtisserie dédiée à la création de moments uniques et gourmands.</p>
+        <p>Nous imaginons et réalisons des prestations sur mesure, pensées pour sublimer vos événements et faire de chaque occasion un souvenir inoubliable. Mariages, anniversaires, baptêmes, événements privés ou professionnels : chaque détail est soigneusement travaillé pour vous offrir une expérience à la hauteur de vos envies.</p>
+        <p><strong>Notre signature ?</strong> Le raffinement, la gourmandise et la personnalisation. Des créations généreuses et élégantes, une présentation soignée et un accompagnement attentif pour donner vie à vos plus belles idées.</p>
+        <p>Chez Sweet Délice’S, chaque événement est unique, chaque création raconte une histoire et chaque détail compte.</p>
+        <p>Parce que vos plus beaux moments méritent une touche d’exception, confiez-nous vos envies et créons ensemble une prestation qui vous ressemble.</p>
+        <p class="maison-sign">Sweet Délice’S — L’excellence dans chaque détail, la gourmandise à chaque instant.</p>
+      </div>
+    </div>
+  </section>
 
   <section id="carte" class="alt">
     <div class="wrap">
@@ -517,19 +550,18 @@ footer.sdf .mono{font-size:2.6rem}
 
         <article class="menu-card" aria-labelledby="t-buffet">
           <div class="strip buffet" role="img" aria-label="Buffet de wraps, verrines, pastels et bar à cocktails"></div>
-          <div><p class="eyebrow">Prestations buffet</p><h3 id="t-buffet">Buffet apéritif</h3></div>
+          <div><p class="eyebrow">Prestations buffet</p><h3 id="t-buffet">Buffets &amp; brunch</h3></div>
           <div class="two">
             <table class="tarifs"><tbody>
-              <tr><td>10 personnes</td><td>250 €</td></tr>
-              <tr><td>20 personnes</td><td>500 €</td></tr>
-              <tr><td>30 personnes</td><td>750 €</td></tr>
-              <tr><td>40 personnes</td><td>1 000 €</td></tr>
-              <tr><td>50 personnes</td><td>1 250 €</td></tr>
+              <tr><td>Buffet classique</td><td>25 € <small>/ pers.</small></td></tr>
+              <tr><td>Buffet premium</td><td>30 € <small>/ pers.</small></td></tr>
+              <tr><td>Buffet prestige</td><td>35 € <small>/ pers.</small></td></tr>
+              <tr><td>Brunch</td><td>35 € <small>/ pers.</small></td></tr>
             </tbody></table>
             <div style="display:flex;flex-direction:column;gap:14px">
+              <p class="note"><b>Le buffet classique comprend :</b></p>
               <ul class="list"><li>6 sortes d'apéritifs salés</li><li>6 sortes de mignardises sucrées</li><li>2 cocktails</li></ul>
               <p class="note">Nappes, présentoirs, bouquets de fleurs, assiettes et couverts fournis.</p>
-              <p class="note">Puis <b>250 €</b> par tranche de 10 personnes.</p>
             </div>
           </div>
           <div class="included"><span>Livraison</span><span>Installation</span><span>Décoration</span></div>
@@ -546,7 +578,10 @@ footer.sdf .mono{font-size:2.6rem}
               <option value="f1">Repas de mariage, formule 1 (35 €/pers.)</option>
               <option value="f2">Repas de mariage, formule 2 (40 €/pers.)</option>
               <option value="f3">Repas de mariage, formule 3 (42 €/pers.)</option>
-              <option value="buffet">Prestation buffet (250 € / 10 pers.)</option>
+              <option value="bc">Buffet classique (25 €/pers.)</option>
+              <option value="bp">Buffet premium (30 €/pers.)</option>
+              <option value="bx">Buffet prestige (35 €/pers.)</option>
+              <option value="br">Brunch (35 €/pers.)</option>
               <option value="sucre">Grosse commande sucrée (canettes, cookies)</option>
             </select>
           </label>
@@ -747,7 +782,7 @@ document.addEventListener('click', e => {
   const ln = e.target.closest('[data-line]');
   if (ln) {
     const it = cart.find(i => i.key === ln.dataset.line);
-    if (it) { it.qty += +ln.dataset.d; if (it.qty <= 0) cart = cart.filter(i => i !== it); }
+    if (it) { it.qty += +ln.dataset.d; if (it.qty < (pieceOf(it.key) ? PIECE_MIN : 1)) cart = cart.filter(i => i !== it); }
     save(); renderCart();
   }
 });
@@ -869,10 +904,11 @@ renderBuilder();
 
 // Devis
 const F = {f1:35, f2:40, f3:42};
+const B = {bc:['Buffet classique', 25], bp:['Buffet premium', 30], bx:['Buffet prestige', 35], br:['Brunch', 35]};
 const $ = id => document.getElementById(id);
 function estimate(){
   const type = $('d-type').value, nb = Math.max(0, Math.floor(+$('d-nb').value || 0));
-  const isMeal = type in F, isBuffet = type === 'buffet', isSweet = type === 'sucre';
+  const isMeal = type in F, isBuffet = type in B, isSweet = type === 'sucre';
   $('d-assiette-wrap').hidden = !isMeal;
   $('d-cooking-wrap').hidden = !isBuffet;
   $('d-dessert-wrap').hidden = isSweet;
@@ -882,8 +918,8 @@ function estimate(){
     rows.push(['Formule ' + type.slice(1) + ' × ' + nb + ' pers.', eur(t)]);
     if ($('d-assiette').checked) quote.push('Service à l\'assiette');
   } else if (isBuffet) {
-    const tr = Math.ceil(nb / 10), t = tr * 250; total += t;
-    rows.push(['Buffet, ' + tr + ' tranche' + (tr > 1 ? 's' : '') + ' de 10 pers.', eur(t)]);
+    const t = B[type][1] * nb; total += t;
+    rows.push([B[type][0] + ' × ' + nb + ' pers.', eur(t)]);
     if ($('d-cooking').checked) quote.push('Cooking show');
   } else {
     quote.push('Douceurs en grande quantité');
