@@ -415,6 +415,14 @@ footer.sdf .mono{font-size:2.6rem}
 .maison-sign{font-family:var(--f-display);font-size:1.25rem;color:var(--ink);padding-top:16px;border-top:1px solid var(--line)}
 @media (max-width:860px){.maison-grid{grid-template-columns:1fr;gap:24px}.maison-head{position:static}}
 .tarifs td small{font-size:.75em;color:var(--muted);-webkit-text-stroke:0}
+
+/* Rubrique traiteur : galerie photos */
+.tgal-head{margin:56px 0 20px;text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center}
+.tgal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.tgal figure{margin:0;border-radius:20px;overflow:hidden;background:var(--bg-alt);box-shadow:var(--shadow)}
+.tgal img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;transition:transform .5s ease}
+.tgal figure:hover img{transform:scale(1.04)}
+@media (max-width:700px){.tgal{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
 </style>
 <style>img{max-width:100%}</style>
 </head>
@@ -568,6 +576,16 @@ footer.sdf .mono{font-size:2.6rem}
           <p class="note">Cooking show : <b>devis sur demande</b>.</p>
           <a class="btn ghost small" href="#pieces" style="align-self:flex-start">Composer à la pièce · dès 1,80 €</a>
         </article>
+      </div>
+
+      <div class="tgal-head"><span class="script">en images</span><h3>Nos prestations</h3></div>
+      <div class="tgal">
+        <figure><img src="img/traiteur/comptoir.jpg" alt="Comptoir Sweet Délice’S Traiteur dressé pour une réception" loading="lazy" width="720" height="960"></figure>
+        <figure><img src="img/traiteur/plateau.jpg" alt="Plateau de charcuterie, fromages et fruits" loading="lazy" width="720" height="960"></figure>
+        <figure><img src="img/traiteur/brunch.jpg" alt="Brunch : viennoiseries, pancakes et granola" loading="lazy" width="720" height="960"></figure>
+        <figure><img src="img/traiteur/saumon.jpg" alt="Plateau de saumon fumé, concombre et oignon rouge" loading="lazy" width="720" height="960"></figure>
+        <figure><img src="img/traiteur/brunch-2.jpg" alt="Buffet brunch fleuri" loading="lazy" width="720" height="960"></figure>
+        <figure><img src="img/traiteur/chauffe-plats.jpg" alt="Chauffe-plats prêts pour le service" loading="lazy" width="720" height="960"></figure>
       </div>
 
       <div class="devis" id="devis">

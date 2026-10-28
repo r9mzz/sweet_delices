@@ -424,6 +424,12 @@ input,select,textarea{min-width:0;max-width:100%}
 .maison p.sign{color:var(--ink);font-family:var(--f-display);font-size:1.05rem;border-top:1px solid var(--line);padding-top:10px}
 .maison .more{display:flex;flex-direction:column;gap:10px}
 .maison-btn{align-self:flex-start;background:none;border:0;padding:4px 0;color:var(--olive);font-weight:600;font-size:.88rem;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+
+/* Traiteur : galerie photos */
+.tgal{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:16px;margin-inline:-16px;padding:0 16px 6px;scrollbar-width:none}
+.tgal::-webkit-scrollbar{display:none}
+.tgal figure{margin:0;flex:0 0 62%;scroll-snap-align:start;border-radius:18px;overflow:hidden;background:var(--bg-alt)}
+.tgal img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover}
 </style>
 <style>img{max-width:100%}</style>
 </head>
@@ -548,6 +554,15 @@ input,select,textarea{min-width:0;max-width:100%}
             <p class="small">Apéritifs salés, mignardises sucrées et cocktails. Le choix des pièces se fait <b>sur devis</b>, selon vos envies. Nappes, présentoirs, fleurs, assiettes et couverts fournis.</p>
             <div class="chips"><span>Livraison</span><span>Installation</span><span>Décoration</span></div>
             <button class="btn ghost" type="button" data-go="carte" data-cat="pieces">Composer à la pièce · dès 1,80 €</button>
+          </div>
+          <div class="row-head"><h2>En images</h2></div>
+          <div class="tgal">
+            <figure><img src="img/traiteur/comptoir.jpg" alt="Comptoir Sweet Délice’S Traiteur dressé pour une réception" loading="lazy" width="720" height="960"></figure>
+            <figure><img src="img/traiteur/plateau.jpg" alt="Plateau de charcuterie, fromages et fruits" loading="lazy" width="720" height="960"></figure>
+            <figure><img src="img/traiteur/brunch.jpg" alt="Brunch : viennoiseries, pancakes et granola" loading="lazy" width="720" height="960"></figure>
+            <figure><img src="img/traiteur/saumon.jpg" alt="Plateau de saumon fumé, concombre et oignon rouge" loading="lazy" width="720" height="960"></figure>
+            <figure><img src="img/traiteur/brunch-2.jpg" alt="Buffet brunch fleuri" loading="lazy" width="720" height="960"></figure>
+            <figure><img src="img/traiteur/chauffe-plats.jpg" alt="Chauffe-plats prêts pour le service" loading="lazy" width="720" height="960"></figure>
           </div>
           <button class="btn" type="button" data-go="devis">Calculer mon devis</button>
         </section>
