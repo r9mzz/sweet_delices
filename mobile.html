@@ -8,6 +8,9 @@
 <title>Sweet Délices Mobile</title>
 <meta name="description" content="Sweet Délices, pâtisserie et traiteur : canette cakes, box cookies, repas de mariage et buffets.">
 
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="48x48" href="img/favicon-48.png">
+<link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
 <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="512x512" href="img/icon-512.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
@@ -705,9 +708,10 @@ input,select,textarea{min-width:0;max-width:100%}
 </div>
 
 <script src="pieces.js"></script>
+<script src="envoi.js"></script>
 <script>
 const $ = id => document.getElementById(id);
-// Coordonnées de Sweet Délices : les commandes et devis partent par e-mail
+// Coordonnées de Sweet Délices : les commandes et devis partent par e-mail ou Instagram (envoi.js)
 const SD_MAIL = 'salamataniang@gmail.com', SD_TEL = '06 58 41 83 37';
 const sdVal = id => (document.getElementById(id).value || '').trim();
 function sdNeed(ids, out){
@@ -722,8 +726,8 @@ function sdNeed(ids, out){
   return true;
 }
 function sdDate(id){ const v = sdVal(id); return v ? new Date(v + 'T12:00').toLocaleDateString('fr-FR', {weekday:'long', day:'numeric', month:'long', year:'numeric'}) : 'à convenir'; }
-function sdSend(subject, lines){ location.href = 'mailto:' + SD_MAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n')); }
-const sdFallback = ' Si rien ne s\'ouvre, écrivez à ' + SD_MAIL + ' ou appelez le ' + SD_TEL + '.';
+function sdSend(subject, lines){ sdChoose(SD_MAIL, subject, lines); }
+const sdFallback = ' En cas de souci, écrivez à ' + SD_MAIL + ', sur Instagram @sweet_delices, ou appelez le ' + SD_TEL + '.';
 // Pas de date passée dans les calendriers
 document.querySelectorAll('input[type=date]').forEach(d => { const n = new Date(); d.min = new Date(n - n.getTimezoneOffset() * 6e4).toISOString().slice(0, 10); });
 const eur = n => n.toLocaleString('fr-FR', {minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2}) + ' €';
@@ -947,7 +951,7 @@ $('orderForm').addEventListener('submit', e => {
     ...cart.map(i => '- ' + i.qty + ' × ' + i.name + ' (' + i.detail + ') : ' + eur(i.qty * i.price)),
     '', 'Total : ' + eur(tot), 'Acompte (50 %) : ' + eur(dep), '',
     mode + (sdVal('o-date') ? ' le ' + sdDate('o-date') : ', date à convenir'), 'Nom : ' + sdVal('o-nom'), 'Téléphone : ' + sdVal('o-tel'), '', 'Merci !']);
-  ok.textContent = 'Votre messagerie s\'ouvre avec la commande prête à envoyer. Sweet Délices vous recontacte ensuite pour confirmer et régler l\'acompte de ' + eur(dep) + '.' + sdFallback;
+  ok.textContent = 'Votre commande est prête : envoyez-la par e-mail ou sur Instagram. Sweet Délices vous recontacte ensuite pour confirmer et régler l\'acompte de ' + eur(dep) + '.' + sdFallback;
   ok.hidden = false; ok.classList.remove('err');
   setTimeout(() => ok.scrollIntoView({block:'center', behavior:'smooth'}), 60);
 });
@@ -996,7 +1000,7 @@ $('devisForm').addEventListener('submit', e => {
     '- Options : ' + (opts.length ? opts.join(', ') : 'aucune'),
     '- Estimation du site : ' + (t ? $('e-total').textContent + ' (acompte 50 % : ' + eur(t / 2) + ')' : 'sur devis'), '',
     'Message : ' + (sdVal('d-msg') || '-'), '', 'Nom : ' + sdVal('d-nom'), 'Téléphone : ' + sdVal('d-tel'), '', 'Merci !']);
-  ok.textContent = 'Votre messagerie s\'ouvre avec la demande prête à envoyer. Sweet Délices vous recontacte pour établir le devis.' + sdFallback;
+  ok.textContent = 'Votre demande est prête : envoyez-la par e-mail ou sur Instagram. Sweet Délices vous recontacte pour établir le devis.' + sdFallback;
   ok.hidden = false; ok.classList.remove('err');
   setTimeout(() => ok.scrollIntoView({block:'center', behavior:'smooth'}), 60);
 });
