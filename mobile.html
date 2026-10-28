@@ -435,6 +435,9 @@ input,select,textarea{min-width:0;max-width:100%}
 .tgal::-webkit-scrollbar{display:none}
 .tgal figure{margin:0;flex:0 0 62%;scroll-snap-align:start;border-radius:18px;overflow:hidden;background:var(--bg-alt)}
 .tgal img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover}
+/* Verre liquide (verre-liquide.js, Chrome et Samsung Internet) : teinte plus légère pour voir la courbure */
+.topbar.verre-liquide{background:color-mix(in srgb,var(--bg) 72%,transparent)}
+.tabbar.verre-liquide{background:color-mix(in srgb,var(--surface) 70%,transparent)}
 </style>
 <style>img{max-width:100%}</style>
 </head>
@@ -710,6 +713,7 @@ input,select,textarea{min-width:0;max-width:100%}
 
 <script src="pieces.js"></script>
 <script src="envoi.js"></script>
+<script type="module">import { verre } from "./verre-liquide.js"; verre(".topbar", { flou: 6 }); verre(".tabbar", { flou: 6 });</script>
 <script>
 const $ = id => document.getElementById(id);
 // Coordonnées de Sweet Délices : les commandes et devis partent par e-mail ou Instagram (envoi.js)
